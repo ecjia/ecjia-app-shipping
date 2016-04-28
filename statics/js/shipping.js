@@ -110,8 +110,8 @@
 		shipping_area_list_search : function(url) {
 			var keywords	= $('[name=keywords]').val();
 			var code		= $('[name=code]').val();
-			var shipping	= $('[name=shipping]').val();
-			url				= url+"&code="+code+"&shipping="+shipping+"&keywords="+keywords;
+			var shipping_id	= $('[name=shipping_id]').val();
+			url				= url+"&shipping_id="+shipping_id+"&code="+code+"&keywords="+keywords;
 			ecjia.pjax(url);
 		},
 	};
@@ -133,7 +133,7 @@
 				var mesObj = new Object ();
 				mesObj.state   = 'error';
 				if(objform.shipping_area_name.value.length == 0) {
-					mesObj.message = '配送区域名称不为空';
+					mesObj.message = '配送区域名称不能为空';
 					ecjia.admin.showmessage(mesObj);
 					$(objform.shipping_area_name).focus();
 					return false;

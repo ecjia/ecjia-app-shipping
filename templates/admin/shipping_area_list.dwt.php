@@ -7,12 +7,15 @@
 		<!-- {if $action_link} -->
 		<a href="{$action_link.href}" class="btn plus_or_reply data-pjax" id="sticky_a"><i class="fontello-icon-plus"></i>{$action_link.text}</a>
 		<!-- {/if} -->
+		<!-- {if $shipping_method} -->
+		<a href="{$shipping_method.href}" class="btn plus_or_reply data-pjax" id="sticky_a"><i class="fontello-icon-reply"></i>{$shipping_method.text}</a>
+		<!-- {/if} -->
 	</h3>
 </div>
 <div class="row-fluid">
 	<div class="span12">
 		<form method="post" action="{$form_action}" name="listForm" >
-			<input type="hidden"     name="shipping" value="{$shipping_id}" />
+			<input type="hidden" name="shipping_id" value="{$shipping_id}" />
 			<input type="hidden" name="code" value="{$code}" />
 			<div class="row-fluid">
 				<div class="btn-group ">
@@ -26,8 +29,8 @@
 					</ul>
 				</div>
 				<div class="choose_list f_r" >
-					<input type="text" name="keywords" value="{$areas.filter.keywords}" placeholder="请输入配送区域名称"/> 
-					<button class="btn" type="button" id="search_btn" onclick='javascript:ecjia.admin.shippingObj.shipping_area_list_search("{$search_action}")'>{t}搜索配送区域{/t}</button>
+					<input type="text" name="keywords" value="{$areas.filter.keywords}" placeholder="请输入配送区域名称关键字"/> 
+					<button class="btn" type="button" id="search_btn" onclick='javascript:ecjia.admin.shippingObj.shipping_area_list_search("{$search_action}")'>{t}搜索{/t}</button>
 				</div>
 			</div>
 			<div class="row-fluid">
@@ -51,9 +54,8 @@
 							<td>{$area.shipping_area_name|escape:"html"}</td>
 							<td>{$area.shipping_area_regions}</td>
 							<td>
-								{assign var=edit_url value=RC_Uri::url('shipping/admin_area/edit',"id={$area.shipping_area_id}")}
-								<a class="data-pjax no-underline" href="{$edit_url}" class="sepV_a" title="{$lang.edit}"><i class="fontello-icon-edit"></i></a>
-								<a class="ajaxremove  no-underline" data-toggle="ajaxremove" data-msg="{t}您确定要删除配送区域[{$area.shipping_area_name}]吗？{/t}" href='{RC_Uri::url("shipping/admin_area/remove_area","id={$area.shipping_area_id}")}' title="{t}{$lang.remove}{/t}"><i class="fontello-icon-trash"></i></a>
+								<a class="data-pjax no-underline" href='{RC_Uri::url("shipping/admin_area/edit","id={$area.shipping_area_id}&shipping_id={$shipping_id}&code={$code}")}' class="sepV_a" title="{$lang.edit}"><i class="fontello-icon-edit"></i></a>
+								<a class="ajaxremove  no-underline" data-toggle="ajaxremove" data-msg="{t}您确定要删除配送区域[{$area.shipping_area_name}]吗？{/t}" href='{RC_Uri::url("shipping/admin_area/remove_area", "id={$area.shipping_area_id}")}' title="{t}{$lang.remove}{/t}"><i class="fontello-icon-trash"></i></a>
 							</td>
 						</tr>
 						<!-- {foreachelse} -->

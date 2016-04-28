@@ -35,18 +35,14 @@
 					<!-- {if $module.enabled == 1} -->
 							{$module.desc|nl2br}
 							<div class="edit-list">
-								{assign var=shipping_init value=RC_Uri::url('shipping/admin_area/init',"code={$module.code}&shipping={$module.id}")}
-								<a class="data-pjax" href="{$shipping_init}"  title="{$lang.shipping_area}">{t}设置配送区域{/t}</a>&nbsp;|&nbsp;
-								{assign var=shipping_edit_print_template value=RC_Uri::url('shipping/admin/edit_print_template',"code={$module.code}&shipping={$module.id}")}
-								<a class="data-pjax" href="{$shipping_edit_print_template}" title="{$lang.shipping_print_edit}">{t}编辑打印模板{/t}</a>&nbsp;|&nbsp;
-								{assign var=shipping_disable value=RC_Uri::url('shipping/admin/disable',"code={$module.code}")}
-								<a class="switch ecjiafc-red" href='javascript:ecjia.admin.shopping_list.plugin_state_click("{$shipping_disable}");' title="{$lang.disable}">{t}禁用{/t}</a>
+								<a class="data-pjax" href='{RC_Uri::url("shipping/admin_area/init","shipping_id={$module.id}&code={$module.code}")}' title="{$lang.shipping_area}">{t}设置配送区域{/t}</a>&nbsp;|&nbsp;
+								<a class="data-pjax" href='{RC_Uri::url("shipping/admin/edit_print_template", "shipping_id={$module.id}&code={$module.code}")}' title="{$lang.shipping_print_edit}">{t}编辑打印模板{/t}</a>&nbsp;|&nbsp;
+								<a class="switch ecjiafc-red" href='javascript:ecjia.admin.shopping_list.plugin_state_click("{RC_Uri::url("shipping/admin/disable", "code={$module.code}")}");' title="{$lang.disable}">{t}禁用{/t}</a>
 							</div>
 						<!-- {else} -->
 							{$module.desc|nl2br}
 							<div class="edit-list">
-								{assign var=shipping_enable value=RC_Uri::url('shipping/admin/enable',"code={$module.code}")}
-								<a class="switch" href='javascript:ecjia.admin.shopping_list.plugin_state_click("{$shipping_enable}");' title="{$lang.enable}">{t}启用{/t}</a>
+								<a class="switch" href='javascript:ecjia.admin.shopping_list.plugin_state_click("{RC_Uri::url("shipping/admin/enable", "code={$module.code}")}");' title="{$lang.enable}">{t}启用{/t}</a>
 							</div>
 						<!-- {/if} -->
 						
