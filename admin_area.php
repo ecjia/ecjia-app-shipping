@@ -26,6 +26,9 @@ class admin_area extends ecjia_admin {
 		RC_Script::enqueue_script('smoke');	
 		//加载app js
 		RC_Script::enqueue_script('shipping', RC_App::apps_url('statics/js/shipping.js', __FILE__));
+		//时间
+		RC_Style::enqueue_style('datepicker',RC_Uri::admin_url('statics/lib/datepicker/datepicker.css'));
+		RC_Script::enqueue_script('bootstrap-datepicker',RC_Uri::admin_url('statics/lib/datepicker/bootstrap-timepicker.min.js'));
 		
 		RC_Style::enqueue_style('chosen');
 		RC_Style::enqueue_style('uniform-aristo');
@@ -180,6 +183,24 @@ class admin_area extends ecjia_admin {
 				$config[$count]['value']    =  make_semiangle(empty($_POST['pay_fee']) ? '0' : trim($_POST['pay_fee']));
 			}
 
+			if ($shipping_data['shipping_code'] == 'ship_o2o_express') {
+				
+				$time = array();
+				foreach ($_POST['start_ship_time'] as $k => $v) {
+					$time[$k]['start']	= $v;
+					$time[$k]['end']	= $_POST['end_ship_time'][$k];
+				}
+				
+				$config[$count]['name']     = 'ship_days';
+				$config[$count]['value']    = empty($_POST['ship_days']) ? '' : intval($_POST['ship_days']);
+				$count++;
+				$config[$count]['name']     = 'last_order_time';
+				$config[$count]['value']    = empty($_POST['last_order_time']) ? '' : trim($_POST['last_order_time']);
+				$count++;
+				$config[$count]['name']     = 'ship_time';
+				$config[$count]['value']    = empty($time) ? '' : $time;
+			}
+			
 			$data = array(
 				'shipping_area_name'    => $shipping_area_name,
 				'shipping_id'           => $shipping_id,
@@ -239,7 +260,7 @@ class admin_area extends ecjia_admin {
 		
 		$shipping_handle = new shipping_factory($shipping_data['shipping_code']);
 		$fields = $shipping_handle->form_format($fields, true);
-        
+        _dump($fields,1);
 		if (! empty( $fields )) {
 			foreach ($fields as $key => $val ) {
 				/* 替换更改的语言项 */
@@ -309,7 +330,7 @@ class admin_area extends ecjia_admin {
 		$this->assign('action_link', array('text' => $shipping_data['shipping_name'].'列表', 'href' => RC_Uri::url('shipping/admin_area/init', array('shipping_id' => $shipping_data['shipping_id'], 'code' => $code))));
 		$this->assign('form_action', 'update');
 		
-		RC_Loader::load_app_func('common', 'goods');
+// 		RC_Loader::load_app_func('common', 'goods');
 		
 		$this->assign('countries', $this->db_region->get_regions());
 		$this->assign('default_country', 1);

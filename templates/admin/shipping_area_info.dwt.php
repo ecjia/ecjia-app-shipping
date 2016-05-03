@@ -58,46 +58,96 @@ ecjia.admin.area_info.init();
 
 				<!-- 500克以内的费用 -->
 				<!--{if $shipping_area.shipping_code != 'ship_cac'}-->
-				<!-- {foreach from=$fields item=field} -->
-				<!--{if $fee_compute_mode == 'by_number'}-->
-				<!--{if $field.name == 'item_fee' || $field.name == 'free_money' || $field.name == 'pay_fee'}-->
-				<div class="control-group formSep" id="{$field.name}">
-					<label class="control-label">{$field.label}：</label>
-					<div class="controls">
-						<input name="{$field.name}" type="text" value="{$field.value}" size="40" /> 
-						<span class="input-must">{$lang.require_field}</span>
-					</div>
-				</div>
-				<!--{else}-->
-				<div class="control-group formSep" id="{$field.name}" style="display: none;">
-					<label class="control-label">{$field.label}：</label>
-					<div class="controls">
-						<input name="{$field.name}" type="text" value="{$field.value}" size="40" />
-						<span class="input-must">{$lang.require_field}</span>
-					</div>
-				</div>
+					<!-- {foreach from=$fields item=field} -->
+						<!--{if $fee_compute_mode == 'by_number'}-->
+							<!--{if $field.name == 'item_fee' || $field.name == 'free_money' || $field.name == 'pay_fee'}-->
+							<div class="control-group formSep" id="{$field.name}">
+								<label class="control-label">{$field.label}：</label>
+								<div class="controls">
+									<input name="{$field.name}" type="text" value="{$field.value}" size="40" /> 
+									<span class="input-must">{$lang.require_field}</span>
+								</div>
+							</div>
+							<!--{else}-->
+							<div class="control-group formSep" id="{$field.name}" style="display: none;">
+								<label class="control-label">{$field.label}：</label>
+								<div class="controls">
+									<input name="{$field.name}" type="text" value="{$field.value}" size="40" />
+									<span class="input-must">{$lang.require_field}</span>
+								</div>
+							</div>
+							<!--{/if}-->
+						<!--{else}-->
+							<!--{if $field.name != 'item_fee'}-->
+							<div class="control-group formSep" id="{$field.name}">
+								<label class="control-label">{$field.label}</label>
+								<div class="controls">
+									<input name="{$field.name}" type="text" value="{$field.value}" size="40" />
+									<span class="input-must">{$lang.require_field}</span>
+								</div>
+							</div>
+							<!--{else}-->
+							<div class="control-group formSep" id="{$field.name}" style="display: none;">
+							<label class="control-label">{$field.label}</label>
+							<div class="controls">
+									<input name="{$field.name}" type="text" value="{$field.value}" size="40" />
+									<span class="input-must">{$lang.require_field}</span>
+								</div>
+							</div>
+							<!--{/if}-->
+						<!--{/if}-->
+					<!-- {/foreach} -->
 				<!--{/if}-->
-				<!--{else}-->
-				<!--{if $field.name != 'item_fee'}-->
-				<div class="control-group formSep" id="{$field.name}">
-					<label class="control-label">{$field.label}</label>
-					<div class="controls">
-						<input name="{$field.name}" type="text" value="{$field.value}" size="40" />
-						<span class="input-must">{$lang.require_field}</span>
+				
+				<!-- {if $shipping_area.shipping_code eq 'ship_o2o_express'} -->
+					<div class="control-group formSep" id="ship_days">
+						<label class="control-label">下单后几天内配送：</label>
+						<div class="controls">
+							<input name="ship_days" placeholder="请填写有效天数，最小单位为1" type="text" value="{$ecjia_field.value}" size="40" />
+							<span class="help-block">默认7天以内配送（用户可选择的时间）</span> 
+						</div>
 					</div>
-				</div>
-				<!--{else}-->
-				<div class="control-group formSep" id="{$field.name}" style="display: none;">
-				<label class="control-label">{$field.label}</label>
-				<div class="controls">
-						<input name="{$field.name}" type="text" value="{$field.value}" size="40" />
-						<span class="input-must">{$lang.require_field}</span>
+					<div class="control-group formSep" id="last_order_time">
+						<label class="control-label">提前下单时间：</label>
+						<div class="controls">
+							<input class="date" name="last_order_time" placeholder="最小单位为分钟；如30" type="text" value="{$ecjia_field.value}" size="40" />
+							<span class="help-block">需比配送时间提前多久下单才能配送，否则匹配至下个配送时间</span> 
+						</div>
 					</div>
-				</div>
-				<!--{/if}-->
-				<!--{/if}-->
-				<!-- {/foreach} -->
-				<!--{/if}-->
+					<!-- {if $area_id} -->
+						<!-- {foreach from=$ecjia_fields item=ecjia_field} -->
+						    <!-- {if $ecjia_field.name == 'ship_time'} -->
+								<div class="control-group formSep" id="ship_time">
+									<label class="control-label">配送时间：</label>
+									<!-- {foreach from=$ecjia_field.time item=time_field} -->
+										<div class="controls">
+											<div class="goods_type">
+												从<input class="w100 tp_1" name="start_ship_time[]" type="text" value="{$time_field.start}" size="40" />&nbsp;&nbsp;
+												至<input class="w100 tp_1" name="end_ship_time[]" type="text" value="{$time_field.end}" size="40" />
+												<a class="no-underline" data-toggle="clone-obj" data-parent=".goods_type" href="javascript:;"><i class="fontello-icon-plus"></i></a>    
+											</div>
+										</div>
+									<!-- {/foreach} -->
+								</div>
+							<!-- {/if} -->
+							
+							
+						<!-- {/foreach} -->
+					<!-- {else} -->
+							<div class="control-group formSep" id="ship_time">
+								<label class="control-label">配送时间：</label>
+								<div class="controls">
+									<div class="goods_type">
+										从&nbsp;&nbsp;<input class="w100 tp_1" name="start_ship_time[]" type="text" value="{$time_field.start}" size="40" />&nbsp;&nbsp;
+										至&nbsp;&nbsp;<input class="w100 tp_1" name="end_ship_time[]" type="text" value="{$time_field.end}" size="40" />
+										<a class="no-underline" data-toggle="clone-obj" data-parent=".goods_type" href="javascript:;"><i class="fontello-icon-plus"></i></a>    
+									</div>
+								</div>
+							</div>
+							
+					<!-- {/if} -->
+				<!-- {/if} -->
+				
 				<!--  国家选择 -->
 				<h3 class="heading">{$lang.shipping_area_regions}:</h3>
 

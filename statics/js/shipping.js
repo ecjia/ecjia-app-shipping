@@ -124,6 +124,28 @@
 			app.area_info.choose_area();
 			app.area_info.selected_area();
 			app.area_info.quick_search();
+			app.area_info.tpicker();
+			
+			$('.tp_1').timepicker({
+				defaultTime: 'current',
+				minuteStep: 5,
+				disableFocus: true,
+				template: 'modal',
+				showMeridian: false
+			});
+		},
+		tpicker : function () {
+			$('.fontello-icon-plus').click(function(e) {
+				setTimeout(function () { 
+					$('.tp_1').timepicker({
+						defaultTime: 'current',
+						minuteStep: 5,
+						disableFocus: true,
+						template: 'modal',
+						showMeridian: false
+					});
+			    }, 1000);
+			});
 		},
 
 		shipping_submit : function() {
