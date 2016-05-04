@@ -103,45 +103,43 @@ ecjia.admin.area_info.init();
 					<div class="control-group formSep" id="ship_days">
 						<label class="control-label">下单后几天内配送：</label>
 						<div class="controls">
-							<input name="ship_days" placeholder="请填写有效天数，最小单位为1" type="text" value="{$ecjia_field.value}" size="40" />
+							<input name="ship_days" placeholder="请填写有效天数，最小单位为1" type="text" value="{$ship_days}" size="40" />
 							<span class="help-block">默认7天以内配送（用户可选择的时间）</span> 
 						</div>
 					</div>
 					<div class="control-group formSep" id="last_order_time">
 						<label class="control-label">提前下单时间：</label>
 						<div class="controls">
-							<input class="date" name="last_order_time" placeholder="最小单位为分钟；如30" type="text" value="{$ecjia_field.value}" size="40" />
+							<input class="date" name="last_order_time" placeholder="最小单位为分钟；如30" type="text" value="{$last_order_time}" size="40" />
 							<span class="help-block">需比配送时间提前多久下单才能配送，否则匹配至下个配送时间</span> 
 						</div>
 					</div>
 					<!-- {if $area_id} -->
-						<!-- {foreach from=$ecjia_fields item=ecjia_field} -->
-						    <!-- {if $ecjia_field.name == 'ship_time'} -->
-								<div class="control-group formSep" id="ship_time">
-									<label class="control-label">配送时间：</label>
-									<!-- {foreach from=$ecjia_field.time item=time_field} -->
-										<div class="controls">
-											<div class="goods_type">
-												从<input class="w100 tp_1" name="start_ship_time[]" type="text" value="{$time_field.start}" size="40" />&nbsp;&nbsp;
-												至<input class="w100 tp_1" name="end_ship_time[]" type="text" value="{$time_field.end}" size="40" />
-												<a class="no-underline" data-toggle="clone-obj" data-parent=".goods_type" href="javascript:;"><i class="fontello-icon-plus"></i></a>    
-											</div>
-										</div>
-									<!-- {/foreach} -->
-								</div>
-							<!-- {/if} -->
-							
-							
-						<!-- {/foreach} -->
+						<div class="control-group formSep" id="ship_time">
+							<label class="control-label">配送时间：</label>
+							<div class="controls">
+							<!-- {foreach from=$o2o_shipping_time item=shipping_time name=shipping} -->
+								<div class='goods_type'>
+									从&nbsp;&nbsp;<input class="w100 tp_1" name="start_ship_time[]" type="text" value="{$shipping_time.start}" autocomplete="off" />&nbsp;&nbsp;
+									至&nbsp;&nbsp;<input class="w100 tp_1" name="end_ship_time[]" type="text" value="{$shipping_time.end}" autocomplete="off" />
+									<!-- {if $smarty.foreach.shipping.last} -->
+										<a class="no-underline" data-toggle="clone-obj" data-before="before" data-parent=".goods_type" href="javascript:;"><i class="fontello-icon-plus"></i></a>
+									<!-- {else} -->
+										<a class="no-underline" href="javascript:;" data-parent=".goods_type" data-toggle="remove-obj"><i class="fontello-icon-cancel ecjiafc-red"></i></a>
+									<!-- {/if} -->
+								</div> 
+							<!-- {/foreach} -->   
+							</div>
+						</div>
 					<!-- {else} -->
 							<div class="control-group formSep" id="ship_time">
 								<label class="control-label">配送时间：</label>
 								<div class="controls">
-									<div class="goods_type">
-										从&nbsp;&nbsp;<input class="w100 tp_1" name="start_ship_time[]" type="text" value="{$time_field.start}" size="40" />&nbsp;&nbsp;
-										至&nbsp;&nbsp;<input class="w100 tp_1" name="end_ship_time[]" type="text" value="{$time_field.end}" size="40" />
-										<a class="no-underline" data-toggle="clone-obj" data-parent=".goods_type" href="javascript:;"><i class="fontello-icon-plus"></i></a>    
-									</div>
+									<div class='goods_type'>
+										从&nbsp;&nbsp;<input class="w100 tp_1" name="start_ship_time[]" type="text" value="{$time_field.start}"/>&nbsp;&nbsp;
+										至&nbsp;&nbsp;<input class="w100 tp_1" name="end_ship_time[]" type="text" value="{$time_field.end}" />
+										<a class="no-underline" data-toggle="clone-obj" data-before="before" data-parent=".goods_type" href="javascript:;"><i class="fontello-icon-plus"></i></a>
+									</div>    
 								</div>
 							</div>
 							

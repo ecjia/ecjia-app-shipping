@@ -125,9 +125,9 @@
 			app.area_info.selected_area();
 			app.area_info.quick_search();
 			app.area_info.tpicker();
-			
+
 			$('.tp_1').timepicker({
-				defaultTime: 'current',
+				defaultTime: false,
 				minuteStep: 5,
 				disableFocus: true,
 				template: 'modal',
@@ -138,7 +138,7 @@
 			$('.fontello-icon-plus').click(function(e) {
 				setTimeout(function () { 
 					$('.tp_1').timepicker({
-						defaultTime: 'current',
+						defaultTime: false,
 						minuteStep: 5,
 						disableFocus: true,
 						template: 'modal',

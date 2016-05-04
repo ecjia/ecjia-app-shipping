@@ -260,7 +260,7 @@ class admin_area extends ecjia_admin {
 		
 		$shipping_handle = new shipping_factory($shipping_data['shipping_code']);
 		$fields = $shipping_handle->form_format($fields, true);
-        _dump($fields,1);
+
 		if (! empty( $fields )) {
 			foreach ($fields as $key => $val ) {
 				/* 替换更改的语言项 */
@@ -278,8 +278,27 @@ class admin_area extends ecjia_admin {
 					$fields[$key]['name'] = $val['name'];
 					$fields[$key]['label'] = RC_Lang::lang($val ['name']);
 				}
+				
+				if ($shipping_data['shipping_code'] == 'ship_o2o_express' && (in_array($val['name'], array('ship_days', 'last_order_time', 'ship_time')))) {
+					if ($val['name'] == 'ship_time') {
+						$o2o_shipping_time = array();
+						foreach ($val['value'] as $v) {
+							$o2o_shipping_time[] = $v;
+						}
+						
+						$this->assign('o2o_shipping_time', $o2o_shipping_time);
+					}
+					if ($val['name'] == 'ship_days') {
+						$this->assign('ship_days', $val['value']);
+					}
+					if ($val['name'] == 'last_order_time') {
+						$this->assign('last_order_time', $val['value']);
+					}
+					unset($fields [$key]);
+				}
 			}
 		} 
+		
 		if (empty( $item_fee )&& !empty( $fields )) {
 			$field = array (
 				'name' => 'item_fee',
@@ -288,6 +307,8 @@ class admin_area extends ecjia_admin {
 			);
 			array_unshift($fields, $field );
 		}
+		
+		
 		$regions = array ();
 		$db_region = RC_Loader::load_app_model('shipping_region_viewmodel');
 		$db_region->view = array(
@@ -383,6 +404,23 @@ class admin_area extends ecjia_admin {
 				$count++;
 				$config[$count]['name']     = 'pay_fee';
 				$config[$count]['value']    =  make_semiangle(empty($_POST['pay_fee']) ? '0' : trim($_POST['pay_fee']));
+			}
+			
+			if ($shipping_data['shipping_code'] == 'ship_o2o_express') {
+				$time = array();
+				foreach ($_POST['start_ship_time'] as $k => $v) {
+					$time[$k]['start']	= $v;
+					$time[$k]['end']	= $_POST['end_ship_time'][$k];
+				}
+			
+				$config[$count]['name']     = 'ship_days';
+				$config[$count]['value']    = empty($_POST['ship_days']) ? '' : intval($_POST['ship_days']);
+				$count++;
+				$config[$count]['name']     = 'last_order_time';
+				$config[$count]['value']    = empty($_POST['last_order_time']) ? '' : trim($_POST['last_order_time']);
+				$count++;
+				$config[$count]['name']     = 'ship_time';
+				$config[$count]['value']    = empty($time) ? '' : $time;
 			}
 			
 			$data = array(
