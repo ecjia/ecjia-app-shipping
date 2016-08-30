@@ -14,7 +14,7 @@
 	<script language="JavaScript">
 	<!--
 	// 这里把JS用到的所有语言都赋值到这里
-	{foreach from=$lang.js_languages key=key item=item}
+	{foreach from=$lang_js_languages key=key item=item}
 	var {$key} = "{$item}";
 	{/foreach}
 //-->
@@ -149,7 +149,7 @@ div.file-group span.uni-action {
 </head>
 <body>
 	<form action="{$post_links.print_img_upload}" enctype="multipart/form-data" method="post" name="theForm"   id="theForm">
-		<input type="hidden" name="shipping" value="{$shipping_id}">
+		<input type="hidden" name="shipping_id" value="{$shipping_id}">
 		<input type="hidden" name="config_lable" value=""> 
 		<input type="hidden" name="print_model" value="2">
 		<input type="hidden" name="shipping_name" value="{$shipping.shipping_name}">
@@ -158,14 +158,14 @@ div.file-group span.uni-action {
 			<tr id="top-row">
 				<td align="left">
 					<div class="btn-group">
-						<button class="btn dropdown-toggle" data-toggle="dropdown">
-							{$lang.lable_select_notice} <span id="label_select" class="caret"></span>
+						<button class="btn dropdown-toggle" data-toggle="dropdown">	
+							{lang key='shipping::shipping.lable_select_notice'}<span id="label_select" class="caret"></span>
 						</button>
 						<ul class="dropdown-menu">
 							<li><a class="batch-del-btn add-lable" data-val="" data-text="" href="javascript:;"> <i class="fontello-icon-trash"></i>
-								{$lang.lable_select_notice}
+								{lang key='shipping::shipping.lable_select_notice'}
 							</a></li>
-							<!-- {foreach from=$lang.lable_box key=Key item=lable_box} -->
+							<!-- {foreach from=$lang_lable_box key=Key item=lable_box} -->
 							<li><a class="batch-del-btn add-lable" data-text="{$lable_box}"
 								data-val="{$Key}" href="javascript:;"> <i
 								class="fontello-icon-trash"></i> {$lable_box}
@@ -173,25 +173,25 @@ div.file-group span.uni-action {
 							<!-- {/foreach} -->
 						</ul>
 					</div> 
-					<button class="btn" type="button" name="del" id="del" onclick="javascript:pintObj.call_flash('lable_del', this);">{$lang.del_lable}</button>
+					<button class="btn" type="button" name="del" id="del" onclick="javascript:pintObj.call_flash('lable_del', this);">{lang key='shipping::shipping.del_lable'}</button>
 				</td>
 				<td id="pic_control_upload" {if $shipping.print_bg !=''} class="display_no"{/if}>
 					<div class="btn-group file-group" style="margin-top: 5px;">
 						<input type="file" onchange='checkFileType(this.value);' class="btn_file" name="bg" id="bg" {if $shipping.print_bg !=''} disabled="disabled"{/if}>
-						<span id="uni-filename" class="uni-filename" style="-moz-user-select: none;">{$lang.upload_shipping_bg},未选中文件。</span>
-						<span class="uni-action" style="-moz-user-select: none;">选择图片</span>
-						<input type="button" class="btn btn-primary" name="upload" id="upload" value="上传" data-url="{$post_links.print_img_upload}"
+						<span id="uni-filename" class="uni-filename" style="-moz-user-select: none;">{lang key='shipping::shipping.upload_shipping_bg'},{lang key='shipping::shipping.file_empty'}</span>
+						<span class="uni-action" style="-moz-user-select: none;">{lang key='shipping::shipping.select_image'}</span>
+						<input type="button" class="btn btn-primary" name="upload" id="upload" value="{lang key='shipping::shipping.upload'}" data-url="{$post_links.print_img_upload}"
 						onclick="javascript:pintObj.bg_upload(this);" {if $shipping.print_bg !=''} disabled="disabled"{/if}> 
 					</div> 
 					<iframe id="bg_upload_hidden" name="bg_upload_hidden" frameborder="0" scrolling="no" class="display_no"></iframe>
 				</td>
 				<td id="pic_control_del" {if $shipping.print_bg== '' } class="display_no"{/if}>
-					<input type="button" name="upload_del" class="btn" id="upload_del" value="{$lang.del_shipping_bg}" data-url="{$post_links.print_img_del}"
+					<input type="button" name="upload_del" class="btn" id="upload_del" value="{lang key='shipping::shipping.del_shipping_bg'}" data-url="{$post_links.print_img_del}"
 					onclick="javascript:pintObj.bg_del(this);" {if $shipping.print_bg== ''} disabled="disabled"{/if}>
 				</td>
 				<td align="right" style="margin-right: 5px;">
-					<button class="btn" type="button" data-url="{$post_links.do_edit}" onclick="javascript:pintObj.save(this);">{$lang.save_setting}</button>&nbsp;&nbsp;
-					<button class="btn" type="button" data-url="{$post_links.recovery}" onclick="javascript:pintObj.recovery_default(this);">{$lang.recovery_default}</button>
+					<button class="btn" type="button" data-url="{$post_links.do_edit}" onclick="javascript:pintObj.save(this);">{lang key='shipping::shipping.save_setting'}</button>&nbsp;&nbsp;
+					<button class="btn" type="button" data-url="{$post_links.recovery}" onclick="javascript:pintObj.recovery_default(this);">{lang key='shipping::shipping.recovery_default'}</button>
 				</td>
 			</tr>
 			<tr>
@@ -429,4 +429,4 @@ var pintObj ={
 			top.document.location.href = url;
 		}
 	};
-	</script>
+</script>

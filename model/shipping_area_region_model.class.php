@@ -9,9 +9,17 @@ class shipping_area_region_model extends Component_Model_Model {
 		$this->table_name = 'area_region';
 		parent::__construct();
 	}
-
-
-
+	
+	public function shipping_area_region_insert($data) {
+		return $this->insert($data);
+	}
+	
+	public function shipping_area_region_remove($where, $in=false) {
+		if ($in) {
+			return $this->in($where)->delete();
+		}
+		return $this->where($where)->delete();
+	}
 }
 
 // end

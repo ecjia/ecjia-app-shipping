@@ -9,9 +9,30 @@ class shipping_model extends Component_Model_Model {
 		$this->table_name = 'shipping';
 		parent::__construct();
 	}
-
-
-
+	
+	public function shipping_find($where, $field='*') {
+		return $this->where($where)->field($field)->find();
+	}
+	
+	public function shipping_field($where, $field) {
+		return $this->where($where)->get_field($field);
+	}
+	
+	public function shipping_select($field='*', $where='', $order='') {
+		if (!empty($where)) {
+			return $this->where($where)->field($field)->order($order)->select();
+		}
+		return $this->field($field)->order($order)->select();
+	}
+	
+	public function is_only($where) {
+		return $this->where($where)->count();
+	}
+	
+	public function shipping_update($where, $data) {
+		return $this->where($where)->update($data);
+	}
+	
 }
 
 // end

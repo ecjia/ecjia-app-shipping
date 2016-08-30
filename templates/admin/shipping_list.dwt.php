@@ -14,11 +14,11 @@
 		<table class="table table-striped table-hide-edit">
 			<thead>
 				<tr>
-					<th class="w100">{$lang.shipping_name}</th>
-					<th class="w550">{$lang.shipping_desc}</th>
-					<th>{$lang.sort_order}</th>
-					<th>{$lang.insure}</th>
-					<th>{$lang.support_cod}</th>
+					<th class="w110">{lang key='shipping::shipping.shipping_name'}</th>
+					<th>{lang key='shipping::shipping.shipping_desc'}</th>
+					<th class="w80">{lang key='system::system.sort_order'}</th>
+					<th class="w80">{lang key='shipping::shipping.insure'}</th>
+					<th class="w70">{lang key='shipping::shipping.support_cod'}</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -26,7 +26,7 @@
 				<tr>
 					<td>
 						<!-- {if $module.enabled == 1} -->
-							<span class="shipping_name cursor_pointer" data-trigger="editable" data-url="{RC_Uri::url('shipping/admin/edit_name')}" data-name="title" data-pk="{$module.id}"  data-title="编辑配送方式名称">{$module.name}</span>
+							<span class="shipping_name cursor_pointer" data-trigger="editable" data-url="{RC_Uri::url('shipping/admin/edit_name')}" data-name="title" data-pk="{$module.id}"  data-title="{lang key='shipping::shipping.edit_shipping_name'}">{$module.name}</span>
 						<!-- {else} -->
 							{$module.name}
 						<!-- {/if} -->
@@ -35,21 +35,22 @@
 					<!-- {if $module.enabled == 1} -->
 							{$module.desc|nl2br}
 							<div class="edit-list">
-								<a class="data-pjax" href='{RC_Uri::url("shipping/admin_area/init","shipping_id={$module.id}&code={$module.code}")}' title="{$lang.shipping_area}">{t}设置配送区域{/t}</a>&nbsp;|&nbsp;
-								<a class="data-pjax" href='{RC_Uri::url("shipping/admin/edit_print_template", "shipping_id={$module.id}&code={$module.code}")}' title="{$lang.shipping_print_edit}">{t}编辑打印模板{/t}</a>&nbsp;|&nbsp;
-								<a class="switch ecjiafc-red" href='javascript:ecjia.admin.shopping_list.plugin_state_click("{RC_Uri::url("shipping/admin/disable", "code={$module.code}")}");' title="{$lang.disable}">{t}禁用{/t}</a>
+								<a class="data-pjax" href='{RC_Uri::url("shipping/admin/edit", "code={$module.code}")}' title="{lang key='system::system.edit'}">{lang key='system::system.edit'}</a>&nbsp;|&nbsp;
+								<a class="data-pjax" href='{RC_Uri::url("shipping/admin_area/init", "shipping_id={$module.id}&code={$module.code}")}'  title="{lang key='shipping::shipping.shipping_area'}">{lang key='shipping::shipping.set_shipping'}</a>&nbsp;|&nbsp;
+								<a class="data-pjax" href='{RC_Uri::url("shipping/admin/edit_print_template", "shipping_id={$module.id}&code={$module.code}")}' title="{lang key='shipping::shipping.shipping_print_edit'}">{lang key='shipping::shipping.shipping_print_edit'}</a>&nbsp;|&nbsp;
+								<a class="switch ecjiafc-red" href='javascript:ecjia.admin.shopping_list.plugin_state_click("{RC_Uri::url("shipping/admin/disable", "code={$module.code}")}");' title="{lang key='shipping::shipping.disable'}">{lang key='shipping::shipping.disable'}</a>
 							</div>
 						<!-- {else} -->
 							{$module.desc|nl2br}
 							<div class="edit-list">
-								<a class="switch" href='javascript:ecjia.admin.shopping_list.plugin_state_click("{RC_Uri::url("shipping/admin/enable", "code={$module.code}")}");' title="{$lang.enable}">{t}启用{/t}</a>
+								<a class="switch" href='javascript:ecjia.admin.shopping_list.plugin_state_click("{RC_Uri::url("shipping/admin/enable", "code={$module.code}")}");' title="{lang key='shipping::shipping.enable'}">{lang key='shipping::shipping.enable'}</a>
 							</div>
 						<!-- {/if} -->
 						
 					</td>
 					<td>
 						<!-- {if $module.enabled == 1} -->
-							<span class="shipping_order cursor_pointer" data-trigger="editable" data-url="{RC_Uri::url('shipping/admin/edit_order')}" data-name="title" data-pk="{$module.id}"  data-title="编辑配送方式排序">{$module.shipping_order}</span>
+							<span class="shipping_order cursor_pointer" data-trigger="editable" data-url="{RC_Uri::url('shipping/admin/edit_order')}" data-name="title" data-pk="{$module.id}"  data-title="{lang key='shipping::shipping.edit_shipping_order'}">{$module.shipping_order}</span>
 						<!-- {else} -->
 							{$module.shipping_order}
 						<!-- {/if} -->
@@ -58,19 +59,19 @@
 						<!-- {if $module.is_insure } -->
 							{$module.insure_fee}
 						<!-- {else} -->
-							不支持
+							{lang key='shipping::shipping.not_support'}
 						<!-- {/if} -->
 					</td>
 					<td>
 						{if $module.cod==1}
-							{$lang.yes}
+							{lang key='system::system.yes'}
 						{else}
-							{$lang.no}
+							{lang key='system::system.no'}
 						{/if}
 					</td>
 				</tr>
 				<!-- {foreachelse} -->
-				   <tr><td class="no-records" colspan="10">{t}没有找到任何记录{/t}</td></tr>
+				<tr><td class="no-records" colspan="10">{lang key='system::system.no_records'}</td></tr>
 				<!-- {/foreach} -->
 			</tbody>
 		</table>

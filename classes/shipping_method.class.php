@@ -22,21 +22,21 @@ class shipping_method
      */
     public function available_shipping_list($region_id_list) 
     {  	
-    	$dbview = RC_Loader::load_app_model('shipping_area_viewmodel', 'shipping');
-        $dbview->view = array(
-        		'shipping_area' => array(
-        				'type' 	=> Component_Model_View::TYPE_LEFT_JOIN,
-        				'alias' => 'a',
-        				'field' => 's.shipping_id, s.shipping_code, s.shipping_name,s.shipping_desc, s.insure, s.support_cod, a.configure',
-        				'on' 	=> 'a.shipping_id = s.shipping_id', 
-        		),
-        		'area_region' => array(
-        				'type' 	=> Component_Model_View::TYPE_LEFT_JOIN,	
-        				'alias' => 'r',
-        				'on' 	=> 'r.shipping_area_id = a.shipping_area_id ', 
-        		)
-        );
-        $data = $dbview->where(array('s.enabled' => 1))->in(array('r.region_id' => $region_id_list))->order(array('s.shipping_order' => 'asc'))->select();
+    	$dbview = RC_Loader::load_app_model('shipping_viewmodel', 'shipping');
+        // $dbview->view = array(
+        // 	'shipping_area' => array(
+        // 		'type' 	=> Component_Model_View::TYPE_LEFT_JOIN,
+        // 		'alias' => 'a',
+        // 		'field' => 's.shipping_id, s.shipping_code, s.shipping_name,s.shipping_desc, s.insure, s.support_cod, a.configure',
+        // 		'on' 	=> 'a.shipping_id = s.shipping_id', 
+        // 	),
+        // 	'area_region' => array(
+        // 		'type' 	=> Component_Model_View::TYPE_LEFT_JOIN,	
+        // 		'alias' => 'r',
+        // 		'on' 	=> 'r.shipping_area_id = a.shipping_area_id ', 
+        // 	)
+        // );
+        $data = $dbview->join(array('shipping_area', 'area_region'))->field('s.shipping_id, s.shipping_code, s.shipping_name,s.shipping_desc, s.insure, s.support_cod, a.configure')->where(array('s.enabled' => 1))->in(array('r.region_id' => $region_id_list))->order(array('s.shipping_order' => 'asc'))->select();
         $plugins = $this->available_shipping_plugins();
         
         $pay_list = array();
@@ -66,22 +66,22 @@ class shipping_method
      */
     public function shipping_area_info($shipping_id, $region_id_list) 
     {
-        $dbview = RC_Loader::load_app_model('shipping_area_viewmodel', 'shipping');
-        $dbview->view = array(
-            'shipping_area' => array(
-                'type' 	=> Component_Model_View::TYPE_LEFT_JOIN,
-                'alias' => 'a',
-                'field' => 's.shipping_code, s.shipping_name,s.shipping_desc, s.insure, s.support_cod, a.configure',
-                'on' 	=> 'a.shipping_id = s.shipping_id',
-            ),
-            'area_region' => array(
-                'type' 	=> Component_Model_View::TYPE_LEFT_JOIN,
-                'alias' => 'r',
-                'on' 	=> 'r.shipping_area_id = a.shipping_area_id ',
-            )
-        );
+        $dbview = RC_Loader::load_app_model('shipping_viewmodel', 'shipping');
+        // $dbview->view = array(
+        //     'shipping_area' => array(
+        //         'type' 	=> Component_Model_View::TYPE_LEFT_JOIN,
+        //         'alias' => 'a',
+        //         'field' => 's.shipping_code, s.shipping_name,s.shipping_desc, s.insure, s.support_cod, a.configure',
+        //         'on' 	=> 'a.shipping_id = s.shipping_id',
+        //     ),
+        //     'area_region' => array(
+        //         'type' 	=> Component_Model_View::TYPE_LEFT_JOIN,
+        //         'alias' => 'r',
+        //         'on' 	=> 'r.shipping_area_id = a.shipping_area_id ',
+        //     )
+        // );
     
-        $row = $dbview->in(array('r.region_id' => $region_id_list))->find(array('s.shipping_id' => $shipping_id, 's.enabled' => 1));
+        $row = $dbview->join(array('shipping_area', 'area_region'))->field('s.shipping_code, s.shipping_name,s.shipping_desc, s.insure, s.support_cod, a.configure')->in(array('r.region_id' => $region_id_list))->find(array('s.shipping_id' => $shipping_id, 's.enabled' => 1));
         if (!empty($row)) {
             $shipping_config = $this->unserialize_config($row['configure']);
             if (isset($shipping_config['pay_fee'])) {

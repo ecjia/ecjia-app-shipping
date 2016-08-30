@@ -38,11 +38,11 @@ abstract class shipping_abstract
         if (empty ( $fields )) {
             $fields = $forms;
         }
-        
+        //@todo 语言包更换方法待确认
 	    if ($format) {    
 	        foreach ( $fields as $key => $val ) {
 	            $fields [$key] ['name'] = $val ['name'];
-	            $fields [$key] ['label'] = RC_Lang::lang ( $val ['name'] );
+	            $fields [$key] ['label'] = RC_Lang::lang($val['name']);
 	        }
 	        return $fields;
 	    } else {
