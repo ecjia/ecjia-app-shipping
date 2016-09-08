@@ -11,26 +11,72 @@ class shipping_model extends Component_Model_Model {
 	}
 	
 	public function shipping_find($where, $field='*') {
-		return $this->where($where)->field($field)->find();
+//		return $this->where($where)->field($field)->find();
+
+		$shipping = RC_DB::table('shipping');
+		if (is_array($where)){
+			foreach($where as $key => $val){
+				$shipping->where($key, $val);
+			}
+		}
+		if($field != '*'){
+			return $shipping->select($field)->first();
+		}else{
+			return $shipping->first();
+		}
 	}
 	
 	public function shipping_field($where, $field) {
-		return $this->where($where)->get_field($field);
+//		return $this->where($where)->get_field($field);
+
+		$shipping = RC_DB::table('shipping');
+		if(is_array($where)){
+			foreach($where as $key => $val){
+				$shipping->where($key, $val);
+			}
+		}
+		return $shipping->pluck($field);
 	}
 	
 	public function shipping_select($field='*', $where='', $order='') {
-		if (!empty($where)) {
-			return $this->where($where)->field($field)->order($order)->select();
+//		return $this->field($field)->order($order)->select();
+		if(empty($order)){
+			return RC_DB::table('shipping')->get();
+		}else{
+			return RC_DB::table('shipping')->orderBy($order)->select($field)->get();
 		}
-		return $this->field($field)->order($order)->select();
 	}
 	
 	public function is_only($where) {
-		return $this->where($where)->count();
+//		return $this->where($where)->count();
+
+		$shipping = RC_DB::table('shipping');
+		if (!empty($where)) {
+			foreach ($where as $k => $v) {
+				if (is_array($v)) {
+					foreach ($v as $key => $val) {
+						if ($key == 'neq') {
+							$shipping->where($k, '!=', $val);
+						}
+					}
+				} else {
+					$shipping->where($k, $v);
+				}
+			}
+		}
+		return $shipping->count();
 	}
 	
 	public function shipping_update($where, $data) {
-		return $this->where($where)->update($data);
+//		return $this->where($where)->update($data);
+
+		$shipping = RC_DB::table('shipping');
+		if (is_array($where)){
+			foreach($where as $key => $val){
+				$shipping->where($key, $val);
+			}
+		}
+		return $shipping->update($data);
 	}
 	
 }

@@ -21,12 +21,13 @@ class shipping_area_model extends Component_Model_Model {
 			$ex_where['shipping_area_name'] = array('like' => "%". mysql_like_quote($filter['keywords']). "%" );
 		}
 		$count = $this->where($ex_where)->count();
-			
+
 		$page = new ecjia_page($count, 10, 6);
-			
+
 		/* 查询所有配送方式信息  */
 		$shipping_areas_list=array();
 		$list = $this->where($ex_where)->limit($page->limit())->select();
+
 		if (!empty($list)) {
 			foreach ($list as $row) {
 				$db_region = RC_Loader::load_app_model('shipping_area_region_viewmodel');
@@ -54,38 +55,98 @@ class shipping_area_model extends Component_Model_Model {
 	}
 	
 	public function is_only($where) {
-		return $this->where($where)->count();
+//		return $this->where($where)->count();
+		$db_shipping_area = RC_DB::table('shipping_area');
+		if(!empty($where)){
+			foreach($where as $key => $vla){
+				if (is_array($vla)){
+					foreach($vla as $k => $v){
+						if ($k == 'neq'){
+							$db_shipping_area->where($key,'!=','$v');
+						}
+					}
+				}else{
+					$db_shipping_area->where($key, $val);
+				}
+			}
+		}
+		return $db_shipping_area->count();
 	}
 	
 	public function shipping_area_find($where, $field='*') {
-		return $this->where($where)->field($field)->find();
+//		return $this->where($where)->field($field)->find();
+
+		$db_shipping_area = RC_DB::table('shipping_area');
+		if (!empty($where)){
+			foreach($where as $key => $val){
+				$db_shipping_area->where($key, $val);
+			}
+		}
+		if( $field == '*'){
+			return $db_shipping_area->first();
+		}
 	}
 	
 	public function shipping_area_manage($parameter) {
-		if (!isset($parameter['shipping_area_id'])) {
-			$id = $this->insert($parameter);
-		} else {
-			$where = array('shipping_area_id' => $parameter['shipping_area_id']);
-		
-			$this->where($where)->update($parameter);
+//		if (!isset($parameter['shipping_area_id'])) {
+//			$id = $this->insert($parameter);
+//		} else {
+//			$where = array('shipping_area_id' => $parameter['shipping_area_id']);
+//			$this->where($where)->update($parameter);
+//			$id = $parameter['shipping_area_id'];
+//		}
+//		return $id;
+		if (!isset($parameter['shipping_area_id'])){
+			$id = RC_DB::table('shipping_area')->insertGetId($parameter);
+		}else{
+			RC_DB::table('shipping_area')->where('shipping_area_id', $parameter['shipping_area_id'])->update($parameter);
 			$id = $parameter['shipping_area_id'];
 		}
 		return $id;
 	}
 	
 	public function shipping_area_field($where, $field) {
-		return $this->where($where)->get_field($field);
+//		return $this->where($where)->get_field($field);
+
+		$db_shipping_area = RC_DB::table('shipping_area');
+		if (!empty($where)){
+			foreach($where as $key => $val){
+				$db_shipping_area->where($key, $val);
+			}
+		}
+		return $db_shipping_area->pluck($field);
 	}
 	
 	public function shipping_area_remove($where) {
-		return $this->where($where)->delete();
+//		return $this->where($where)->delete();
+
+		$db_shipping_area = RC_DB::table('shipping_area');
+		if (!empty($where)){
+			foreach($where as $key => $val){
+				$db_shipping_area->where($key, $val);
+			}
+		}
+		return $db_shipping_area->delete();
 	}
 	
 	public function shipping_area_batch($where, $type) {
+//		if ($type == 'select') {
+//			return $this->in($where)->select();
+//		} elseif ($type == 'delete') {
+//			return $this->in($where)->delete();
+//		}
+
+		$db_shipping_area = RC_DB::table('shipping_area');
 		if ($type == 'select') {
-			return $this->in($where)->select();
+			foreach($where as $key => $val){
+				$db_shipping_area->whereIn($key, $val);
+			}
+			return $db_shipping_area->get();
 		} elseif ($type == 'delete') {
-			return $this->in($where)->delete();
+			foreach($where as $key => $val){
+				$db_shipping_area->whereIn($key, array($val));
+			}
+			return $db_shipping_area->delete();
 		}
 	}
 }
