@@ -144,7 +144,7 @@ class shipping_area_model extends Component_Model_Model {
 			return $db_shipping_area->get();
 		} elseif ($type == 'delete') {
 			foreach($where as $key => $val){
-				$db_shipping_area->whereIn($key, array($val));
+				$db_shipping_area->whereIn($key, $val);
 			}
 			return $db_shipping_area->delete();
 		}

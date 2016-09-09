@@ -382,6 +382,7 @@ class admin_area extends ecjia_admin {
 		
 			// 查询所有区域 region_id => parent_id	
 			$data_region = $this->db_region->region_select(array('region_id', 'parent_id'));
+
 		    foreach ($data_region as $key => $val) {
 		    	$region_list[$val['region_id']] = $val['parent_id'];
 		    }
@@ -398,8 +399,9 @@ class admin_area extends ecjia_admin {
 				}
 			}
 			/* 清除原有的城市和地区 */
+
 			$this->db_shipping_area_region->shipping_area_region_remove(array('shipping_area_id' => $shipping_area_id));
-		
+
 			/* 添加选定的城市和地区 */
 			foreach ($selected_regions as $key => $val) {
 				$data = array(
@@ -453,7 +455,7 @@ class admin_area extends ecjia_admin {
 		if (!empty($ids)) {
 			$this->db_shipping_area_region->shipping_area_region_remove(array('shipping_area_id' => $ids), true);
 			$this->db_shipping_area->shipping_area_batch(array('shipping_area_id' => $ids), 'delete');
-			
+
 			if (!empty($row)) {
 				foreach ($row as $v) {
 					$shipping_name = $this->db_shipping->shipping_field(array('shipping_id' => $v['shipping_id']), 'shipping_name');
