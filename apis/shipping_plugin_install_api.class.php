@@ -30,8 +30,6 @@ class shipping_plugin_install_api extends Component_Event_Api
 	        $format_name = $plugin_data['Name'];
 	        $format_description = $plugin_data['Description'];
 	        
-	        $db = RC_Loader::load_app_model('shipping_model', 'shipping');
-	        
 	        /* 检查输入 */
 	        if (empty($format_name) || empty($options['config']['shipping_code'])) {
 	            return ecjia_plugin::add_error('plugin_install_error', RC_Lang::get('shipping::shipping.no_shipping_name'));
@@ -39,7 +37,8 @@ class shipping_plugin_install_api extends Component_Event_Api
 	        
 	        $insure = empty($options['config']['insure']) ? 0 : $options['config']['insure'];
 	        
-	        $shipping_data = $db->field(array('`shipping_id`','`print_bg`'))->find("`shipping_code` = '" . $options['config']['shipping_code'] . "'");
+// 	        $shipping_data = $db->field(array('`shipping_id`','`print_bg`'))->find("`shipping_code` = '" . $options['config']['shipping_code'] . "'");
+	        $shipping_data = RC_DB::table('shipping')->where('shipping_code', $options['config']['shipping_code'])->select('shipping_id', 'print_bg')->first();
 	        
 	        if ($shipping_data['shipping_id'] > 0) {
 	            /* 该配送方式已经安装过, 将该配送方式的状态设置为 enable */
@@ -54,7 +53,8 @@ class shipping_plugin_install_api extends Component_Event_Api
 	                'support_cod' 	=> intval($options['config']['cod']),
 	                'enabled' => 1,
 	            );
-	            $db->where("`shipping_code` = '" . $options['config']['shipping_code'] . "'")->update($data);
+// 	            $db->where("`shipping_code` = '" . $options['config']['shipping_code'] . "'")->update($data);
+	            RC_DB::table('shipping')->where('shipping_code', $options['config']['shipping_code'])->update($data);
 	        
 	        } else {
 	            /* 该配送方式没有安装过, 将该配送方式的信息添加到数据库 */
@@ -71,7 +71,8 @@ class shipping_plugin_install_api extends Component_Event_Api
 	                'print_model' 	=> $options['config']['print_model'],
 	            );
 	            	
-	            $id = $db->insert($data);
+// 	            $id = $db->insert($data);
+	            $id = RC_DB::table('shipping')->insertGetId($data);
 	        }
 	        
 	        /* 记录管理员操作 */

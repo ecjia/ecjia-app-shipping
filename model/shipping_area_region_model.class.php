@@ -11,31 +11,15 @@ class shipping_area_region_model extends Component_Model_Model {
 	}
 	
 	public function shipping_area_region_insert($data) {
-//		return $this->insert($data);
 		return RC_DB::table('area_region')->insert($data);
 	}
 	
-	public function shipping_area_region_remove($where, $in=false) {
-//		if ($in) {
-//			return $this->in($where)->delete();
-//		}
-//		return $this->where($where)->delete();
+	public function shipping_area_region_remove($ids, $in=false) {
 		$db_area_region = RC_DB::table('area_region');
 		if ($in) {
-			if (!empty($where)){
-				foreach($where as $key => $val){
-					$db_area_region->whereIn($key, array($val));
-				}
-			}
-			return $db_area_region->delete();
+			return $db_area_region->whereIn('shipping_area_id', $ids)->delete();
 		}
-		if (!empty($where)){
-			foreach($where as $key => $val){
-				$db_area_region->where($key, $val);
-			}
-		}
-		return $db_area_region->delete();
-
+		return $db_area_region->where('shipping_area_id', $ids)->delete();
 	}
 }
 

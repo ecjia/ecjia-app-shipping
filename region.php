@@ -11,7 +11,7 @@ class region extends ecjia_admin {
 	
 	
 	public function init() {
-		$db_region 	= RC_Loader::load_app_model('region_model', 'shipping');
+		$db_region 	= RC_Model::model('shipping/region_model');
 		$type      	= !empty($_GET['type'])   ? intval($_GET['type'])   : 0;
 		$parent		= !empty($_GET['parent']) ? intval($_GET['parent']) : 0;
 		

@@ -11,10 +11,9 @@ class shipping_model extends Component_Model_Model {
 	}
 	
 	public function shipping_find($where, $field='*') {
-//		return $this->where($where)->field($field)->find();
 		$shipping = RC_DB::table('shipping');
-		if (!empty($where)){
-			foreach($where as $key => $val){
+		if (!empty($where)) {
+			foreach ($where as $key => $val) {
 				$shipping->where($key, $val);
 			}
 		}
@@ -22,10 +21,9 @@ class shipping_model extends Component_Model_Model {
 	}
 	
 	public function shipping_field($where, $field) {
-//		return $this->where($where)->get_field($field);
 		$shipping = RC_DB::table('shipping');
-		if(!empty($where)){
-			foreach($where as $key => $val){
+		if (!empty($where)) {
+			foreach ($where as $key => $val) {
 				$shipping->where($key, $val);
 			}
 		}
@@ -33,16 +31,21 @@ class shipping_model extends Component_Model_Model {
 	}
 	
 	public function shipping_select($field='*', $where='', $order='') {
-//		return $this->field($field)->order($order)->select();
-		if(empty($order)){
-			return RC_DB::table('shipping')->get();
-		}else{
-			return RC_DB::table('shipping')->orderBy($order)->select($field)->get();
+		$shipping = RC_DB::table('shipping');
+		if (!empty($where)) {
+			foreach ($where as $key => $val) {
+				$shipping->where($key, $val);
+			}
+		}
+		
+		if (empty($order)) {
+			return $shipping->select($field)->get();
+		} else {
+			return $shipping->orderBy($order)->select($field)->get();
 		}
 	}
 	
 	public function is_only($where) {
-//		return $this->where($where)->count();
 		$shipping = RC_DB::table('shipping');
 		if (!empty($where)) {
 			foreach ($where as $k => $v) {
@@ -61,10 +64,9 @@ class shipping_model extends Component_Model_Model {
 	}
 	
 	public function shipping_update($where, $data) {
-//		return $this->where($where)->update($data);
 		$shipping = RC_DB::table('shipping');
-		if (!empty($where)){
-			foreach($where as $key => $val){
+		if (!empty($where)) {
+			foreach ($where as $key => $val) {
 				$shipping->where($key, $val);
 			}
 		}

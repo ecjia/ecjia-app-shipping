@@ -8,17 +8,14 @@ defined('IN_ECJIA') or exit('No permission resources.');
 
 class admin extends ecjia_admin {
 	private $db_shipping;
-	private $db_area;
-	private $db_region;
+
 	public function __construct() {
 		parent::__construct();
 
 		RC_Loader::load_app_func('global');
 		assign_adminlog_content();
 
-		$this->db_shipping 	= RC_Loader::load_app_model('shipping_model');
-		$this->db_area 		= RC_Loader::load_app_model('shipping_area_model');
-		$this->db_region 	= RC_Loader::load_app_model('shipping_area_region_model');
+		$this->db_shipping 	= RC_Model::model('shipping/shipping_model');
 		
 		/* 加载全局 js/css */
 		RC_Script::enqueue_script('jquery-validate');
@@ -47,7 +44,7 @@ class admin extends ecjia_admin {
 	 */
 	public function init() { 
 		$this->admin_priv('ship_manage', ecjia::MSGTYPE_JSON);
-		
+
 		ecjia_screen::get_current_screen()->remove_last_nav_here();
 		ecjia_screen::get_current_screen()->add_nav_here(new admin_nav_here(RC_Lang::get('shipping::shipping.shipping')));
 		ecjia_screen::get_current_screen()->add_help_tab(array(
@@ -60,7 +57,6 @@ class admin extends ecjia_admin {
 			'<p><strong>' . RC_Lang::get('shipping::shipping.more_info') . '</strong></p>' .
 			'<p>' . __('<a href="https://ecjia.com/wiki/帮助:ECJia智能后台:配送方式" target="_blank">'. RC_Lang::get('shipping::shipping.about_shipping_list') .'</a>') . '</p>'
 		);
-		
 		$this->assign('ur_here', RC_Lang::get('shipping::shipping.shipping'));
 		
 		//替换数据库获取数据方式
@@ -121,8 +117,8 @@ class admin extends ecjia_admin {
 			$this->showmessage(RC_Lang::get('shipping::shipping.shipping_not_available'), ecjia::MSGTYPE_HTML | ecjia::MSGSTAT_ERROR);
 		}
 			
-		$this->assign('form_action',  RC_Uri::url('shipping/admin/save'));
-		$this->assign('shipping',  $shipping);
+		$this->assign('form_action', RC_Uri::url('shipping/admin/save'));
+		$this->assign('shipping', $shipping);
 	
 		$this->display('shipping_edit.dwt');
 	}
@@ -154,7 +150,6 @@ class admin extends ecjia_admin {
 		ecjia_admin::admin_log($name, 'edit', 'shipping');
 		$this->showmessage(RC_Lang::get('shipping::shipping.edit_ok'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('pjaxurl' => RC_Uri::url('shipping/admin/edit', array('code' => $code))));
 	}
-	
 	
 	/**
 	 * 禁用配送方式 ajax-get
@@ -381,8 +376,8 @@ class admin extends ecjia_admin {
 		$shipping_data = $this->db_shipping->shipping_find(array('shipping_id' => $shipping_id));
 
 		if ($shipping_data) {
-			$shipping_data['shipping_print'] = !empty($shipping_data['shipping_print']) ? $shipping_data['shipping_print'] : '';
-			$shipping_data['print_model'] = empty($shipping_data['print_model']) ? 1 : $shipping_data['print_model']; //兼容以前版本
+			$shipping_data['shipping_print']	= !empty($shipping_data['shipping_print']) 	? $shipping_data['shipping_print'] 	: '';
+			$shipping_data['print_model'] 		= !empty($shipping_data['print_model']) 	? $shipping_data['print_model']	  	: 1; //兼容以前版本
 			$this->assign('shipping', $shipping_data);
 			
 			ecjia_screen::get_current_screen()->add_nav_here(new admin_nav_here(RC_Lang::get('shipping::shipping.edit_template')));
@@ -437,17 +432,17 @@ class admin extends ecjia_admin {
 		$shipping_id  	= intval($_POST['pk']);
 		$shipping_name 	= trim($_POST['value']);
 		/* 检查名称是否为空 */
-		if (empty($shipping_name) || $shipping_id==0 ) {
+		if (empty($shipping_name) || $shipping_id == 0 ) {
 			$this->showmessage(RC_Lang::get('shipping::shipping.no_shipping_name'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR );
 		} else {
 			/* 检查名称是否重复 */
 			$old_name=$this->db_shipping->shipping_field(array('shipping_id' => $shipping_id), 'shipping_name');
 			/* 名称是否有修改 */
-			if( $old_name==$shipping_name ) {
+			if ($old_name==$shipping_name ) {
 				$this->showmessage(RC_Lang::get('shipping::shipping.repeat_shipping_name'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR );
 			} else {
 				/* 名称是否重复 */
-				if( $this->db_shipping->is_only(array('shipping_name' => $shipping_name, 'shipping_id' => array('neq' => $shipping_id))) !=0) {
+				if ($this->db_shipping->is_only(array('shipping_name' => $shipping_name, 'shipping_id' => array('neq' => $shipping_id))) != 0) {
 
 					$this->showmessage(RC_Lang::get('shipping::shipping.repeat_shipping_name'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR );
 				} else {

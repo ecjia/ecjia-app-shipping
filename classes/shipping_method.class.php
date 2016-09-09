@@ -11,7 +11,7 @@ class shipping_method
     
 	public function __construct() 
 	{
-		$this->db = RC_Loader::load_app_model('shipping_model', 'shipping');
+		$this->db = RC_Model::model('shipping/shipping_model');
 	}
 	
 	
@@ -20,9 +20,8 @@ class shipping_method
      * @param   array   $region_id_list     收货人地区id数组（包括国家、省、市、区）
      * @return  array   配送方式数组
      */
-    public function available_shipping_list($region_id_list) 
-    {  	
-    	$dbview = RC_Loader::load_app_model('shipping_viewmodel', 'shipping');
+    public function available_shipping_list($region_id_list) {  	
+//     	$dbview = RC_Model::model('shipping/shipping_viewmodel');
         // $dbview->view = array(
         // 	'shipping_area' => array(
         // 		'type' 	=> Component_Model_View::TYPE_LEFT_JOIN,
@@ -36,8 +35,15 @@ class shipping_method
         // 		'on' 	=> 'r.shipping_area_id = a.shipping_area_id ', 
         // 	)
         // );
-        $data = $dbview->join(array('shipping_area', 'area_region'))->field('s.shipping_id, s.shipping_code, s.shipping_name,s.shipping_desc, s.insure, s.support_cod, a.configure')->where(array('s.enabled' => 1))->in(array('r.region_id' => $region_id_list))->order(array('s.shipping_order' => 'asc'))->select();
-        $plugins = $this->available_shipping_plugins();
+//         $data = $dbview->join(array('shipping_area', 'area_region'))->field('s.shipping_id, s.shipping_code, s.shipping_name,s.shipping_desc, s.insure, s.support_cod, a.configure')->where(array('s.enabled' => 1))->in(array('r.region_id' => $region_id_list))->order(array('s.shipping_order' => 'asc'))->select();
+		$data = RC_DB::table('shipping')->leftJoin('shipping_area', 'shipping_area.shipping_id', '=', 'shipping.shipping_id')
+			->leftJoin('area_region', 'area_region.shipping_area_id', '=', 'shipping_area.shipping_area_id')
+			->select('shipping.shipping_id', 'shipping.shipping_code', 'shipping.shipping_name', 'shipping.shipping_desc', 'shipping.insure', 'shipping.support_cod', 'shipping_area.configure')
+			->where('shipping.enabled', 1)
+			->whereIn('area_region.region_id', $region_id_list)
+			->orderby('shipping.shipping_order', 'asc')
+			->get();	
+		$plugins = $this->available_shipping_plugins();
         
         $pay_list = array();
         if (!empty($data)) {
@@ -53,8 +59,7 @@ class shipping_method
     /**
      * 激活的支付插件列表
      */
-    public function available_shipping_plugins()
-    {
+    public function available_shipping_plugins() {
     	return ecjia_config::instance()->get_addon_config('shipping_plugins', true);
     }
     
@@ -64,9 +69,8 @@ class shipping_method
      * @param   array   $region_id_list     收货人地区id数组
      * @return  array   配送区域信息（config 对应着反序列化的 configure）
      */
-    public function shipping_area_info($shipping_id, $region_id_list) 
-    {
-        $dbview = RC_Loader::load_app_model('shipping_viewmodel', 'shipping');
+    public function shipping_area_info($shipping_id, $region_id_list) {
+//         $dbview = RC_Model::model('shipping/shipping_viewmodel');
         // $dbview->view = array(
         //     'shipping_area' => array(
         //         'type' 	=> Component_Model_View::TYPE_LEFT_JOIN,
@@ -80,8 +84,16 @@ class shipping_method
         //         'on' 	=> 'r.shipping_area_id = a.shipping_area_id ',
         //     )
         // );
-    
-        $row = $dbview->join(array('shipping_area', 'area_region'))->field('s.shipping_code, s.shipping_name,s.shipping_desc, s.insure, s.support_cod, a.configure')->in(array('r.region_id' => $region_id_list))->find(array('s.shipping_id' => $shipping_id, 's.enabled' => 1));
+//         $row = $dbview->join(array('shipping_area', 'area_region'))->field('s.shipping_code, s.shipping_name,s.shipping_desc, s.insure, s.support_cod, a.configure')->in(array('r.region_id' => $region_id_list))->find(array('s.shipping_id' => $shipping_id, 's.enabled' => 1));
+        
+        $row = RC_DB::table('shipping')->leftJoin('shipping_area', 'shipping_area.shipping_id', '=', 'shipping.shipping_id')
+        	->leftJoin('area_region', 'area_region.shipping_area_id', '=', 'shipping_area.shipping_area_id')
+        	->select('shipping.shipping_code', 'shipping.shipping_name', 'shipping.shipping_desc', 'shipping.insure', 'shipping.support_cod', 'shipping_area.configure')
+        	->where('shipping.shipping_id', $shipping_id)
+        	->where('shipping.enabled', 1)
+        	->whereIn('area_region.region_id', $region_id_list)
+        	->first();
+        
         if (!empty($row)) {
             $shipping_config = $this->unserialize_config($row['configure']);
             if (isset($shipping_config['pay_fee'])) {
@@ -104,7 +116,9 @@ class shipping_method
      */
     public function shipping_list() 
     {
-    	$data = $this->db->field('shipping_id, shipping_name, shipping_code')->where(array('enabled' => 1))->select();
+//     	$data = $this->db->field('shipping_id, shipping_name, shipping_code')->where(array('enabled' => 1))->select();
+    	$data = RC_DB::table('shipping')->select('shipping_id', 'shipping_name', 'shipping_code')->where('enabled', 1)->get();
+    	
     	$plugins = $this->available_shipping_plugins();
     	$pay_list = array();
     	if (!empty($data)) {
@@ -125,7 +139,9 @@ class shipping_method
      */
     public function shipping_info($shipping_id) 
     {
-        return $this->db->find(array('shipping_id' => $shipping_id , 'enabled' => 1));
+//         return $this->db->find(array('shipping_id' => $shipping_id , 'enabled' => 1));
+        
+        return RC_DB::table('shipping')->where('shipping_id', $shipping_id)->where('enabled', 1)->first();
     }
 	
     

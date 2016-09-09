@@ -34,9 +34,9 @@ class shipping_plugin_uninstall_api extends Component_Event_Api
 	        
 	        RC_Loader::load_app_func('global', 'shipping');
 	        
-	        $db = RC_Loader::load_app_model('shipping_model', 'shipping');
-	        $db_area = RC_Loader::load_app_model('shipping_area_model', 'shipping');
-	        $db_region = RC_Loader::load_app_model('shipping_area_region_model', 'shipping');
+	        $db = RC_Model::model('shipping/shipping_model');
+	        $db_area = RC_Model::model('shipping/shipping_area_model');
+	        $db_region = RC_Model::model('shipping/shipping_area_region_model');
 	        
 	        /* 获得该配送方式的ID */
 	        $row = $db->field('shipping_id, shipping_name, print_bg')->find("`shipping_code` = '" . $options['config']['shipping_code'] . "'");

@@ -29,10 +29,10 @@ class admin_area extends ecjia_admin {
 		RC_Script::enqueue_script('jquery-uniform');
 		RC_Script::enqueue_script('jquery-chosen');
 		
-		$this->db_shipping 				= RC_Loader::load_app_model('shipping_model');
-		$this->db_shipping_area 		= RC_Loader::load_app_model('shipping_area_model');
-		$this->db_region 				= RC_Loader::load_app_model('region_model');
-		$this->db_shipping_area_region 	= RC_Loader::load_app_model('shipping_area_region_model');
+		$this->db_shipping 				= RC_Model::model('shipping/shipping_model');
+		$this->db_shipping_area 		= RC_Model::model('shipping/shipping_area_model');
+		$this->db_region 				= RC_Model::model('shipping/region_model');
+		$this->db_shipping_area_region 	= RC_Model::model('shipping/shipping_area_region_model');
 		
 		RC_Script::localize_script('shipping', 'js_lang', RC_Lang::get('shipping::shipping.js_lang'));
 		RC_Script::localize_script('shopping_admin', 'js_lang', RC_Lang::get('shipping::shipping.js_lang'));
@@ -215,7 +215,7 @@ class admin_area extends ecjia_admin {
 	public function edit() {
 		$this->admin_priv('shiparea_update', ecjia::MSGTYPE_JSON);
 		
-		$dbview = RC_Loader::load_app_model('shipping_viewmodel');
+		$dbview = RC_Model::model('shipping/shipping_viewmodel');
 		// 调用视图查看
 // 		$dbview->view = array (
 // 			'shipping_area' => array (
@@ -270,7 +270,7 @@ class admin_area extends ecjia_admin {
 			array_unshift($fields, $field );
 		}
 		$regions = array ();
-		$db_region_view = RC_Loader::load_app_model('shipping_area_region_viewmodel');
+// 		$db_region_view = RC_Loader::load_app_model('shipping_area_region_viewmodel');
 // 		$db_region->view = array(
 // 			'region' => array(
 // 				'type' 	=> Component_Model_View::TYPE_LEFT_JOIN,
@@ -279,8 +279,11 @@ class admin_area extends ecjia_admin {
 // 				'on' 	=> 'r.region_id = a.region_id' 
 // 			) 
 // 		);
-		$region_data = $db_region_view->shipping_region_select(array('a.shipping_area_id' => $ship_area_id), 'a.region_id, r.region_name', 'region');
+// 		$region_data = $db_region_view->shipping_region_select(array('a.shipping_area_id' => $ship_area_id), 'a.region_id, r.region_name', 'region');
 
+		$region_data = RC_DB::table('area_region')->leftJoin('region', 'area_region.region_id', '=', 'region.region_id')
+			->select('area_region.region_id', 'region.region_name')->where('area_region.shipping_area_id', $ship_area_id)->get();
+		
 		if (!empty($region_data)) {
 			foreach ($region_data as $key => $val) {
 				if (empty($val['region_name'])) {
@@ -400,7 +403,7 @@ class admin_area extends ecjia_admin {
 			}
 			/* 清除原有的城市和地区 */
 
-			$this->db_shipping_area_region->shipping_area_region_remove(array('shipping_area_id' => $shipping_area_id));
+			$this->db_shipping_area_region->shipping_area_region_remove($shipping_area_id);
 
 			/* 添加选定的城市和地区 */
 			foreach ($selected_regions as $key => $val) {
@@ -425,11 +428,10 @@ class admin_area extends ecjia_admin {
 		$id = !empty($_GET['id']) ? intval($_GET['id']) : 0;
 		if ($id > 0) {
 			$row = $this->db_shipping_area->shipping_area_find(array('shipping_area_id' => $id));
-
 			$shipping_name = $this->db_shipping->shipping_field(array('shipping_id' => $row['shipping_id']), 'shipping_name');
 
 			if (isset($row['shipping_area_id'])) {
-				$this->db_shipping_area_region->shipping_area_region_remove(array('shipping_area_id' => $id));
+				$this->db_shipping_area_region->shipping_area_region_remove($id);
 				$this->db_shipping_area->shipping_area_remove(array('shipping_area_id' => $id));
 
 				ecjia_admin::admin_log($row['shipping_area_name'].'，'.RC_Lang::get('shipping::shipping_area.shipping_way').$shipping_name, 'remove', 'shipping_area');
@@ -453,13 +455,12 @@ class admin_area extends ecjia_admin {
 		$row = $this->db_shipping_area->shipping_area_batch(array('shipping_area_id' => $ids), 'select');
 
 		if (!empty($ids)) {
-			$this->db_shipping_area_region->shipping_area_region_remove(array('shipping_area_id' => $ids), true);
+			$this->db_shipping_area_region->shipping_area_region_remove($ids, true);
 			$this->db_shipping_area->shipping_area_batch(array('shipping_area_id' => $ids), 'delete');
 
 			if (!empty($row)) {
 				foreach ($row as $v) {
 					$shipping_name = $this->db_shipping->shipping_field(array('shipping_id' => $v['shipping_id']), 'shipping_name');
-
 					ecjia_admin::admin_log($v['shipping_area_name'].'，'.RC_Lang::get('shipping::shipping_area.shipping_way').$shipping_name, 'batch_remove', 'shipping_area');
 				}
 			}

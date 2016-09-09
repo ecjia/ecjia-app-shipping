@@ -18,12 +18,10 @@ class region_model extends Component_Model_Model {
 	 * @return      array
 	 */
 	function get_regions($type = 0, $parent = 0) {
-//		return $this->field('region_id, region_name')->where(array('region_type' => $type,'parent_id' => $parent))->select();
 		return RC_DB::table('region')->where('region_type', $type)->where('parent_id', $parent)->select('region_id', 'region_name')->get();
 	}
 	
 	public function region_select($field='*') {
-//		return $this->field($field)->select();
 		return RC_DB::table('region')->select($field)->get();
 	}
 }
