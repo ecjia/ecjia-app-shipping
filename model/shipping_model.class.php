@@ -12,25 +12,19 @@ class shipping_model extends Component_Model_Model {
 	
 	public function shipping_find($where, $field='*') {
 //		return $this->where($where)->field($field)->find();
-
 		$shipping = RC_DB::table('shipping');
-		if (is_array($where)){
+		if (!empty($where)){
 			foreach($where as $key => $val){
 				$shipping->where($key, $val);
 			}
 		}
-		if($field != '*'){
-			return $shipping->select($field)->first();
-		}else{
-			return $shipping->first();
-		}
+		return $shipping->select($field)->first();
 	}
 	
 	public function shipping_field($where, $field) {
 //		return $this->where($where)->get_field($field);
-
 		$shipping = RC_DB::table('shipping');
-		if(is_array($where)){
+		if(!empty($where)){
 			foreach($where as $key => $val){
 				$shipping->where($key, $val);
 			}
@@ -49,7 +43,6 @@ class shipping_model extends Component_Model_Model {
 	
 	public function is_only($where) {
 //		return $this->where($where)->count();
-
 		$shipping = RC_DB::table('shipping');
 		if (!empty($where)) {
 			foreach ($where as $k => $v) {
@@ -69,9 +62,8 @@ class shipping_model extends Component_Model_Model {
 	
 	public function shipping_update($where, $data) {
 //		return $this->where($where)->update($data);
-
 		$shipping = RC_DB::table('shipping');
-		if (is_array($where)){
+		if (!empty($where)){
 			foreach($where as $key => $val){
 				$shipping->where($key, $val);
 			}

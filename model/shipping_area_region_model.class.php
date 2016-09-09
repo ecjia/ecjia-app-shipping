@@ -22,14 +22,14 @@ class shipping_area_region_model extends Component_Model_Model {
 //		return $this->where($where)->delete();
 		$db_area_region = RC_DB::table('area_region');
 		if ($in) {
-			if (is_array($where)){
+			if (!empty($where)){
 				foreach($where as $key => $val){
 					$db_area_region->whereIn($key, array($val));
 				}
 			}
 			return $db_area_region->delete();
 		}
-		if (is_array($where)){
+		if (!empty($where)){
 			foreach($where as $key => $val){
 				$db_area_region->where($key, $val);
 			}

@@ -117,7 +117,6 @@ class admin extends ecjia_admin {
 		}
 		/* 查询该支付方式内容 */
 		$shipping = $this->db_shipping->shipping_find(array('shipping_code' => $shipping_code, 'enabled' => 1));
-
 		if (empty($shipping)) {
 			$this->showmessage(RC_Lang::get('shipping::shipping.shipping_not_available'), ecjia::MSGTYPE_HTML | ecjia::MSGSTAT_ERROR);
 		}
@@ -141,7 +140,6 @@ class admin extends ecjia_admin {
 		}
 	
 		$data = $this->db_shipping->is_only(array('shipping_name' => $name, 'shipping_code' => array('neq' => $code)));
-
 		if ($data > 0) {
 			$this->showmessage(RC_Lang::get('shipping::shipping.shipping_name'). RC_Lang::get('shipping::shipping.repeat'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
 		}
@@ -202,7 +200,6 @@ class admin extends ecjia_admin {
 		$shipping_id = !empty($_GET['shipping_id']) ? intval($_GET['shipping_id']) : 0;
 		/* 检查该插件是否已经安装 取值 */ 
 		$shipping_data = $this->db_shipping->shipping_find(array('shipping_id' => $shipping_id));
-
 
 		if ($shipping_data) {
 			/* 判断模板图片位置 */
@@ -316,7 +313,6 @@ class admin extends ecjia_admin {
 				}
 				/* 如果之前存在上传的图片，先删除 */
 				$ship_date = $this->db_shipping->shipping_select('', array('shipping_id' => $shipping_id));
-
 				if ($ship_date) {
 					if (isset($ship_date['print_bg'])) {
 						$uploads_dir_info = RC_Upload::upload_dir();
@@ -490,7 +486,7 @@ class admin extends ecjia_admin {
 			}
 			/* 检查该插件是否支持保价   在此不做检查，在页面上进行控制，不支持保价的不允许修改*/
 			$this->db_shipping->shipping_update(array('shipping_id' => $shipping_id), array('insure' => $shipping_insure));
-//			没找到哪里测试
+
 			$this->showmessage(RC_Lang::get('shipping::shipping.attradd_succed'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS);
 		}
 	}
