@@ -16,6 +16,9 @@ class shipping_area_model extends Component_Model_Model {
 		/* 过滤条件  为查询*/
 		$filter['keywords'] = empty($args['keywords']) ? '' : trim($args['keywords']);
 		$ex_where = array('shipping_id' => $args['shipping_id']);
+		if ($args['shipping_id']) {
+		    $db_shipping_area->where('shipping_id', $args['shipping_id']);
+		}
 		if ($filter['keywords']) {
 			$db_shipping_area->where('shipping_area_name', 'like', '%'. mysql_like_quote($filter['keywords']). '%');
 		}
