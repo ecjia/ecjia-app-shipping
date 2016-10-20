@@ -15,13 +15,16 @@ class shipping_area_model extends Component_Model_Model {
 		$db_shipping_area = RC_DB::table('shipping_area');
 		/* 过滤条件  为查询*/
 		$filter['keywords'] = empty($args['keywords']) ? '' : trim($args['keywords']);
-		$ex_where = array('shipping_id' => $args['shipping_id']);
+		
 		if ($args['shipping_id']) {
 		    $db_shipping_area->where('shipping_id', $args['shipping_id']);
 		}
 		if ($filter['keywords']) {
 			$db_shipping_area->where('shipping_area_name', 'like', '%'. mysql_like_quote($filter['keywords']). '%');
 		}
+		
+		isset($_SESSION['store_id']) ? $db_shipping_area->where(RC_DB::raw('store_id'), $_SESSION['store_id']) : '';
+		
 		$count = $db_shipping_area->count();
 		$page = new ecjia_page($count, 10, 6);
 
@@ -62,9 +65,9 @@ class shipping_area_model extends Component_Model_Model {
 //		return $this->where($where)->count();
 		$db_shipping_area = RC_DB::table('shipping_area');
 		if(!empty($where)){
-			foreach($where as $key => $vla){
-				if (is_array($vla)){
-					foreach($vla as $k => $v){
+			foreach($where as $key => $val){
+				if (is_array($val)){
+					foreach($val as $k => $v){
 						if ($k == 'neq'){
 							$db_shipping_area->where($key,'!=','$v');
 						}

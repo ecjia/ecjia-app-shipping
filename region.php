@@ -4,7 +4,7 @@
  */
 defined('IN_ECJIA') or exit('No permission resources.');
 
-class region extends ecjia_admin {
+class region extends ecjia_front {
 	public function __construct() {
 		parent::__construct();
 	}
