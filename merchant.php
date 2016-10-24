@@ -36,6 +36,7 @@ class merchant extends ecjia_merchant {
 		RC_Script::localize_script('merchant_shipping', 'js_lang', RC_Lang::get('shipping::shipping.js_lang'));
 		RC_Script::localize_script('shopping_admin', 'js_lang', RC_Lang::get('shipping::shipping.js_lang'));
 		
+		ecjia_merchant_screen::get_current_screen()->set_parentage('shipping', 'shipping/merchant.php');
 		ecjia_screen::get_current_screen()->add_nav_here(new admin_nav_here('我的配送', RC_Uri::url('shipping/admin/init')));
 	}
 
