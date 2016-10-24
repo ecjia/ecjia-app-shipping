@@ -50,8 +50,11 @@ class admin_area extends ecjia_admin {
 		$args = array('shipping_id' => $shipping_id);
 		$args['keywords'] = !empty($_GET['keywords']) ? trim($_GET['keywords']) : '';
 
-		$ship_areas_list = $this->db_shipping_area->get_shipareas_list($args);
-
+// 		$ship_areas_list = $this->db_shipping_area->get_shipareas_list($args);
+		$shipping_area_db = RC_Model::model('shipping/shipping_area_viewmodel');
+		$ship_areas_list = $shipping_area_db->get_shipareas_list($args);
+		
+		
 //		$shipping_name = $this->db_shipping->where(array('shipping_id' => $shipping_id))->get_field('shipping_name');
 		$shipping_name = $this->db_shipping->shipping_field(array('shipping_id' => $shipping_id), 'shipping_name');
 

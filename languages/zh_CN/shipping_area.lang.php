@@ -10,7 +10,8 @@ return array(
 	'shipping_area_districts' 	=> '地区列表',
 	'shipping_area_regions' 	=> '所辖地区',
 	'shipping_area_assign' 		=> '配送方式',
-		
+	
+	'merchant_name'		=> '商家名称',
 	'area_region' 		=> '地区',
 	'removed_region' 	=> '该区域已被移除',
 	'area_shipping' 	=> '配送方式',

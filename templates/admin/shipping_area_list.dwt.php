@@ -41,6 +41,7 @@
 								<input type="checkbox" data-children=".checkbox" data-toggle="selectall" name="select_rows" style="opacity: 0;">
 							</th>
 							<th class="w150">{lang key='shipping::shipping_area.shipping_area_name'}</th>
+							<th class="w150">{lang key='shipping::shipping_area.merchant_name'}</th>
 							<th>{lang key='shipping::shipping_area.shipping_area_regions'}</th>
 							<th class="w100">{lang key='system::system.handler'}</th>
 						</tr>
@@ -52,6 +53,7 @@
 								<input class="checkbox" type="checkbox" value="{$area.shipping_area_id}"  name="areas[]" style="opacity: 0;">
 							</td>
 							<td>{$area.shipping_area_name|escape:"html"}</td>
+							<td>{$area.merchants_name}</td>
 							<td>{$area.shipping_area_regions}</td>
 							<td>
 								<a class="data-pjax no-underline" href='{RC_Uri::url("shipping/admin_area/edit", "id={$area.shipping_area_id}&shipping_id={$shipping_id}&code={$code}")}' class="sepV_a" title="{lang key='system::system.edit'}"><i class="fontello-icon-edit"></i></a>
