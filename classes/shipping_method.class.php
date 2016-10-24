@@ -20,7 +20,7 @@ class shipping_method
      * @param   array   $region_id_list     收货人地区id数组（包括国家、省、市、区）
      * @return  array   配送方式数组
      */
-    public function available_shipping_list($region_id_list) {  	
+    public function available_shipping_list($region_id_list, $store_id = 0) {  	
 //     	$dbview = RC_Model::model('shipping/shipping_viewmodel');
         // $dbview->view = array(
         // 	'shipping_area' => array(
@@ -40,6 +40,7 @@ class shipping_method
 			->leftJoin('area_region', 'area_region.shipping_area_id', '=', 'shipping_area.shipping_area_id')
 			->select('shipping.shipping_id', 'shipping.shipping_code', 'shipping.shipping_name', 'shipping.shipping_desc', 'shipping.insure', 'shipping.support_cod', 'shipping_area.configure')
 			->where('shipping.enabled', 1)
+			->where('shipping_area.store_id', $store_id)
 			->whereIn('area_region.region_id', $region_id_list)
 			->orderby('shipping.shipping_order', 'asc')
 			->get();	
@@ -69,7 +70,7 @@ class shipping_method
      * @param   array   $region_id_list     收货人地区id数组
      * @return  array   配送区域信息（config 对应着反序列化的 configure）
      */
-    public function shipping_area_info($shipping_id, $region_id_list) {
+    public function shipping_area_info($shipping_id, $region_id_list, $store_id = 0) {
 //         $dbview = RC_Model::model('shipping/shipping_viewmodel');
         // $dbview->view = array(
         //     'shipping_area' => array(
@@ -92,6 +93,7 @@ class shipping_method
         	->where('shipping.shipping_id', $shipping_id)
         	->where('shipping.enabled', 1)
         	->whereIn('area_region.region_id', $region_id_list)
+        	->where('shipping_area.store_id', $store_id)
         	->first();
         
         if (!empty($row)) {
@@ -188,6 +190,36 @@ class shipping_method
     		return $config;
     	} else {
     		return false;
+    	}
+    }
+    
+    /**
+     * 获取指定配送的保价费用
+     *
+     * @access  public
+     * @param   string	  $shipping_code  配送方式的code
+     * @param   float	   $goods_amount   保价金额
+     * @param   mix		 $insure		 保价比例
+     * @return  float
+     */
+    public function shipping_insure_fee($shipping_code, $goods_amount, $insure) {
+    	if (strpos($insure, '%') === false) {
+    		/* 如果保价费用不是百分比则直接返回该数值 */
+    		return floatval($insure);
+    	} else {
+    		RC_Loader::load_app_class('shipping_factory', 'shipping', false);
+    		$shipping_handle = new shipping_factory($shipping_code);
+    		if ($shipping_handle){
+//     			$shipping = new $shipping_code;
+    			$insure   = floatval($insure) / 100;
+    			if (method_exists($shipping, 'calculate_insure')) {
+    				return $shipping_handle->calculate_insure($goods_amount, $insure);
+    			} else {
+    				return ceil($goods_amount * $insure);
+    			}
+    		} else {
+    			return false;
+    		}
     	}
     }
 }
