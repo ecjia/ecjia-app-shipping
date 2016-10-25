@@ -63,11 +63,19 @@ class merchant extends ecjia_merchant {
 		//替换数据库获取数据方式
 // 		$data = $this->db_shipping->shipping_select(array('shipping_id', 'shipping_code', 'shipping_name', 'shipping_desc', 'insure', 'support_cod', 'shipping_order', 'enabled'), '', 'shipping_order');
 		$type = isset($_GET['type']) ? trim($_GET['type']) : '';
-		$where = array('enabled' => 1, 'store_id' => $_SESSION['store_id']);
-
-		$shppint_count = RC_Model::model('shipping/shipping_viewmodel')->join(array('shipping_area'))->where($where)->group(array('s.shipping_id'))->select();
-		$enable_count = RC_Model::model('shipping/shipping_viewmodel')->join(array('shipping_area'))->where(array_merge($where, array('a.shipping_area_id is not null')))->group(array('s.shipping_id'))->select();
-		$unable_count = RC_Model::model('shipping/shipping_viewmodel')->join(array('shipping_area'))->where(array_merge($where, array('a.shipping_area_id is null')))->group(array('s.shipping_id'))->select();
+		$shipping_db = RC_Model::model('shipping/shipping_viewmodel');
+		$shipping_db->view = array(
+				'shipping_area' => array(
+						'type' 	=> Component_Model_View::TYPE_LEFT_JOIN,
+						'alias' => 'a',
+						'on' 	=> 'a.shipping_id = s.shipping_id and a.store_id ='.$_SESSION['store_id'],
+				),
+		);
+		$where = array('enabled' => 1);
+// 		, 'store_id' => $_SESSION['store_id']
+		$shppint_count	= $shipping_db->join(array('shipping_area'))->where($where)->group(array('s.shipping_id'))->select();
+		$enable_count	= $shipping_db->join(array('shipping_area'))->where(array_merge($where, array('a.shipping_area_id is not null')))->group(array('s.shipping_id'))->select();
+		$unable_count	= $shipping_db->join(array('shipping_area'))->where(array_merge($where, array('a.shipping_area_id is null')))->group(array('s.shipping_id'))->select();
 		$shppint_count['count']		   = count($shppint_count);
 		$shppint_count['enable_count'] = count($enable_count);
 		$shppint_count['unable_count'] = count($unable_count);
@@ -82,7 +90,7 @@ class merchant extends ecjia_merchant {
 		
 		$page = new ecjia_merchant_page($count, 10, 3);
 		
-		$data = RC_Model::model('shipping/shipping_viewmodel')->join(array('shipping_area'))->where($where)->order(array('shipping_order' => 'asc'))->group(array('s.shipping_id'))->limit($page->limit())->select();
+		$data = $shipping_db->join(array('shipping_area'))->where($where)->order(array('shipping_order' => 'asc'))->group(array('s.shipping_id'))->limit($page->limit())->select();
 		
 		$plugins = ecjia_config::instance()->get_addon_config('shipping_plugins', true);
 		
