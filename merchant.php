@@ -63,11 +63,12 @@ class merchant extends ecjia_merchant {
 		//替换数据库获取数据方式
 // 		$data = $this->db_shipping->shipping_select(array('shipping_id', 'shipping_code', 'shipping_name', 'shipping_desc', 'insure', 'support_cod', 'shipping_order', 'enabled'), '', 'shipping_order');
 		$type = isset($_GET['type']) ? trim($_GET['type']) : '';
-		$where = array('enabled' => 1);
+		$where = array('enabled' => 1, 'store_id' => $_SESSION['store_id']);
 
-		$shppint_count['count'] = RC_Model::model('shipping/shipping_viewmodel')->join(null)->where($where)->count();
+		$shppint_count = RC_Model::model('shipping/shipping_viewmodel')->join(array('shipping_area'))->where($where)->group(array('s.shipping_id'))->select();
 		$enable_count = RC_Model::model('shipping/shipping_viewmodel')->join(array('shipping_area'))->where(array_merge($where, array('a.shipping_area_id is not null')))->group(array('s.shipping_id'))->select();
 		$unable_count = RC_Model::model('shipping/shipping_viewmodel')->join(array('shipping_area'))->where(array_merge($where, array('a.shipping_area_id is null')))->group(array('s.shipping_id'))->select();
+		$shppint_count['count']		   = count($shppint_count);
 		$shppint_count['enable_count'] = count($enable_count);
 		$shppint_count['unable_count'] = count($unable_count);
 		$count = $shppint_count['count'];
