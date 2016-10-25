@@ -19,6 +19,26 @@
 <div class="row">
 	<div class="col-lg-12">
 	    <div class="panel">
+	    	<ul class="nav nav-pills pull-left panel-heading">
+    			<li class="{if !$smarty.get.type}active{/if}">
+    				<a class="data-pjax" href="{RC_Uri::url('shipping/merchant/init')}" >
+    					全部
+    					<span class="badge badge-info">{$shipping_count.count}</span>
+    				</a>
+    			</li>
+    			<li class="{if $smarty.get.type eq 'enable'}active{/if}">
+    				<a class="data-pjax" href='{RC_Uri::url("shipping/merchant/init", "type=enable")}'>
+    					已启用
+    					<span class="badge badge-info use-plugins-num">{$shipping_count.enable_count}</span>
+    				</a>
+    			</li>
+    			<li class="{if $smarty.get.type eq 'unable'}active{/if}">
+    				<a class="data-pjax" href='{RC_Uri::url("shipping/merchant/init", "type=unable")}'>
+    					未启用
+    					<span class="badge badge-info unuse-plugins-num">{$shipping_count.unable_count}</span>
+    				</a>
+    			</li>
+    		</ul>
 	    	<div class="panel-body">
 				<div class="row-fluid">
 					<section class="panel">
@@ -33,7 +53,7 @@
 								</tr>
 							</thead>
 							<tbody>
-								<!-- {foreach from=$modules item=module} -->
+								<!-- {foreach from=$shipping_list item=module} -->
 								<tr>
 									<td>
 										{$module.name}
@@ -73,6 +93,7 @@
 							</tbody>
 						</table>
 					</section>
+					<!-- {$page} -->
 				</div>
 			</div>
 		</div>
