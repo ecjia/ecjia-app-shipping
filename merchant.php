@@ -90,7 +90,7 @@ class merchant extends ecjia_merchant {
 		
 		$page = new ecjia_merchant_page($count, 10, 3);
 		
-		$data = $shipping_db->join(array('shipping_area'))->where($where)->order(array('shipping_order' => 'asc'))->group(array('s.shipping_id'))->limit($page->limit())->select();
+		$data = $shipping_db->field(array('s.*', 'a.shipping_area_id'))->join(array('shipping_area'))->where($where)->order(array('shipping_order' => 'asc'))->group(array('s.shipping_id'))->limit($page->limit())->select();
 		
 		$plugins = ecjia_config::instance()->get_addon_config('shipping_plugins', true);
 		
