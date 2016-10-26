@@ -30,12 +30,12 @@ ecjia.merchant.area_info.init();
 	        <div class='col-lg-12 panel-heading form-inline'>
         		<div class="btn-group form-group ">
         			<button data-toggle="dropdown" class="btn btn-primary dropdown-toggle btnSubmit" >
-						<i class="fontello-icon-cog"></i>
+						<i class="fa fa-cogs"></i>
 						{lang key='shipping::shipping_area.batch'}
 						<span class="caret"></span>
 					</button>
 					<ul class="dropdown-menu">
-						<li><a class="button_remove" data-name="area_ids" data-noselectmsg="{lang key='shipping::shipping_area.select_drop_area'}" data-url="{$form_action}" data-msg="{lang key='shipping::shipping_area.batch_drop_confirm'}" data-idclass=".checkbox:checked" data-toggle="ecjiabatch"  href="javascript:;"><i class="fontello-icon-trash"></i>{lang key='system::system.drop'}</a></li>
+						<li><a class="button_remove" data-name="area_ids" data-noselectmsg="{lang key='shipping::shipping_area.select_drop_area'}" data-url="{$form_action}" data-msg="{lang key='shipping::shipping_area.batch_drop_confirm'}" data-idclass=".checkbox:checked" data-toggle="ecjiabatch"  href="javascript:;"><i class="fa fa-trash-o"></i> {lang key='system::system.drop'}</a></li>
 					</ul>
 				</div>
 				
@@ -43,7 +43,7 @@ ecjia.merchant.area_info.init();
         			<div class="form-group">
         				<input class="form-control" type="text" name="keywords" value="{$areas.filter.keywords}" placeholder="{lang key='shipping::shipping_area.area_name_keywords'}"/>
         			</div>
-        			<button class="btn btn-primary" type="button" id="search_btn" onclick='javascript:ecjia.merchant.shippingObj.shipping_area_list_search("{$search_action}")'>{lang key='shipping::shipping_area.search'}</button>
+        			<button class="btn btn-primary" type="button" id="search_btn" onclick='javascript:ecjia.merchant.shippingObj.shipping_area_list_search("{$search_action}")'><i class="fa fa-search"></i> {lang key='shipping::shipping_area.search'}</button>
         		</form>
         		<input type="hidden" name="shipping_id" value="{$shipping_id}" />
 				<input type="hidden" name="code" value="{$code}" />
