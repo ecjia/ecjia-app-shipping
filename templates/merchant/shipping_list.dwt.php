@@ -21,10 +21,11 @@
 	    <div class="panel">
 	    	<div class="panel-body">
 				<div class="accordion-group panel panel-default">
-					<div class="panel-heading">
-                        <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
-                                <strong>{t}已启用{/t}</strong>{t} ( 点击设置配送区域里的移除按钮对启用的配送方式进行删除 ) {/t}
-                        </a>
+					<div class="page-header">
+                        <h4>
+                        	<strong>{t}已启用{/t}</strong>
+                        	<small>（点击设置配送区域里的移除按钮对启用的配送方式进行删除）</small>
+                        </h4>
                      </div>
 					<table class="table table-striped table-hide-edit">
 						<thead>
@@ -74,10 +75,11 @@
 		<div class="panel">	
 			<div class="panel-body">			
 				<div class="accordion-group panel panel-default">
-					<div class="panel-heading">
-	          			<a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
-	          					<strong>{t}未启用{/t}</strong>{t} ( 点击设置配送区域里的新建配送区域进行开启配送方式 ) {/t}
-	              		</a>
+					<div class="page-header">
+						<h4>
+	          				<strong>{t}未启用{/t}</strong>
+	          				<small>（点击设置配送区域里的新建配送区域进行开启配送方式）</small>
+	          			</h4>
 	     			</div>
 					<table class="table table-striped table-hide-edit">
 						<thead>
