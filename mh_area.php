@@ -154,7 +154,7 @@ class mh_area extends ecjia_merchant {
 	    $code 				= !empty($_GET['code']) ? trim($_GET['code']) : '';
 
 		/* 检查同类型的配送方式下有没有重名的配送区域 */	
-		$area_count = $this->db_shipping_area->is_only(array('shipping_id' => $shipping_id, 'shipping_area_name' => $shipping_area_name));
+		$area_count = $this->db_shipping_area->is_only(array('shipping_id' => $shipping_id, 'shipping_area_name' => $shipping_area_name, 'store_id' => $_SESSION['store_id']));
 
 		if ($area_count > 0) {
 		    $this->showmessage(RC_Lang::get('shipping::shipping_area.repeat_area_name'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
@@ -207,7 +207,7 @@ class mh_area extends ecjia_merchant {
 					$this->db_shipping_area_region->shipping_area_region_insert($data);
 				}
 			}
-		
+			
 			ecjia_admin::admin_log($shipping_area_name.'，'.RC_Lang::get('shipping::shipping_area.shipping_way').$shipping_data['shipping_name'], 'add', 'shipping_area');
 			$links[] = array('text' => RC_Lang::get('shipping::shipping_area.add_continue'), 'href' => RC_Uri::url('shipping/mh_area/add', array('shipping_id' => $shipping_id, 'code' => $code)));
 			
@@ -237,10 +237,9 @@ class mh_area extends ecjia_merchant {
 		$code 			= !empty($_GET['code']) 		? trim($_GET['code']) 			: '';
 		
 		$shipping_data = $dbview->shipping_area_find(array('a.shipping_area_id' => $ship_area_id, 'a.store_id' => $_SESSION['store_id']), 's.shipping_name, s.shipping_code, s.support_cod, a.*', 'shipping_area');
-		if (!empty($shipping_data)) {
-			$this->showmessage('未找到相关配送区域！' , ecjia::MSGTYPE_HTML | ecjia::MSGSTAT_ERROR);
+		if (empty($shipping_data)) {
+			$this->showmessage('未找到相关配送区域！', ecjia::MSGTYPE_HTML | ecjia::MSGSTAT_ERROR);
 		}
-		
 		$fields = unserialize ($shipping_data['configure']);
 
 		/* 如果配送方式支持货到付款并且没有设置货到付款支付费用，则加入货到付款费用 */
@@ -348,7 +347,7 @@ class mh_area extends ecjia_merchant {
 		/*判断该配送区域是否属于该商户*/ 
 		$shipping_area = $this->db_shipping_area->where(array('shipping_area_id' => $shipping_area_id, 'store_id' => $_SESSION['store_id']))->find();
 		if (empty($shipping_area)) {
-			$this->showmessage('未找到相关配送区域！' , ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
+			$this->showmessage('未找到相关配送区域！', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
 		}
 		if ($ship_area_count > 0) {
 			$this->showmessage(RC_Lang::get('shipping::shipping_area.repeat_area_name'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
