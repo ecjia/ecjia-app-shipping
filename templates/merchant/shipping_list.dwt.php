@@ -23,9 +23,7 @@
 				<div class="accordion-group panel panel-default">
 					<div class="panel-heading">
                         <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
-                            <h4 class="panel-title">
-                                <strong>{t}已启用{/t}</strong>
-                            </h4>
+                                <strong>{t}已启用{/t}</strong>{t} ( 点击设置配送区域里的移除按钮对启用的配送方式进行删除 ) {/t}
                         </a>
                      </div>
 					<table class="table table-striped table-hide-edit">
@@ -33,7 +31,6 @@
 							<tr>
 								<th class="w110">{lang key='shipping::shipping.shipping_name'}</th>
 								<th>{lang key='shipping::shipping.shipping_desc'}</th>
-								<th class="w80">{lang key='system::system.sort_order'}</th>
 								<th class="w80">{lang key='shipping::shipping.insure'}</th>
 								<th class="w100">{lang key='shipping::shipping.support_cod'}</th>
 							</tr>
@@ -49,9 +46,6 @@
 									<div class="edit-list">
 										<a class="data-pjax" href='{RC_Uri::url("shipping/mh_area/init", "shipping_id={$module.id}&code={$module.code}")}'  title="{lang key='shipping::shipping.shipping_area'}">{lang key='shipping::shipping.set_shipping'}</a>
 									</div>
-								</td>
-								<td>
-									{$module.shipping_order}
 								</td>
 								<td>
 									<!-- {if $module.is_insure } -->
@@ -82,9 +76,7 @@
 				<div class="accordion-group panel panel-default">
 					<div class="panel-heading">
 	          			<a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
-	                 		<h4 class="panel-title">
-	          					<strong>{t}未启用{/t}</strong>
-	                        </h4>
+	          					<strong>{t}未启用{/t}</strong>{t} ( 点击设置配送区域里的新建配送区域进行开启配送方式 ) {/t}
 	              		</a>
 	     			</div>
 					<table class="table table-striped table-hide-edit">
@@ -92,7 +84,6 @@
 							<tr>
 								<th class="w110">{lang key='shipping::shipping.shipping_name'}</th>
 								<th>{lang key='shipping::shipping.shipping_desc'}</th>
-								<th class="w80">{lang key='system::system.sort_order'}</th>
 								<th class="w80">{lang key='shipping::shipping.insure'}</th>
 								<th class="w100">{lang key='shipping::shipping.support_cod'}</th>
 							</tr>
@@ -108,9 +99,6 @@
 									<div class="edit-list">
 										<a class="data-pjax" href='{RC_Uri::url("shipping/mh_area/init", "shipping_id={$module.id}&code={$module.code}")}'  title="{lang key='shipping::shipping.shipping_area'}">{lang key='shipping::shipping.set_shipping'}</a>
 									</div>
-								</td>
-								<td>
-									{$module.shipping_order}
 								</td>
 								<td>
 									<!-- {if $module.is_insure } -->
