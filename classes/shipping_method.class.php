@@ -45,8 +45,8 @@ class shipping_method
 			->orderby('shipping.shipping_order', 'asc')
 			->get();	
 		$plugins = $this->available_shipping_plugins();
-        
-        $pay_list = array();
+
+		$pay_list = array();
         if (!empty($data)) {
         	foreach ($data as $row) {
         		if (isset($plugins[$row['shipping_code']])) {
