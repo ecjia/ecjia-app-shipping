@@ -110,7 +110,7 @@ ecjia.admin.area_info.init();
 					</div>
 				</div>
 
-				<div class="controls span12 m_b20">
+				<div class="span12 m_l0 m_b20">
 					<div class="ms-container ms-shipping span12" id="ms-custom-navigation">
 						<div class="ms-selectable span3">
 							<div class="search-header">
