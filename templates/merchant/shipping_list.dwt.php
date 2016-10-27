@@ -105,6 +105,9 @@
 								</td>
 								<td class="hide-edit-area">
 									{$module.desc|nl2br}
+									<div class="edit-list">
+										<a class="data-pjax" href='{RC_Uri::url("shipping/mh_area/init", "shipping_id={$module.id}&code={$module.code}")}'  title="{lang key='shipping::shipping.shipping_area'}">{lang key='shipping::shipping.set_shipping'}</a>
+									</div>
 								</td>
 								<td>
 									{$module.shipping_order}

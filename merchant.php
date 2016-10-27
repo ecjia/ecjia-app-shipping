@@ -61,17 +61,29 @@ class merchant extends ecjia_merchant {
 		$this->assign('ur_here', '我的配送');
 		
 		//已启用的配送方式
-		$enabled_data = RC_DB::table('shipping')
-			->select('*')
-			->where('enabled', 1)
-			->orderBy('shipping_order')
+		$enabled_data = RC_DB::table('shipping as s')
+			->leftJoin('shipping_area as a', function($join) {
+				$join->on(RC_DB::raw('s.shipping_id'), '=', RC_DB::raw('a.shipping_id'))
+					->where(RC_DB::raw('a.store_id'), '=', $_SESSION['store_id']);
+			})
+			->groupBy(RC_DB::raw('s.shipping_id'))
+			->orderBy(RC_DB::raw('s.shipping_order'))
+			->selectRaw('s.*, a.shipping_area_id')
+			->where(RC_DB::raw('s.enabled'), 1)
+			->whereNotNull(RC_DB::raw('a.shipping_area_id'))
 			->get();
 		
 		//未启用的配送方式
-		$disabled_data = RC_DB::table('shipping')
-			->select('*')
-			->where('enabled', 0)
-			->orderBy('shipping_order')
+		$disabled_data = RC_DB::table('shipping as s')
+			->leftJoin('shipping_area as a', function($join) {
+				$join->on(RC_DB::raw('s.shipping_id'), '=', RC_DB::raw('a.shipping_id'))
+					->where(RC_DB::raw('a.store_id'), '=', $_SESSION['store_id']);
+			})
+			->groupBy(RC_DB::raw('s.shipping_id'))
+			->orderBy(RC_DB::raw('s.shipping_order'))
+			->selectRaw('s.*, a.shipping_area_id')
+			->where(RC_DB::raw('s.enabled'), 1)
+			->whereNull(RC_DB::raw('a.shipping_area_id'))
 			->get();
 		
 		$plugins = ecjia_config::instance()->get_addon_config('shipping_plugins', true);

@@ -23,8 +23,8 @@ class mh_area extends ecjia_merchant {
 // 		RC_Script::enqueue_script('shopping_admin', RC_App::apps_url('statics/js/shipping_admin.js', __FILE__));
 		RC_Script::enqueue_script('merchant_shipping', RC_App::apps_url('statics/js/merchant_shipping.js', __FILE__));
 // 		RC_Style::enqueue_style('chosen');
-		RC_Style::enqueue_style('chosen_style', RC_Theme::get_template_directory_uri().'/assets/chosen/chosen.css', array());
-		RC_Script::enqueue_script('chosen_script', RC_Theme::get_template_directory_uri().'/assets/chosen/chosen.jquery.min.js', array(), false, false);
+// 		RC_Style::enqueue_style('chosen_style', RC_Theme::get_template_directory_uri().'/assets/chosen/chosen.css', array());
+// 		RC_Script::enqueue_script('chosen_script', RC_Theme::get_template_directory_uri().'/assets/chosen/chosen.jquery.min.js', array(), false, false);
 		
 		RC_Style::enqueue_style('merchant_shipping', RC_App::apps_url('statics/css/merchant_shipping.css', __FILE__), array(), false, false);
 		

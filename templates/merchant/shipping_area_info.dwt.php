@@ -45,10 +45,7 @@ ecjia.merchant.area_info.init();
 						</div>
 						
 						<!-- 费用计算方式 -->
-						<!-- {if $shipping_area.shipping_code eq 'ship_ems' || $shipping_area.shipping_code eq 'ship_yto' ||
-						$shipping_area.shipping_code eq 'ship_zto' || $shipping_area.shipping_code eq 'ship_sto_express' ||
-						$shipping_area.shipping_code eq 'ship_post_mail' || $shipping_area.shipping_code eq 'ship_sf_express' ||
-						$shipping_area.shipping_code eq 'ship_post_express' } -->
+						<!-- {if $shipping_area.shipping_code eq 'ship_ems' || $shipping_area.shipping_code eq 'ship_yto' || $shipping_area.shipping_code eq 'ship_zto' || $shipping_area.shipping_code eq 'ship_sto_express' || $shipping_area.shipping_code eq 'ship_post_mail' || $shipping_area.shipping_code eq 'ship_sf_express' || $shipping_area.shipping_code eq 'ship_post_express' } -->
 						<div class="form-group">
 							<label class="control-label col-lg-2">{lang key='shipping::shipping_area.label_fee_compute_mode'}</label>
 							<div class="controls col-lg-3">
