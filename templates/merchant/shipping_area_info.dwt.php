@@ -66,7 +66,7 @@ ecjia.merchant.area_info.init();
 						<!--{if $fee_compute_mode == 'by_number'}-->
 						<!--{if $field.name == 'item_fee' || $field.name == 'free_money' || $field.name == 'pay_fee'}-->
 						<div class="form-group"  id="{$field.name}">
-							<label class="control-label col-lg-2">{$field.label}：</label>
+							<label class="control-label col-lg-2">{$field.label}</label>
 							<div class="controls col-lg-3">
 								<input class="form-control" name="{$field.name}" type="text" value="{$field.value}"/> 
 							</div>
@@ -74,7 +74,7 @@ ecjia.merchant.area_info.init();
 						</div>
 						<!--{else}-->
 						<div class="form-group"  id="{$field.name}" style="display: none;">
-							<label class="control-label col-lg-2">{$field.label}：</label>
+							<label class="control-label col-lg-2">{$field.label}</label>
 							<div class="controls col-lg-3">
 								<input class="form-control" name="{$field.name}" type="text" value="{$field.value}" />
 							</div>
@@ -84,7 +84,7 @@ ecjia.merchant.area_info.init();
 						<!--{else}-->
 						<!--{if $field.name != 'item_fee'}-->
 						<div class="form-group"  id="{$field.name}">
-							<label class="control-label col-lg-2">{$field.label}：</label>
+							<label class="control-label col-lg-2">{$field.label}</label>
 							<div class="controls col-lg-3">
 								<input class="form-control" name="{$field.name}" type="text" value="{$field.value}"/>
 							</div>
@@ -92,7 +92,7 @@ ecjia.merchant.area_info.init();
 						</div>
 						<!--{else}-->
 						<div class="form-group"  id="{$field.name}"  style="display: none;">
-							<label class="control-label col-lg-2">{$field.label}：</label>
+							<label class="control-label col-lg-2">{$field.label}</label>
 							<div class="controls col-lg-3">
 								<input class="form-control" name="{$field.name}" type="text" value="{$field.value}" size="40" />
 							</div>
