@@ -69,7 +69,7 @@ class shipping_area_model extends Component_Model_Model {
 				if (is_array($val)){
 					foreach($val as $k => $v){
 						if ($k == 'neq'){
-							$db_shipping_area->where($key,'!=','$v');
+							$db_shipping_area->where($key, '!=', $v);
 						}
 					}
 				}else{

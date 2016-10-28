@@ -343,13 +343,12 @@ class mh_area extends ecjia_merchant {
 		$code 				= !empty($_GET['code']) ? trim($_GET['code']) 	: '';
 		
 		$ship_area_count = $this->db_shipping_area->is_only(array('shipping_id' => $shipping_id, 'shipping_area_name' => $shipping_area_name, 'shipping_area_id' => array('neq' => $shipping_area_id), 'store_id' => $_SESSION['store_id']));
-       
 		/*判断该配送区域是否属于该商户*/ 
 		$shipping_area = $this->db_shipping_area->where(array('shipping_area_id' => $shipping_area_id, 'store_id' => $_SESSION['store_id']))->find();
 		if (empty($shipping_area)) {
 			$this->showmessage('未找到相关配送区域！', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
 		}
-		if ($ship_area_count > 1) {
+		if ($ship_area_count > 0) {
 			$this->showmessage(RC_Lang::get('shipping::shipping_area.repeat_area_name'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
 		} else {
 //			$shipping_data = $this->db_shipping->shipping_find(array('shipping_id' => $shipping_id), 'shipping_code, shipping_name, support_cod');
