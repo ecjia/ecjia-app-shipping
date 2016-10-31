@@ -153,6 +153,8 @@ return array(
 	
 	'edit_template_help'	=> '欢迎访问ECJia智能后台快递单模板编辑页面，可以在此编辑相应的快递单模板信息。',
 	'about_edit_template'	=> '关于快递单模板编辑帮助文档',
+    'close_distribution'    => '（删除配送区域即可关闭配送方式）',
+    'open_distribution'     => '（设置配送区域即可开启配送方式）',
 );
 
 // end

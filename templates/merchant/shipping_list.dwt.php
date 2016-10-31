@@ -24,7 +24,7 @@
 					<div class="page-header">
                         <h4>
                         	<strong>{t}已启用{/t}</strong>
-                        	<small>（点击设置配送区域里的移除按钮对启用的配送方式进行删除）</small>
+                        	<small>{lang key='shipping::shipping.close_distribution'}</small>
                         </h4>
                      </div>
 					<table class="table table-striped table-hide-edit">
@@ -78,7 +78,7 @@
 					<div class="page-header">
 						<h4>
 	          				<strong>{t}未启用{/t}</strong>
-	          				<small>（点击设置配送区域里的新建配送区域进行开启配送方式）</small>
+	          				<small>{lang key='shipping::shipping.open_distribution'}</small>
 	          			</h4>
 	     			</div>
 					<table class="table table-striped table-hide-edit">
