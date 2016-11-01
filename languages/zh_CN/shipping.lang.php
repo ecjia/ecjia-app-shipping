@@ -131,6 +131,7 @@ return array(
 	'edit_ok'				=> '编辑成功',
 	
 	'shipping_manage'		=> '配送方式管理',
+	'shipping_merchant_manage'	=> '我的配送',
 	
 	'js_lang' => array(
 		'shipping_area_name_required'	=> '配送区域名称不能为空',
