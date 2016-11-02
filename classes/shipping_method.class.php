@@ -72,22 +72,22 @@ class shipping_method
      */
     public function shipping_area_info($shipping_id, $region_id_list, $store_id = 0) {
 //         $dbview = RC_Model::model('shipping/shipping_viewmodel');
-        // $dbview->view = array(
-        //     'shipping_area' => array(
-        //         'type' 	=> Component_Model_View::TYPE_LEFT_JOIN,
-        //         'alias' => 'a',
-        //         'field' => 's.shipping_code, s.shipping_name,s.shipping_desc, s.insure, s.support_cod, a.configure',
-        //         'on' 	=> 'a.shipping_id = s.shipping_id',
-        //     ),
-        //     'area_region' => array(
-        //         'type' 	=> Component_Model_View::TYPE_LEFT_JOIN,
-        //         'alias' => 'r',
-        //         'on' 	=> 'r.shipping_area_id = a.shipping_area_id ',
-        //     )
-        // );
+//         $dbview->view = array(
+//             'shipping_area' => array(
+//                 'type' 	=> Component_Model_View::TYPE_LEFT_JOIN,
+//                 'alias' => 'a',
+//                 'field' => 's.shipping_code, s.shipping_name,s.shipping_desc, s.insure, s.support_cod, a.configure',
+//                 'on' 	=> 'a.shipping_id = s.shipping_id',
+//             ),
+//             'area_region' => array(
+//                 'type' 	=> Component_Model_View::TYPE_LEFT_JOIN,
+//                 'alias' => 'r',
+//                 'on' 	=> 'r.shipping_area_id = a.shipping_area_id ',
+//             )
+//         );
 //         $row = $dbview->join(array('shipping_area', 'area_region'))->field('s.shipping_code, s.shipping_name,s.shipping_desc, s.insure, s.support_cod, a.configure')->in(array('r.region_id' => $region_id_list))->find(array('s.shipping_id' => $shipping_id, 's.enabled' => 1));
-        
-        $row = RC_DB::table('shipping')->leftJoin('shipping_area', 'shipping_area.shipping_id', '=', 'shipping.shipping_id')
+    	$db = RC_DB::table('shipping');
+        $row = $db->leftJoin('shipping_area', 'shipping_area.shipping_id', '=', 'shipping.shipping_id')
         	->leftJoin('area_region', 'area_region.shipping_area_id', '=', 'shipping_area.shipping_area_id')
         	->select('shipping.shipping_code', 'shipping.shipping_name', 'shipping.shipping_desc', 'shipping.insure', 'shipping.support_cod', 'shipping_area.configure')
         	->where('shipping.shipping_id', $shipping_id)
@@ -95,7 +95,7 @@ class shipping_method
         	->whereIn('area_region.region_id', $region_id_list)
         	->where('shipping_area.store_id', $store_id)
         	->first();
-        
+      
         if (!empty($row)) {
             $shipping_config = $this->unserialize_config($row['configure']);
             if (isset($shipping_config['pay_fee'])) {
