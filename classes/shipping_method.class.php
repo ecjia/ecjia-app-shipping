@@ -70,7 +70,7 @@ class shipping_method
      * @param   array   $region_id_list     收货人地区id数组
      * @return  array   配送区域信息（config 对应着反序列化的 configure）
      */
-    public function shipping_area_info($shipping_id, $region_id_list, $store_id = 0) {
+    public function shipping_area_info($shipping_id, $region_id_list, $store_id) {
 //         $dbview = RC_Model::model('shipping/shipping_viewmodel');
 //         $dbview->view = array(
 //             'shipping_area' => array(
@@ -95,7 +95,7 @@ class shipping_method
         	->whereIn('area_region.region_id', $region_id_list)
         	->where('shipping_area.store_id', $store_id)
         	->first();
-      
+        
         if (!empty($row)) {
             $shipping_config = $this->unserialize_config($row['configure']);
             if (isset($shipping_config['pay_fee'])) {
