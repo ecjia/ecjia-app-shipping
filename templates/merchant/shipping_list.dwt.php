@@ -24,7 +24,7 @@
 					<div class="page-header">
                         <h4>
                         	<strong>{t}已启用{/t}</strong>
-                        	<small>{lang key='shipping::shipping.close_distribution'}</small>
+                        	<small class="ecjiaf-ff1">{lang key='shipping::shipping.close_distribution'}</small>
                         </h4>
                      </div>
 					<table class="table table-striped table-hide-edit">
@@ -78,7 +78,7 @@
 					<div class="page-header">
 						<h4>
 	          				<strong>{t}未启用{/t}</strong>
-	          				<small>{lang key='shipping::shipping.open_distribution'}</small>
+	          				<small class="ecjiaf-ff1">{lang key='shipping::shipping.open_distribution'}</small>
 	          			</h4>
 	     			</div>
 					<table class="table table-striped table-hide-edit">
