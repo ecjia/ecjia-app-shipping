@@ -208,7 +208,7 @@ class mh_area extends ecjia_merchant {
 				}
 			}
 			
-			ecjia_admin::admin_log($shipping_area_name.'，'.RC_Lang::get('shipping::shipping_area.shipping_way').$shipping_data['shipping_name'], 'add', 'shipping_area');
+			ecjia_merchant::admin_log($shipping_area_name.'，'.RC_Lang::get('shipping::shipping_area.shipping_way').$shipping_data['shipping_name'], 'add', 'shipping_area');
 			$links[] = array('text' => RC_Lang::get('shipping::shipping_area.add_continue'), 'href' => RC_Uri::url('shipping/mh_area/add', array('shipping_id' => $shipping_id, 'code' => $code)));
 			
 			$refresh_url = RC_Uri::url('shipping/mh_area/edit', array('id' => $area_id, 'shipping_id' => $shipping_id, 'code' => $code));
@@ -387,7 +387,7 @@ class mh_area extends ecjia_merchant {
 			$this->db_shipping_area->where(array('shipping_area_id' => $shipping_area_id, 'store_id' => $_SESSION['store_id']))->update($data);
 
 			
-			ecjia_admin::admin_log($shipping_area_name.'，'.RC_Lang::get('shipping::shipping_area.shipping_way').$shipping_data['shipping_name'], 'edit', 'shipping_area');
+			ecjia_merchant::admin_log($shipping_area_name.'，'.RC_Lang::get('shipping::shipping_area.shipping_way').$shipping_data['shipping_name'], 'edit', 'shipping_area');
 		
 			/* 过滤掉重复的region */
 			$selected_regions = array();
@@ -452,7 +452,7 @@ class mh_area extends ecjia_merchant {
 				$this->db_shipping_area_region->shipping_area_region_remove($id);
 				$this->db_shipping_area->shipping_area_remove(array('shipping_area_id' => $id));
 
-				ecjia_admin::admin_log($row['shipping_area_name'].'，'.RC_Lang::get('shipping::shipping_area.shipping_way').$shipping_name, 'remove', 'shipping_area');
+				ecjia_merchant::admin_log($row['shipping_area_name'].'，'.RC_Lang::get('shipping::shipping_area.shipping_way').$shipping_name, 'remove', 'shipping_area');
 				$this->showmessage(RC_Lang::get('shipping::shipping_area.remove_success'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS);
 			}
 		} else {
@@ -482,7 +482,7 @@ class mh_area extends ecjia_merchant {
 			if (!empty($row)) {
 				foreach ($row as $v) {
 					$shipping_name = $this->db_shipping->shipping_field(array('shipping_id' => $v['shipping_id']), 'shipping_name');
-					ecjia_admin::admin_log($v['shipping_area_name'].'，'.RC_Lang::get('shipping::shipping_area.shipping_way').$shipping_name, 'batch_remove', 'shipping_area');
+					ecjia_merchant::admin_log($v['shipping_area_name'].'，'.RC_Lang::get('shipping::shipping_area.shipping_way').$shipping_name, 'batch_remove', 'shipping_area');
 				}
 			}
 			$refresh_url = RC_Uri::url('shipping/mh_area/init', array('shipping_id' => $shipping_id, 'code' => $code));
