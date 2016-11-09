@@ -34,11 +34,12 @@ class shipping_area_viewmodel extends Component_Model_View {
 			$db_shipping_area->where('shipping_id', $args['shipping_id']);
 		}
 		if ($filter['keywords']) {
-			$db_shipping_area->whereRaw('(shipping_area_name like "%'.mysql_like_quote($filter['keywords']).'%" or merchants_name like "%'.mysql_like_quote($filter['keywords']).'%")');
+			$db_shipping_area->whereRaw('(sa.shipping_area_name like "%'.mysql_like_quote($filter['keywords']).'%" or s.merchants_name like "%'.mysql_like_quote($filter['keywords']).'%")');
 // 			$db_shipping_area->where('shipping_area_name', 'like', '%'. mysql_like_quote($filter['keywords']). '%');
 		}
-	
-		isset($_SESSION['store_id']) ? $db_shipping_area->where(RC_DB::raw('store_id'), $_SESSION['store_id']) : '';
+		
+		isset($_SESSION['store_id']) ? $db_shipping_area->where(RC_DB::raw('sa.store_id'), $_SESSION['store_id']) : '';
+		!empty($args['store_id']) ? $db_shipping_area->where(RC_DB::raw('sa.store_id'), $args['store_id']) : '';
 	
 		$count = $db_shipping_area->count();
 		$page = new ecjia_page($count, 10, 6);
@@ -51,9 +52,13 @@ class shipping_area_viewmodel extends Component_Model_View {
 			foreach ($list as $row) {
 				$db_region = RC_Model::model('shipping/shipping_area_region_viewmodel');
 				//				$region_names = $db_region->join('region')->where(array( 'a.shipping_area_id' => $row['shipping_area_id']))->field('r.region_name')->select();
-				$region_names = RC_DB::table('area_region')->leftJoin('region', 'region.region_id', '=', 'area_region.region_id')
-				->where('area_region.shipping_area_id', $row['shipping_area_id'])
-				->select('region.region_name')->get();
+				
+				$region_names = RC_DB::table('area_region as a')
+					->leftJoin('region as r', RC_DB::raw('r.region_id'), '=', RC_DB::raw('a.region_id'))
+					->where(RC_DB::raw('a.shipping_area_id'), $row['shipping_area_id'])
+					->select(RC_DB::raw('r.region_name'))
+					->get();
+				
 				if (is_array($region_names) && count($region_names)>0 ) {
 					$region_array = array();
 					foreach ($region_names as $name) {
