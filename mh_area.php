@@ -48,7 +48,7 @@ class mh_area extends ecjia_merchant {
 	 * 配送区域列表
 	 */
 	public function init() {
-		$this->admin_priv('shiparea_manage');
+		$this->admin_priv('ship_merchant_manage', ecjia::MSGTYPE_JSON);
 		
 		$shipping_id = !empty($_GET['shipping_id']) ? intval($_GET['shipping_id']) : 0;
 		$args = array('shipping_id' => $shipping_id);
@@ -91,7 +91,7 @@ class mh_area extends ecjia_merchant {
 	 * 
 	 */
 	public function add() {
-	    $this->admin_priv('shiparea_add');
+	    $this->admin_priv('ship_merchant_update', ecjia::MSGTYPE_JSON);
 		
 		$shipping_id 	= !empty($_GET['shipping_id']) ? intval($_GET['shipping_id']) : 0;
 		$code 			= !empty($_GET['code']) ? trim($_GET['code']) : '';
@@ -147,7 +147,7 @@ class mh_area extends ecjia_merchant {
 	}
 	
 	public function insert() {
-	    $this->admin_priv('shiparea_add', ecjia::MSGTYPE_JSON);
+	    $this->admin_priv('ship_merchant_update', ecjia::MSGTYPE_JSON);
 	    
 	    $shipping_id 		= !empty($_GET['shipping_id']) ? intval($_GET['shipping_id']) : 0;
 	    $shipping_area_name = !empty($_POST['shipping_area_name']) ? trim($_POST['shipping_area_name']) : '';
@@ -220,7 +220,7 @@ class mh_area extends ecjia_merchant {
 	 * 编辑配送区域
 	 */
 	public function edit() {
-		$this->admin_priv('shiparea_update');
+		$this->admin_priv('ship_merchant_update', ecjia::MSGTYPE_JSON);
 		
 		$dbview = RC_Model::model('shipping/shipping_viewmodel');
 		// 调用视图查看
@@ -334,7 +334,7 @@ class mh_area extends ecjia_merchant {
 	}
 	
 	public function update() {
-		$this->admin_priv('shiparea_update', ecjia::MSGTYPE_JSON);
+		$this->admin_priv('ship_merchant_update', ecjia::MSGTYPE_JSON);
 		
 		/* 检查同类型的配送方式下有没有其他重名的配送区域 */
 		$shipping_id 		= !empty($_GET['shipping_id']) ? intval($_GET['shipping_id']) : 0;
@@ -437,7 +437,7 @@ class mh_area extends ecjia_merchant {
 	 * 删除配送区域
 	 */
 	public function remove_area() { 
-		$this->admin_priv('shiparea_delete', ecjia::MSGTYPE_JSON);
+		$this->admin_priv('ship_merchant_delete', ecjia::MSGTYPE_JSON);
 		
 		$id = !empty($_GET['id']) ? intval($_GET['id']) : 0;
 		if ($id > 0) {
@@ -464,7 +464,7 @@ class mh_area extends ecjia_merchant {
 	 * 批量删除配送区域 pjax-post
 	 */
 	public function multi_remove() {
-		$this->admin_priv('shiparea_delete', ecjia::MSGTYPE_JSON);
+		$this->admin_priv('ship_merchant_delete', ecjia::MSGTYPE_JSON);
 		
 		$ids 			= !empty($_POST['area_ids']) 	? trim($_POST['area_ids']) 		: '';
 		$shipping_id 	= !empty($_GET['shipping_id']) 	? intval($_GET['shipping_id']) 	: 0;
