@@ -27,6 +27,15 @@ ecjia.admin.area_info.init();
 		
 		<form id="form-privilege" class="form-horizontal" name="theForm" action="{$form_action}" method="post" enctype="multipart/form-data">
 			<fieldset>
+			    {if $store.merchants_name}
+			    <div class="control-group formSep">
+					<label class="control-label">商家名称：</label>
+					<div class="controls">
+						<input name="" type="text" value="{$store.merchants_name}" size="40" readonly="readonly" /> 
+						<input type="hidden" name="store_id" value="{$store.store_id}" />
+					</div>
+				</div>
+			    {/if}
 				<!-- {if $area_id} -->
 				<input type="hidden" name="id" value="{$area_id}" />
 				<!-- {/if} -->

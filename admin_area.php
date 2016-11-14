@@ -96,9 +96,15 @@ class admin_area extends ecjia_admin {
 		
 		$shipping_id 	= !empty($_GET['shipping_id']) ? intval($_GET['shipping_id']) : 0;
 		$code 			= !empty($_GET['code']) ? trim($_GET['code']) : '';
+		$store_id 		= !empty($_GET['store_id']) ? intval($_GET['store_id']) : 0;
 //		$shipping_data  = $this->db_shipping->shipping_find(array('shipping_id' => $shipping_id), 'shipping_name, shipping_code, support_cod');
 		$shipping_data  = $this->db_shipping->shipping_find(array('shipping_id' => $shipping_id), array('shipping_name', 'shipping_code', 'support_cod'));
 
+		if ($store_id) {
+		    $store = RC_DB::table('store_franchisee')->where('store_id', $store_id)->first();
+		    $this->assign('store', $store);
+		}
+		
 		$fields = array();
 		$shipping_handle = new shipping_factory($shipping_data['shipping_code']);
 		$fields = $shipping_handle->form_format($fields, true);
@@ -153,10 +159,11 @@ class admin_area extends ecjia_admin {
 	    $shipping_id 		= !empty($_GET['shipping_id']) ? intval($_GET['shipping_id']) : 0;
 	    $shipping_area_name = !empty($_POST['shipping_area_name']) ? trim($_POST['shipping_area_name']) : '';
 	    $code 				= !empty($_GET['code']) ? trim($_GET['code']) : '';
+	    $store_id 			= !empty($_POST['store_id']) ? intval($_POST['store_id']) : 0;
 
 		/* 检查同类型的配送方式下有没有重名的配送区域 */	
-		$area_count = $this->db_shipping_area->is_only(array('shipping_id' => $shipping_id, 'shipping_area_name' => $shipping_area_name));
-
+		$area_count = $this->db_shipping_area->where(array('shipping_id' => $shipping_id, 'store_id' => $store_id, 'shipping_area_name' => $shipping_area_name))->count();
+		
 		if ($area_count > 0) {
 		    $this->showmessage(RC_Lang::get('shipping::shipping_area.repeat_area_name'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
 		} else {
@@ -190,7 +197,8 @@ class admin_area extends ecjia_admin {
 			$data = array(
 				'shipping_area_name'    => $shipping_area_name,
 				'shipping_id'           => $shipping_id,
-				'configure'             => serialize($config)
+				'configure'             => serialize($config),
+			    'store_id'              => $store_id
 			);
 			$area_id = $this->db_shipping_area->shipping_area_manage($data);
 
@@ -232,9 +240,17 @@ class admin_area extends ecjia_admin {
 		$shipping_id 	= !empty($_GET['shipping_id']) 	? intval($_GET['shipping_id']) 	: 0;
 		$ship_area_id 	= !empty($_GET['id']) 			? intval($_GET['id']) 			: 0;
 		$code 			= !empty($_GET['code']) 		? trim($_GET['code']) 			: '';
+		$store_id 		= !empty($_GET['store_id']) ? intval($_GET['store_id']) : 0;
 		
 		$shipping_data = $dbview->shipping_area_find(array('a.shipping_area_id' => $ship_area_id), 's.shipping_name, s.shipping_code, s.support_cod, a.*', 'shipping_area');
 		$fields = unserialize ($shipping_data['configure']);
+		
+		//商店信息
+		if ($store_id || $shipping_data['store_id']) {
+		    $store_id = $shipping_data['store_id'] ? $shipping_data['store_id'] : $store_id;
+		    $store = RC_DB::table('store_franchisee')->where('store_id', $store_id)->first();
+		    $this->assign('store', $store);
+		}
 
 		/* 如果配送方式支持货到付款并且没有设置货到付款支付费用，则加入货到付款费用 */
 		if ($shipping_data['support_cod'] && $fields[count($fields) - 1]['name'] != 'pay_fee') {

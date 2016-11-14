@@ -5,7 +5,7 @@
 	<h3 class="heading">
 		<!-- {if $ur_here}{$ur_here}{/if} -->
 		<!-- {if $action_link} -->
-		<a href="{$action_link.href}" class="btn plus_or_reply data-pjax" id="sticky_a"><i class="fontello-icon-plus"></i>{$action_link.text}</a>
+		<a href="{$action_link.href}{if $smarty.get.store_id}&store_id={$smarty.get.store_id}{/if}" class="btn plus_or_reply data-pjax" id="sticky_a"><i class="fontello-icon-plus"></i>{$action_link.text}</a>
 		<!-- {/if} -->
 		<!-- {if $shipping_method} -->
 		<a href="{$shipping_method.href}" class="btn plus_or_reply data-pjax" id="sticky_a"><i class="fontello-icon-reply"></i>{$shipping_method.text}</a>
