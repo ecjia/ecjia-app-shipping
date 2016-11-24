@@ -103,6 +103,60 @@ ecjia.merchant.area_info.init();
 						<!-- {/foreach} -->
 						<!--{/if}-->
 						
+						<!-- {if $shipping_area.shipping_code eq 'ship_o2o_express'} -->
+							<div class="form-group" id="ship_days">
+								<label class="control-label col-lg-2">下单后几天内配送：</label>
+								<div class="controls col-lg-3">
+									<input class="form-control col-lg-3" name="ship_days" placeholder="请填写有效天数，最小单位为1" type="text" value="{$ship_days}" />
+								</div>
+								<div class="clear">
+									<label class="control-label col-lg-2"></label>
+									<span class="col-lg-5 help-block">默认7天以内配送（用户可选择的时间）</span>
+								</div> 
+							</div>
+							<div class="form-group" id="last_order_time">
+								<label class="control-label col-lg-2">提前下单时间：</label>
+								<div class="controls col-lg-3">
+									<input class="date form-control" name="last_order_time" placeholder="最小单位为分钟；如30" type="text" value="{$last_order_time}" />
+								 
+								</div>
+								<div class="clear">
+									<label class="control-label col-lg-2"></label>
+									<span class="col-lg-5 help-block">需比配送时间提前多久下单才能配送，否则匹配至下个配送时间</span>
+								</div>
+							</div>
+							<!-- {if $area_id} -->
+								<div class="form-group" id="ship_time">
+									<label class="control-label col-lg-2">配送时间：</label>
+									<div class="controls col-lg-4">
+									<!-- {foreach from=$o2o_shipping_time item=shipping_time name=shipping} -->
+										<div class='time-picker'>
+											从&nbsp;&nbsp;<input class="w100 form-control tp_1" name="start_ship_time[]" type="text" value="{$shipping_time.start}" autocomplete="off" />&nbsp;&nbsp;
+											至&nbsp;&nbsp;<input class="w100 form-control tp_1" name="end_ship_time[]" type="text" value="{$shipping_time.end}" autocomplete="off" />
+											<!-- {if $smarty.foreach.shipping.last} -->
+												<a class="no-underline" data-toggle="clone-obj" data-before="before" data-parent=".time-picker" href="javascript:;"><i class="fontello-icon-plus fa fa-plus"></i></a>
+											<!-- {else} -->
+												<a class="no-underline" href="javascript:;" data-parent=".time-picker" data-toggle="remove-obj"><i class="fontello-icon-cancel ecjiafc-red fa fa-times "></i></a>
+											<!-- {/if} -->
+										</div> 
+									<!-- {/foreach} -->   
+									</div>
+								</div>
+							<!-- {else} -->
+									<div class="form-group" id="ship_time">
+										<label class="control-label col-lg-2">配送时间：</label>
+										<div class="controls col-lg-4">
+											<div class='time-picker'>
+												从&nbsp;&nbsp;<input class="w100 form-control tp_1" name="start_ship_time[]" type="text" value="{$time_field.start}"/>&nbsp;&nbsp;
+												至&nbsp;&nbsp;<input class="w100 form-control tp_1" name="end_ship_time[]" type="text" value="{$time_field.end}" />
+												<a class="no-underline" data-toggle="clone-obj" data-before="before" data-parent=".time-picker" href="javascript:;"><i class="fontello-icon-plus fa fa-plus"></i></a>
+											</div>    
+										</div>
+									</div>
+									
+							<!-- {/if} -->
+						<!-- {/if} -->
+						
 						<!--  国家选择 -->
 						<h3 class="page-header">{lang key='shipping::shipping_area.shipping_area_regions'}</h3>
 						

@@ -29,6 +29,11 @@ class admin_area extends ecjia_admin {
 		RC_Script::enqueue_script('jquery-uniform');
 		RC_Script::enqueue_script('jquery-chosen');
 		
+		//时间
+		RC_Style::enqueue_style('datepicker',RC_Uri::admin_url('statics/lib/datepicker/datepicker.css'));
+		RC_Script::enqueue_script('bootstrap-datepicker',RC_Uri::admin_url('statics/lib/datepicker/bootstrap-timepicker.min.js'));
+		
+		
 		$this->db_shipping 				= RC_Model::model('shipping/shipping_model');
 		$this->db_shipping_area 		= RC_Model::model('shipping/shipping_area_model');
 		$this->db_region 				= RC_Model::model('shipping/region_model');
@@ -193,6 +198,24 @@ class admin_area extends ecjia_admin {
 				$config[$count]['name']     = 'pay_fee';
 				$config[$count]['value']    =  make_semiangle(empty($_POST['pay_fee']) ? '0' : trim($_POST['pay_fee']));
 			}
+			
+			if ($shipping_data['shipping_code'] == 'ship_o2o_express') {
+			
+				$time = array();
+				foreach ($_POST['start_ship_time'] as $k => $v) {
+					$time[$k]['start']	= $v;
+					$time[$k]['end']	= $_POST['end_ship_time'][$k];
+				}
+			
+				$config[$count]['name']     = 'ship_days';
+				$config[$count]['value']    = empty($_POST['ship_days']) ? '' : intval($_POST['ship_days']);
+				$count++;
+				$config[$count]['name']     = 'last_order_time';
+				$config[$count]['value']    = empty($_POST['last_order_time']) ? '' : trim($_POST['last_order_time']);
+				$count++;
+				$config[$count]['name']     = 'ship_time';
+				$config[$count]['value']    = empty($time) ? '' : $time;
+			}
 
 			$data = array(
 				'shipping_area_name'    => $shipping_area_name,
@@ -278,6 +301,24 @@ class admin_area extends ecjia_admin {
 				} else {
 					$fields[$key]['name'] = $val['name'];
 					$fields[$key]['label'] = RC_Lang::lang($val['name']);
+				}
+				
+				if ($shipping_data['shipping_code'] == 'ship_o2o_express' && (in_array($val['name'], array('ship_days', 'last_order_time', 'ship_time')))) {
+					if ($val['name'] == 'ship_time') {
+						$o2o_shipping_time = array();
+						foreach ($val['value'] as $v) {
+							$o2o_shipping_time[] = $v;
+						}
+				
+						$this->assign('o2o_shipping_time', $o2o_shipping_time);
+					}
+					if ($val['name'] == 'ship_days') {
+						$this->assign('ship_days', $val['value']);
+					}
+					if ($val['name'] == 'last_order_time') {
+						$this->assign('last_order_time', $val['value']);
+					}
+					unset($fields [$key]);
 				}
 			}
 		} 
@@ -385,6 +426,25 @@ class admin_area extends ecjia_admin {
 				$config[$count]['name']     = 'pay_fee';
 				$config[$count]['value']    =  make_semiangle(empty($_POST['pay_fee']) ? '0' : trim($_POST['pay_fee']));
 			}
+			
+			if ($shipping_data['shipping_code'] == 'ship_o2o_express') {
+				$time = array();
+				foreach ($_POST['start_ship_time'] as $k => $v) {
+					$time[$k]['start']	= $v;
+					$time[$k]['end']	= $_POST['end_ship_time'][$k];
+				}
+					
+				$config[$count]['name']     = 'ship_days';
+				$config[$count]['value']    = empty($_POST['ship_days']) ? '' : intval($_POST['ship_days']);
+				$count++;
+				$config[$count]['name']     = 'last_order_time';
+				$config[$count]['value']    = empty($_POST['last_order_time']) ? '' : trim($_POST['last_order_time']);
+				$count++;
+				$config[$count]['name']     = 'ship_time';
+				$config[$count]['value']    = empty($time) ? '' : $time;
+			}
+			
+			
 			$data = array(
 				'shipping_area_id' 		=> $shipping_area_id,
 				'shipping_area_name' 	=> $shipping_area_name,

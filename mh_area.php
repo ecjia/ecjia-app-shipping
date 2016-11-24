@@ -28,6 +28,14 @@ class mh_area extends ecjia_merchant {
 		
 		RC_Style::enqueue_style('merchant_shipping', RC_App::apps_url('statics/css/merchant_shipping.css', __FILE__), array(), false, false);
 		
+		//时间
+// 		RC_Style::enqueue_style('datepicker', RC_Uri::admin_url('statics/lib/datepicker/datepicker.css'));
+// 		RC_Script::enqueue_script('bootstrap-datepicker', RC_Uri::admin_url('statics/lib/datepicker/bootstrap-timepicker.min.js'));
+		
+		RC_Script::enqueue_script('datepicker', RC_Uri::admin_url('statics/lib/datepicker/bootstrap-datetimepicker.js'));
+		RC_Style::enqueue_style('datepicker', RC_Uri::admin_url('statics/lib/datepicker/bootstrap-datetimepicker.min.css'));
+		
+		
 // 		RC_Style::enqueue_style('uniform-aristo');
 // 		RC_Script::enqueue_script('jquery-uniform');
 // 		RC_Script::enqueue_script('jquery-chosen');
@@ -185,6 +193,24 @@ class mh_area extends ecjia_merchant {
 				$config[$count]['name']     = 'pay_fee';
 				$config[$count]['value']    =  make_semiangle(empty($_POST['pay_fee']) ? '0' : trim($_POST['pay_fee']));
 			}
+			
+			if ($shipping_data['shipping_code'] == 'ship_o2o_express') {
+					
+				$time = array();
+				foreach ($_POST['start_ship_time'] as $k => $v) {
+					$time[$k]['start']	= $v;
+					$time[$k]['end']	= $_POST['end_ship_time'][$k];
+				}
+					
+				$config[$count]['name']     = 'ship_days';
+				$config[$count]['value']    = empty($_POST['ship_days']) ? '' : intval($_POST['ship_days']);
+				$count++;
+				$config[$count]['name']     = 'last_order_time';
+				$config[$count]['value']    = empty($_POST['last_order_time']) ? '' : trim($_POST['last_order_time']);
+				$count++;
+				$config[$count]['name']     = 'ship_time';
+				$config[$count]['value']    = empty($time) ? '' : $time;
+			}
 
 			$data = array(
 				'shipping_area_name'    => $shipping_area_name,
@@ -268,6 +294,24 @@ class mh_area extends ecjia_merchant {
 				} else {
 					$fields[$key]['name'] = $val['name'];
 					$fields[$key]['label'] = empty($val['label']) ? RC_Lang::get('shipping::shipping_area.'.$val['name']) : $val['label'];
+				}
+				
+				if ($shipping_data['shipping_code'] == 'ship_o2o_express' && (in_array($val['name'], array('ship_days', 'last_order_time', 'ship_time')))) {
+					if ($val['name'] == 'ship_time') {
+						$o2o_shipping_time = array();
+						foreach ($val['value'] as $v) {
+							$o2o_shipping_time[] = $v;
+						}
+				
+						$this->assign('o2o_shipping_time', $o2o_shipping_time);
+					}
+					if ($val['name'] == 'ship_days') {
+						$this->assign('ship_days', $val['value']);
+					}
+					if ($val['name'] == 'last_order_time') {
+						$this->assign('last_order_time', $val['value']);
+					}
+					unset($fields [$key]);
 				}
 			}
 		} 
@@ -379,6 +423,24 @@ class mh_area extends ecjia_merchant {
 				$config[$count]['name']     = 'pay_fee';
 				$config[$count]['value']    =  make_semiangle(empty($_POST['pay_fee']) ? '0' : trim($_POST['pay_fee']));
 			}
+			
+			if ($shipping_data['shipping_code'] == 'ship_o2o_express') {
+				$time = array();
+				foreach ($_POST['start_ship_time'] as $k => $v) {
+					$time[$k]['start']	= $v;
+					$time[$k]['end']	= $_POST['end_ship_time'][$k];
+				}
+					
+				$config[$count]['name']     = 'ship_days';
+				$config[$count]['value']    = empty($_POST['ship_days']) ? '' : intval($_POST['ship_days']);
+				$count++;
+				$config[$count]['name']     = 'last_order_time';
+				$config[$count]['value']    = empty($_POST['last_order_time']) ? '' : trim($_POST['last_order_time']);
+				$count++;
+				$config[$count]['name']     = 'ship_time';
+				$config[$count]['value']    = empty($time) ? '' : $time;
+			}
+			
 			$data = array(
 // 				'shipping_area_id' 		=> $shipping_area_id,
 				'shipping_area_name' 	=> $shipping_area_name,

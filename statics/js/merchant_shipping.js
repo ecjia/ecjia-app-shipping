@@ -115,7 +115,40 @@
             app.area_info.choose_area();
             app.area_info.selected_area();
             app.area_info.quick_search();
+            app.area_info.tpicker();
+            app.area_info.datepicker();
+            
         },
+        
+        datepicker : function(){
+            $(".tp_1").datetimepicker({
+				format: "hh:ii",
+                weekStart: 1,
+                todayBtn: 1,
+                autoclose: 1,
+                todayHighlight: 1,
+                startView: 1,
+                forceParse: 0,
+                minuteStep: 5
+			});
+        },
+        
+        tpicker : function () {
+			$('.fontello-icon-plus').click(function(e) {
+				setTimeout(function () { 
+					$(".tp_1").datetimepicker({
+						format: "hh:ii",
+		                weekStart: 1,
+		                todayBtn: 1,
+		                autoclose: 1,
+		                todayHighlight: 1,
+		                startView: 1,
+		                forceParse: 0,
+		                minuteStep: 5
+					});
+			    }, 1000);
+			});
+		},
  
         shipping_submit: function () {
             $('form[name="theForm"]').on('submit', function (e) {

@@ -8,6 +8,12 @@
 	padding-top: 2px !important;
 	height:30px;
 }
+.time-picker {
+	margin-bottom:5px;
+}
+.time-picker .form-control {
+	display : unset;
+}
 
 
 
