@@ -165,7 +165,7 @@ class mh_area extends ecjia_merchant {
 		$area_count = $this->db_shipping_area->is_only(array('shipping_id' => $shipping_id, 'shipping_area_name' => $shipping_area_name, 'store_id' => $_SESSION['store_id']));
 
 		if ($area_count > 0) {
-		    $this->showmessage(RC_Lang::get('shipping::shipping_area.repeat_area_name'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
+		    return $this->showmessage(RC_Lang::get('shipping::shipping_area.repeat_area_name'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
 		} else {
 //			$shipping_data = $this->db_shipping->shipping_find(array('shipping_id' => $shipping_id), 'shipping_code, support_cod, shipping_name');
 			$shipping_data = $this->db_shipping->shipping_find(array('shipping_id' => $shipping_id), array('shipping_code', 'support_cod', 'shipping_name'));
@@ -238,7 +238,7 @@ class mh_area extends ecjia_merchant {
 			$links[] = array('text' => RC_Lang::get('shipping::shipping_area.add_continue'), 'href' => RC_Uri::url('shipping/mh_area/add', array('shipping_id' => $shipping_id, 'code' => $code)));
 			
 			$refresh_url = RC_Uri::url('shipping/mh_area/edit', array('id' => $area_id, 'shipping_id' => $shipping_id, 'code' => $code));
-			$this->showmessage(RC_Lang::get('shipping::shipping_area.add_area_success'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('links' => $links, 'refresh_url' => $refresh_url));
+			return $this->showmessage(RC_Lang::get('shipping::shipping_area.add_area_success'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('links' => $links, 'refresh_url' => $refresh_url));
 		}
 	}
 	
@@ -264,7 +264,7 @@ class mh_area extends ecjia_merchant {
 		
 		$shipping_data = $dbview->shipping_area_find(array('a.shipping_area_id' => $ship_area_id, 'a.store_id' => $_SESSION['store_id']), 's.shipping_name, s.shipping_code, s.support_cod, a.*', 'shipping_area');
 		if (empty($shipping_data)) {
-			$this->showmessage('未找到相关配送区域！', ecjia::MSGTYPE_HTML | ecjia::MSGSTAT_ERROR);
+			return $this->showmessage('未找到相关配送区域！', ecjia::MSGTYPE_HTML | ecjia::MSGSTAT_ERROR);
 		}
 		$fields = unserialize ($shipping_data['configure']);
 
@@ -390,10 +390,10 @@ class mh_area extends ecjia_merchant {
 		/*判断该配送区域是否属于该商户*/ 
 		$shipping_area = $this->db_shipping_area->where(array('shipping_area_id' => $shipping_area_id, 'store_id' => $_SESSION['store_id']))->find();
 		if (empty($shipping_area)) {
-			$this->showmessage('未找到相关配送区域！', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
+			return $this->showmessage('未找到相关配送区域！', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
 		}
 		if ($ship_area_count > 0) {
-			$this->showmessage(RC_Lang::get('shipping::shipping_area.repeat_area_name'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
+			return $this->showmessage(RC_Lang::get('shipping::shipping_area.repeat_area_name'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
 		} else {
 //			$shipping_data = $this->db_shipping->shipping_find(array('shipping_id' => $shipping_id), 'shipping_code, shipping_name, support_cod');
 			$shipping_data = $this->db_shipping->shipping_find(array('shipping_id' => $shipping_id), array('shipping_code', 'shipping_name', 'support_cod'));
@@ -491,7 +491,7 @@ class mh_area extends ecjia_merchant {
 			}
 		
 			$refresh_url = RC_Uri::url('shipping/mh_area/edit', array('id' => $shipping_area_id, 'shipping_id' => $shipping_id, 'code' => $code));
-			$this->showmessage(RC_Lang::get('shipping::shipping_area.edit_area') . "&nbsp;" .$shipping_area_name . "&nbsp;" . RC_Lang::get('shipping::shipping.attradd_succed'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('refresh_url' => $refresh_url));
+			return $this->showmessage(RC_Lang::get('shipping::shipping_area.edit_area') . "&nbsp;" .$shipping_area_name . "&nbsp;" . RC_Lang::get('shipping::shipping.attradd_succed'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('refresh_url' => $refresh_url));
 		}
 	}
 	
@@ -505,7 +505,7 @@ class mh_area extends ecjia_merchant {
 		if ($id > 0) {
 			$row = $this->db_shipping_area->shipping_area_find(array('shipping_area_id' => $id, 'store_id' => $_SESSION['store_id']));
 			if (empty($row)) {
-				$this->showmessage('未找到相关配送区域！' , ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
+				return $this->showmessage('未找到相关配送区域！' , ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
 			}
 			
 			$shipping_name = $this->db_shipping->shipping_field(array('shipping_id' => $row['shipping_id']), 'shipping_name');
@@ -515,10 +515,10 @@ class mh_area extends ecjia_merchant {
 				$this->db_shipping_area->shipping_area_remove(array('shipping_area_id' => $id));
 
 				ecjia_merchant::admin_log($row['shipping_area_name'].'，'.RC_Lang::get('shipping::shipping_area.shipping_way').$shipping_name, 'remove', 'shipping_area');
-				$this->showmessage(RC_Lang::get('shipping::shipping_area.remove_success'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS);
+				return $this->showmessage(RC_Lang::get('shipping::shipping_area.remove_success'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS);
 			}
 		} else {
-			$this->showmessage(RC_Lang::get('shipping::shipping_area.remove_fail'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
+			return $this->showmessage(RC_Lang::get('shipping::shipping_area.remove_fail'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
 		}
 	}
 	
@@ -548,9 +548,9 @@ class mh_area extends ecjia_merchant {
 				}
 			}
 			$refresh_url = RC_Uri::url('shipping/mh_area/init', array('shipping_id' => $shipping_id, 'code' => $code));
-			$this->showmessage(RC_Lang::get('shipping::shipping_area.batch_delete'). RC_Lang::get('shipping::shipping.attradd_succed'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS , array('pjaxurl' => $refresh_url));
+			return $this->showmessage(RC_Lang::get('shipping::shipping_area.batch_delete'). RC_Lang::get('shipping::shipping.attradd_succed'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS , array('pjaxurl' => $refresh_url));
 		}else {
-			$this->showmessage(RC_Lang::get('shipping::shipping_area.batch_no_select_falid'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
+			return $this->showmessage(RC_Lang::get('shipping::shipping_area.batch_no_select_falid'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
 		}
 	}
 	

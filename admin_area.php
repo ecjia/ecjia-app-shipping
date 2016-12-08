@@ -170,7 +170,7 @@ class admin_area extends ecjia_admin {
 		$area_count = $this->db_shipping_area->where(array('shipping_id' => $shipping_id, 'store_id' => $store_id, 'shipping_area_name' => $shipping_area_name))->count();
 		
 		if ($area_count > 0) {
-		    $this->showmessage(RC_Lang::get('shipping::shipping_area.repeat_area_name'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
+		    return $this->showmessage(RC_Lang::get('shipping::shipping_area.repeat_area_name'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
 		} else {
 //			$shipping_data = $this->db_shipping->shipping_find(array('shipping_id' => $shipping_id), 'shipping_code, support_cod, shipping_name');
 			$shipping_data = $this->db_shipping->shipping_find(array('shipping_id' => $shipping_id), array('shipping_code', 'support_cod', 'shipping_name'));
@@ -240,7 +240,7 @@ class admin_area extends ecjia_admin {
 			$links[] = array('text' => RC_Lang::get('shipping::shipping_area.add_continue'), 'href' => RC_Uri::url('shipping/admin_area/add', array('shipping_id' => $shipping_id, 'code' => $code)));
 			
 			$refresh_url = RC_Uri::url('shipping/admin_area/edit', array('id' => $area_id, 'shipping_id' => $shipping_id, 'code' => $code));
-			$this->showmessage(RC_Lang::get('shipping::shipping_area.add_area_success'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('links' => $links, 'refresh_url' => $refresh_url));
+			return $this->showmessage(RC_Lang::get('shipping::shipping_area.add_area_success'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('links' => $links, 'refresh_url' => $refresh_url));
 		}
 	}
 	
@@ -396,7 +396,7 @@ class admin_area extends ecjia_admin {
 		$ship_area_count = $this->db_shipping_area->is_only(array('shipping_id' => $shipping_id, 'shipping_area_name' => $shipping_area_name, 'shipping_area_id' => array('neq' => $shipping_area_id)));
 
 		if ($ship_area_count > 0) {
-			$this->showmessage(RC_Lang::get('shipping::shipping_area.repeat_area_name'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
+			return $this->showmessage(RC_Lang::get('shipping::shipping_area.repeat_area_name'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
 		} else {
 //			$shipping_data = $this->db_shipping->shipping_find(array('shipping_id' => $shipping_id), 'shipping_code, shipping_name, support_cod');
 			$shipping_data = $this->db_shipping->shipping_find(array('shipping_id' => $shipping_id), array('shipping_code', 'shipping_name', 'support_cod'));
@@ -495,7 +495,7 @@ class admin_area extends ecjia_admin {
 			}
 		
 			$refresh_url = RC_Uri::url('shipping/admin_area/edit', array('id' => $shipping_area_id, 'shipping_id' => $shipping_id, 'code' => $code));
-			$this->showmessage(RC_Lang::get('shipping::shipping_area.edit_area') . "&nbsp;" .$shipping_area_name . "&nbsp;" . RC_Lang::get('shipping::shipping.attradd_succed'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('refresh_url' => $refresh_url));
+			return $this->showmessage(RC_Lang::get('shipping::shipping_area.edit_area') . "&nbsp;" .$shipping_area_name . "&nbsp;" . RC_Lang::get('shipping::shipping.attradd_succed'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('refresh_url' => $refresh_url));
 		}
 	}
 	
@@ -515,10 +515,10 @@ class admin_area extends ecjia_admin {
 				$this->db_shipping_area->shipping_area_remove(array('shipping_area_id' => $id));
 
 				ecjia_admin::admin_log($row['shipping_area_name'].'，'.RC_Lang::get('shipping::shipping_area.shipping_way').$shipping_name, 'remove', 'shipping_area');
-				$this->showmessage(RC_Lang::get('shipping::shipping_area.remove_success'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS);
+				return $this->showmessage(RC_Lang::get('shipping::shipping_area.remove_success'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS);
 			}
 		} else {
-			$this->showmessage(RC_Lang::get('shipping::shipping_area.remove_fail'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
+			return $this->showmessage(RC_Lang::get('shipping::shipping_area.remove_fail'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
 		}
 	}
 	
@@ -545,9 +545,9 @@ class admin_area extends ecjia_admin {
 				}
 			}
 			$refresh_url = RC_Uri::url('shipping/admin_area/init', array('shipping_id' => $shipping_id, 'code' => $code));
-			$this->showmessage(RC_Lang::get('shipping::shipping_area.batch_delete'). RC_Lang::get('shipping::shipping.attradd_succed'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS , array('pjaxurl' => $refresh_url));
+			return $this->showmessage(RC_Lang::get('shipping::shipping_area.batch_delete'). RC_Lang::get('shipping::shipping.attradd_succed'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS , array('pjaxurl' => $refresh_url));
 		}else {
-			$this->showmessage(RC_Lang::get('shipping::shipping_area.batch_no_select_falid'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
+			return $this->showmessage(RC_Lang::get('shipping::shipping_area.batch_no_select_falid'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
 		}
 	}
 	

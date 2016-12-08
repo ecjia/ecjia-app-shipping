@@ -109,12 +109,12 @@ class admin extends ecjia_admin {
 		if (isset($_GET['code'])) {
 			$shipping_code = trim($_GET['code']);
 		} else {
-			$this->showmessage(__('invalid parameter'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
+			return $this->showmessage(__('invalid parameter'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
 		}
 		/* 查询该支付方式内容 */
 		$shipping = $this->db_shipping->shipping_find(array('shipping_code' => $shipping_code, 'enabled' => 1));
 		if (empty($shipping)) {
-			$this->showmessage(RC_Lang::get('shipping::shipping.shipping_not_available'), ecjia::MSGTYPE_HTML | ecjia::MSGSTAT_ERROR);
+			return $this->showmessage(RC_Lang::get('shipping::shipping.shipping_not_available'), ecjia::MSGTYPE_HTML | ecjia::MSGSTAT_ERROR);
 		}
 			
 		$this->assign('form_action', RC_Uri::url('shipping/admin/save'));
@@ -132,12 +132,12 @@ class admin extends ecjia_admin {
 		$name = trim($_POST['shipping_name']);
 		$code = trim($_POST['shipping_code']);
 		if (empty($name)) {
-			$this->showmessage(RC_Lang::get('shipping::shipping.shipping_name') . RC_Lang::get('system::system.empty'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
+			return $this->showmessage(RC_Lang::get('shipping::shipping.shipping_name') . RC_Lang::get('system::system.empty'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
 		}
 	
 		$data = $this->db_shipping->is_only(array('shipping_name' => $name, 'shipping_code' => array('neq' => $code)));
 		if ($data > 0) {
-			$this->showmessage(RC_Lang::get('shipping::shipping.shipping_name'). RC_Lang::get('shipping::shipping.repeat'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
+			return $this->showmessage(RC_Lang::get('shipping::shipping.shipping_name'). RC_Lang::get('shipping::shipping.repeat'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
 		}
 
 		$array = array(
@@ -148,7 +148,7 @@ class admin extends ecjia_admin {
 
 		/* 记录日志 */
 		ecjia_admin::admin_log($name, 'edit', 'shipping');
-		$this->showmessage(RC_Lang::get('shipping::shipping.edit_ok'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('pjaxurl' => RC_Uri::url('shipping/admin/edit', array('code' => $code))));
+		return $this->showmessage(RC_Lang::get('shipping::shipping.edit_ok'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('pjaxurl' => RC_Uri::url('shipping/admin/edit', array('code' => $code))));
 	}
 	
 	/**
@@ -165,7 +165,7 @@ class admin extends ecjia_admin {
 		$shipping_name = $this->db_shipping->shipping_field(array('shipping_code' => $code), 'shipping_name');
 
 		ecjia_admin::admin_log($shipping_name, 'stop', 'shipping');
-		$this->showmessage(RC_Lang::get('shipping::shipping.plugin').' <strong>'.RC_Lang::get('shipping::shipping.disabled').'</strong>', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS , array( 'refresh_url' => $refresh_url));
+		return $this->showmessage(RC_Lang::get('shipping::shipping.plugin').' <strong>'.RC_Lang::get('shipping::shipping.disabled').'</strong>', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS , array( 'refresh_url' => $refresh_url));
 	}
 	
 	/**
@@ -182,7 +182,7 @@ class admin extends ecjia_admin {
 		$shipping_name = $this->db_shipping->shipping_field(array('shipping_code' => $code), 'shipping_name');
 		
 		ecjia_admin::admin_log($shipping_name, 'use', 'shipping');
-		$this->showmessage(RC_Lang::get('shipping::shipping.plugin').' <strong>'.RC_Lang::get('shipping::shipping.enabled').'</strong>', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS , array( 'refresh_url' => $refresh_url));
+		return $this->showmessage(RC_Lang::get('shipping::shipping.plugin').' <strong>'.RC_Lang::get('shipping::shipping.enabled').'</strong>', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS , array( 'refresh_url' => $refresh_url));
 	}
 	
 	
@@ -251,9 +251,9 @@ class admin extends ecjia_admin {
 				}
 			}
 			$refresh_url = RC_Uri::url('shipping/admin/edit_print_template', array('shipping_id' => $shipping_id ));
-			$this->showmessage(RC_Lang::get('shipping::shipping.recovery_default') . RC_Lang::get('shipping::shipping.attradd_succed'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS , array( 'refresh_url' => $refresh_url));
+			return $this->showmessage(RC_Lang::get('shipping::shipping.recovery_default') . RC_Lang::get('shipping::shipping.attradd_succed'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS , array( 'refresh_url' => $refresh_url));
 		} else {
-			$this->showmessage(RC_Lang::get('shipping::shipping.recovery_default') . RC_Lang::get('shipping::shipping.attradd_faild'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR );
+			return $this->showmessage(RC_Lang::get('shipping::shipping.recovery_default') . RC_Lang::get('shipping::shipping.attradd_faild'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR );
 		}
 	}
 	
@@ -290,7 +290,7 @@ class admin extends ecjia_admin {
 			if (!RC_File::file_suffix($_FILES['bg']['name'], $allow_suffix)) {
 				$url = RC_Uri::url('shipping/admin/edit_print_template', array('shipping_id' => $shipping_id )) ;
 				$this->header("Location: $url\n");
-  				$this->showmessage(RC_Lang::get('shipping::shipping.js_languages.upload_falid') .implode(',', $allow_suffix), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR );
+  				return $this->showmessage(RC_Lang::get('shipping::shipping.js_languages.upload_falid') .implode(',', $allow_suffix), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR );
 			} else {
 				$name = date('Ymd');
 				for ($i = 0; $i < 6; $i++) {
@@ -321,11 +321,11 @@ class admin extends ecjia_admin {
 					$url = RC_Uri::url('shipping/admin/edit_print_template', array('shipping_id' => $shipping_id)) ;
 					$this->header("Location: $url\n");
 				} else {
-					$this->showmessage(RC_Lang::get('shipping::shipping.upload_shipping_bg'). RC_Lang::get('shipping::shipping.attradd_faild'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
+					return $this->showmessage(RC_Lang::get('shipping::shipping.upload_shipping_bg'). RC_Lang::get('shipping::shipping.attradd_faild'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
 				}
 			}
 		} else {
-			$this->showmessage(RC_Lang::get('shipping::shipping.upload_shipping_bg'). RC_Lang::get('shipping::shipping.attradd_faild'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
+			return $this->showmessage(RC_Lang::get('shipping::shipping.upload_shipping_bg'). RC_Lang::get('shipping::shipping.attradd_faild'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
 		}
 	}
 	
@@ -346,12 +346,12 @@ class admin extends ecjia_admin {
 				$data = array('print_bg' => '');
 				$res = $this->db_shipping->shipping_update(array('shipping_id' => $shipping_id), $data);
 
-				$this->showmessage(RC_Lang::get('shipping::shipping.remove_success'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS);
+				return $this->showmessage(RC_Lang::get('shipping::shipping.remove_success'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS);
 			} else {
-				$this->showmessage(RC_Lang::get('shipping::shipping.use_again_notice'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS);
+				return $this->showmessage(RC_Lang::get('shipping::shipping.use_again_notice'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS);
 			}	
 		} else {
-			$this->showmessage(RC_Lang::get('shipping::shipping.remove_success'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
+			return $this->showmessage(RC_Lang::get('shipping::shipping.remove_success'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
 		}
 	}
 	
@@ -388,7 +388,7 @@ class admin extends ecjia_admin {
 			
 			$this->display('shipping_template.dwt');
 		} else {
-			$this->showmessage(RC_Lang::get('shipping::shipping.no_shipping_install'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR );
+			return $this->showmessage(RC_Lang::get('shipping::shipping.no_shipping_install'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR );
 		}
 	}
 	
@@ -419,7 +419,7 @@ class admin extends ecjia_admin {
 		}
 		
 		ecjia_admin::admin_log(addslashes($_POST['shipping_name']), 'edit', 'shipping_print_template');
-		$this->showmessage(RC_Lang::get('shipping::shipping.edit_template_success'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS);
+		return $this->showmessage(RC_Lang::get('shipping::shipping.edit_template_success'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS);
 	}
 	
 	/**
@@ -433,23 +433,23 @@ class admin extends ecjia_admin {
 		$shipping_name 	= trim($_POST['value']);
 		/* 检查名称是否为空 */
 		if (empty($shipping_name) || $shipping_id == 0 ) {
-			$this->showmessage(RC_Lang::get('shipping::shipping.no_shipping_name'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR );
+			return $this->showmessage(RC_Lang::get('shipping::shipping.no_shipping_name'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR );
 		} else {
 			/* 检查名称是否重复 */
 			$old_name=$this->db_shipping->shipping_field(array('shipping_id' => $shipping_id), 'shipping_name');
 			/* 名称是否有修改 */
 			if ($old_name==$shipping_name ) {
-				$this->showmessage(RC_Lang::get('shipping::shipping.repeat_shipping_name'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR );
+				return $this->showmessage(RC_Lang::get('shipping::shipping.repeat_shipping_name'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR );
 			} else {
 				/* 名称是否重复 */
 				if ($this->db_shipping->is_only(array('shipping_name' => $shipping_name, 'shipping_id' => array('neq' => $shipping_id))) != 0) {
 
-					$this->showmessage(RC_Lang::get('shipping::shipping.repeat_shipping_name'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR );
+					return $this->showmessage(RC_Lang::get('shipping::shipping.repeat_shipping_name'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR );
 				} else {
 					$this->db_shipping->shipping_update(array('shipping_id' => $shipping_id), array('shipping_name' => $shipping_name));
 					
 					ecjia_admin::admin_log(addslashes($shipping_name), 'edit', 'shipping');
-					$this->showmessage(RC_Lang::get('shipping::shipping.attradd_succed'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS);
+					return $this->showmessage(RC_Lang::get('shipping::shipping.attradd_succed'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS);
 				}
 			}
 		}
@@ -465,13 +465,13 @@ class admin extends ecjia_admin {
 		$shipping_insure = trim($_POST['value']);
 		
 		if (empty($shipping_insure) && !($shipping_insure === '0')) {
-			$this->showmessage(RC_Lang::get('shipping::shipping.no_shipping_insure'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
+			return $this->showmessage(RC_Lang::get('shipping::shipping.no_shipping_insure'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
 		}
 		else {
 			$shipping_insure = make_semiangle($shipping_insure); //全角转半角
 			if (strpos($shipping_insure, '%') === false) {
 				if (!is_numeric($_POST['value'])) { 
-					$this->showmessage(RC_Lang::get('shipping::shipping.enter_valid_number'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
+					return $this->showmessage(RC_Lang::get('shipping::shipping.enter_valid_number'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
 				} else {
 					$shipping_insure = floatval($shipping_insure);
 				}
@@ -482,7 +482,7 @@ class admin extends ecjia_admin {
 			/* 检查该插件是否支持保价   在此不做检查，在页面上进行控制，不支持保价的不允许修改*/
 			$this->db_shipping->shipping_update(array('shipping_id' => $shipping_id), array('insure' => $shipping_insure));
 
-			$this->showmessage(RC_Lang::get('shipping::shipping.attradd_succed'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS);
+			return $this->showmessage(RC_Lang::get('shipping::shipping.attradd_succed'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS);
 		}
 	}
 	
@@ -494,14 +494,14 @@ class admin extends ecjia_admin {
 		$this->admin_priv('ship_update', ecjia::MSGTYPE_JSON);
 		
 		if (!is_numeric($_POST['value'])) {
-			$this->showmessage(RC_Lang::get('shipping::shipping.format_error'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
+			return $this->showmessage(RC_Lang::get('shipping::shipping.format_error'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
 		} else {
 			/* 取得参数 */
 			$shipping_id    = intval($_POST['pk']);
 			$shipping_order = intval($_POST['value']);
 			
 			$this->db_shipping->shipping_update(array('shipping_id' => $shipping_id), array('shipping_order' => $shipping_order));
-			$this->showmessage(RC_Lang::get('shipping::shipping.attradd_succed'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('pjaxurl' => RC_uri::url('shipping/admin/init')));
+			return $this->showmessage(RC_Lang::get('shipping::shipping.attradd_succed'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('pjaxurl' => RC_uri::url('shipping/admin/init')));
 		}
 	}
 }	
