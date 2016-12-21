@@ -201,7 +201,11 @@ class mh_area extends ecjia_merchant {
 					$time[$k]['start']	= $v;
 					$time[$k]['end']	= $_POST['end_ship_time'][$k];
 				}
-					
+				
+				
+				$config[$count]['name']     = 'express_money';
+				$config[$count]['value']    = empty($_POST['express_money']) ? 0 : floatval($_POST['express_money']);
+				$count++;
 				$config[$count]['name']     = 'ship_days';
 				$config[$count]['value']    = empty($_POST['ship_days']) ? '' : intval($_POST['ship_days']);
 				$count++;
@@ -296,7 +300,7 @@ class mh_area extends ecjia_merchant {
 					$fields[$key]['label'] = empty($val['label']) ? RC_Lang::get('shipping::shipping_area.'.$val['name']) : $val['label'];
 				}
 				
-				if ($shipping_data['shipping_code'] == 'ship_o2o_express' && (in_array($val['name'], array('ship_days', 'last_order_time', 'ship_time')))) {
+				if ($shipping_data['shipping_code'] == 'ship_o2o_express' && (in_array($val['name'], array('ship_days', 'last_order_time', 'ship_time', 'express_money')))) {
 					if ($val['name'] == 'ship_time') {
 						$o2o_shipping_time = array();
 						foreach ($val['value'] as $v) {
@@ -310,6 +314,9 @@ class mh_area extends ecjia_merchant {
 					}
 					if ($val['name'] == 'last_order_time') {
 						$this->assign('last_order_time', $val['value']);
+					}
+					if ($val['name'] == 'express_money') {
+						$this->assign('express_money', $val['value']);
 					}
 					unset($fields [$key]);
 				}
@@ -430,7 +437,10 @@ class mh_area extends ecjia_merchant {
 					$time[$k]['start']	= $v;
 					$time[$k]['end']	= $_POST['end_ship_time'][$k];
 				}
-					
+				
+				$config[$count]['name']     = 'express_money';
+				$config[$count]['value']    = empty($_POST['express_money']) ? 0 : floatval($_POST['express_money']);
+				$count++;
 				$config[$count]['name']     = 'ship_days';
 				$config[$count]['value']    = empty($_POST['ship_days']) ? '' : intval($_POST['ship_days']);
 				$count++;

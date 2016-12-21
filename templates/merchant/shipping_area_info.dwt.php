@@ -104,6 +104,12 @@ ecjia.merchant.area_info.init();
 						<!--{/if}-->
 						
 						<!-- {if $shipping_area.shipping_code eq 'ship_o2o_express'} -->
+							<div class="form-group" id="express_money">
+								<label class="control-label col-lg-2">配送员费用：</label>
+								<div class="controls col-lg-3">
+									<input class="form-control col-lg-3" name="express_money" type="text" value="{$express_money|default:0}" size="40" />
+								</div>
+							</div>
 							<div class="form-group" id="ship_days">
 								<label class="control-label col-lg-2">下单后几天内配送：</label>
 								<div class="controls col-lg-3">
