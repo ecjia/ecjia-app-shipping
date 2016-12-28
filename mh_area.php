@@ -25,20 +25,11 @@ class mh_area extends ecjia_merchant {
 // 		RC_Style::enqueue_style('chosen');
 // 		RC_Style::enqueue_style('chosen_style', RC_Theme::get_template_directory_uri().'/assets/chosen/chosen.css', array());
 // 		RC_Script::enqueue_script('chosen_script', RC_Theme::get_template_directory_uri().'/assets/chosen/chosen.jquery.min.js', array(), false, false);
-		
 		RC_Style::enqueue_style('merchant_shipping', RC_App::apps_url('statics/css/merchant_shipping.css', __FILE__), array(), false, false);
 		
 		//时间
-// 		RC_Style::enqueue_style('datepicker', RC_Uri::admin_url('statics/lib/datepicker/datepicker.css'));
-// 		RC_Script::enqueue_script('bootstrap-datepicker', RC_Uri::admin_url('statics/lib/datepicker/bootstrap-timepicker.min.js'));
-		
 		RC_Script::enqueue_script('datepicker', RC_Uri::admin_url('statics/lib/datepicker/bootstrap-datetimepicker.js'));
 		RC_Style::enqueue_style('datepicker', RC_Uri::admin_url('statics/lib/datepicker/bootstrap-datetimepicker.min.css'));
-		
-		
-// 		RC_Style::enqueue_style('uniform-aristo');
-// 		RC_Script::enqueue_script('jquery-uniform');
-// 		RC_Script::enqueue_script('jquery-chosen');
 		
 		$this->db_shipping 				= RC_Model::model('shipping/shipping_model');
 		$this->db_shipping_area 		= RC_Model::model('shipping/shipping_area_model');
