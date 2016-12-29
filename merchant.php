@@ -41,7 +41,7 @@ class merchant extends ecjia_merchant {
 		RC_Script::localize_script('shopping_admin', 'js_lang', RC_Lang::get('shipping::shipping.js_lang'));
 		
 		ecjia_merchant_screen::get_current_screen()->set_parentage('shipping', 'shipping/merchant.php');
-		ecjia_screen::get_current_screen()->add_nav_here(new admin_nav_here('我的配送', RC_Uri::url('shipping/admin/init')));
+		ecjia_merchant_screen::get_current_screen()->add_nav_here(new admin_nav_here('配送管理', RC_Uri::url('shipping/merchant/init')));
 	}
 
 	/**
@@ -50,7 +50,6 @@ class merchant extends ecjia_merchant {
 	public function init() { 
 		$this->admin_priv('ship_merchant_manage', ecjia::MSGTYPE_JSON);
 
-		ecjia_screen::get_current_screen()->remove_last_nav_here();
 		ecjia_screen::get_current_screen()->add_nav_here(new admin_nav_here('我的配送'));
 		ecjia_screen::get_current_screen()->add_help_tab(array(
 			'id'		=> 'overview',
