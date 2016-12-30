@@ -21,21 +21,6 @@ class shipping_method
      * @return  array   配送方式数组
      */
     public function available_shipping_list($region_id_list, $store_id = 0) {  	
-//     	$dbview = RC_Model::model('shipping/shipping_viewmodel');
-        // $dbview->view = array(
-        // 	'shipping_area' => array(
-        // 		'type' 	=> Component_Model_View::TYPE_LEFT_JOIN,
-        // 		'alias' => 'a',
-        // 		'field' => 's.shipping_id, s.shipping_code, s.shipping_name,s.shipping_desc, s.insure, s.support_cod, a.configure',
-        // 		'on' 	=> 'a.shipping_id = s.shipping_id', 
-        // 	),
-        // 	'area_region' => array(
-        // 		'type' 	=> Component_Model_View::TYPE_LEFT_JOIN,	
-        // 		'alias' => 'r',
-        // 		'on' 	=> 'r.shipping_area_id = a.shipping_area_id ', 
-        // 	)
-        // );
-//         $data = $dbview->join(array('shipping_area', 'area_region'))->field('s.shipping_id, s.shipping_code, s.shipping_name,s.shipping_desc, s.insure, s.support_cod, a.configure')->where(array('s.enabled' => 1))->in(array('r.region_id' => $region_id_list))->order(array('s.shipping_order' => 'asc'))->select();
 		$data = RC_DB::table('shipping')->leftJoin('shipping_area', 'shipping_area.shipping_id', '=', 'shipping.shipping_id')
 			->leftJoin('area_region', 'area_region.shipping_area_id', '=', 'shipping_area.shipping_area_id')
 			->select('shipping.shipping_id', 'shipping.shipping_code', 'shipping.shipping_name', 'shipping.shipping_desc', 'shipping.insure', 'shipping.support_cod', 'shipping_area.configure')
@@ -71,21 +56,6 @@ class shipping_method
      * @return  array   配送区域信息（config 对应着反序列化的 configure）
      */
     public function shipping_area_info($shipping_id, $region_id_list, $store_id) {
-//         $dbview = RC_Model::model('shipping/shipping_viewmodel');
-//         $dbview->view = array(
-//             'shipping_area' => array(
-//                 'type' 	=> Component_Model_View::TYPE_LEFT_JOIN,
-//                 'alias' => 'a',
-//                 'field' => 's.shipping_code, s.shipping_name,s.shipping_desc, s.insure, s.support_cod, a.configure',
-//                 'on' 	=> 'a.shipping_id = s.shipping_id',
-//             ),
-//             'area_region' => array(
-//                 'type' 	=> Component_Model_View::TYPE_LEFT_JOIN,
-//                 'alias' => 'r',
-//                 'on' 	=> 'r.shipping_area_id = a.shipping_area_id ',
-//             )
-//         );
-//         $row = $dbview->join(array('shipping_area', 'area_region'))->field('s.shipping_code, s.shipping_name,s.shipping_desc, s.insure, s.support_cod, a.configure')->in(array('r.region_id' => $region_id_list))->find(array('s.shipping_id' => $shipping_id, 's.enabled' => 1));
     	$db = RC_DB::table('shipping');
         $row = $db->leftJoin('shipping_area', 'shipping_area.shipping_id', '=', 'shipping.shipping_id')
         	->leftJoin('area_region', 'area_region.shipping_area_id', '=', 'shipping_area.shipping_area_id')
@@ -118,7 +88,6 @@ class shipping_method
      */
     public function shipping_list() 
     {
-//     	$data = $this->db->field('shipping_id, shipping_name, shipping_code')->where(array('enabled' => 1))->select();
     	$data = RC_DB::table('shipping')->select('shipping_id', 'shipping_name', 'shipping_code')->where('enabled', 1)->get();
     	
     	$plugins = $this->available_shipping_plugins();
@@ -210,7 +179,6 @@ class shipping_method
     		RC_Loader::load_app_class('shipping_factory', 'shipping', false);
     		$shipping_handle = new shipping_factory($shipping_code);
     		if ($shipping_handle){
-//     			$shipping = new $shipping_code;
     			$insure   = floatval($insure) / 100;
     			if (method_exists($shipping, 'calculate_insure')) {
     				return $shipping_handle->calculate_insure($goods_amount, $insure);

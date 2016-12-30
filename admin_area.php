@@ -56,12 +56,10 @@ class admin_area extends ecjia_admin {
 		$args['keywords'] = !empty($_GET['keywords']) ? trim($_GET['keywords']) : '';
 		$args['store_id'] = !empty($_GET['store_id']) ? intval($_GET['store_id']) : 0;
 
-// 		$ship_areas_list = $this->db_shipping_area->get_shipareas_list($args);
 		$shipping_area_db = RC_Model::model('shipping/shipping_area_viewmodel');
 		$ship_areas_list = $shipping_area_db->get_shipareas_list($args);
 		
 		
-//		$shipping_name = $this->db_shipping->where(array('shipping_id' => $shipping_id))->get_field('shipping_name');
 		$shipping_name = $this->db_shipping->shipping_field(array('shipping_id' => $shipping_id), 'shipping_name');
 
 		ecjia_screen::get_current_screen()->add_nav_here(new admin_nav_here(__($shipping_name)));
@@ -102,7 +100,6 @@ class admin_area extends ecjia_admin {
 		$shipping_id 	= !empty($_GET['shipping_id']) ? intval($_GET['shipping_id']) : 0;
 		$code 			= !empty($_GET['code']) ? trim($_GET['code']) : '';
 		$store_id 		= !empty($_GET['store_id']) ? intval($_GET['store_id']) : 0;
-//		$shipping_data  = $this->db_shipping->shipping_find(array('shipping_id' => $shipping_id), 'shipping_name, shipping_code, support_cod');
 		$shipping_data  = $this->db_shipping->shipping_find(array('shipping_id' => $shipping_id), array('shipping_name', 'shipping_code', 'support_cod'));
 
 		if ($store_id) {
@@ -172,7 +169,6 @@ class admin_area extends ecjia_admin {
 		if ($area_count > 0) {
 		    return $this->showmessage(RC_Lang::get('shipping::shipping_area.repeat_area_name'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
 		} else {
-//			$shipping_data = $this->db_shipping->shipping_find(array('shipping_id' => $shipping_id), 'shipping_code, support_cod, shipping_name');
 			$shipping_data = $this->db_shipping->shipping_find(array('shipping_id' => $shipping_id), array('shipping_code', 'support_cod', 'shipping_name'));
 
 			$config = array();
@@ -331,16 +327,6 @@ class admin_area extends ecjia_admin {
 			array_unshift($fields, $field );
 		}
 		$regions = array ();
-// 		$db_region_view = RC_Loader::load_app_model('shipping_area_region_viewmodel');
-// 		$db_region->view = array(
-// 			'region' => array(
-// 				'type' 	=> Component_Model_View::TYPE_LEFT_JOIN,
-// 				'alias' => 'r',
-// 				'field' => 'a.region_id, r.region_name',
-// 				'on' 	=> 'r.region_id = a.region_id' 
-// 			) 
-// 		);
-// 		$region_data = $db_region_view->shipping_region_select(array('a.shipping_area_id' => $ship_area_id), 'a.region_id, r.region_name', 'region');
 
 		$region_data = RC_DB::table('area_region')->leftJoin('region', 'area_region.region_id', '=', 'region.region_id')
 			->select('area_region.region_id', 'region.region_name')->where('area_region.shipping_area_id', $ship_area_id)->get();
@@ -398,14 +384,12 @@ class admin_area extends ecjia_admin {
 		if ($ship_area_count > 0) {
 			return $this->showmessage(RC_Lang::get('shipping::shipping_area.repeat_area_name'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
 		} else {
-//			$shipping_data = $this->db_shipping->shipping_find(array('shipping_id' => $shipping_id), 'shipping_code, shipping_name, support_cod');
 			$shipping_data = $this->db_shipping->shipping_find(array('shipping_id' => $shipping_id), array('shipping_code', 'shipping_name', 'support_cod'));
 
 			$shipping_data['configure'] = $this->db_shipping_area->shipping_area_field(array('shipping_id' => $shipping_id, 'shipping_area_name' => $shipping_area_name), 'configure');
 
 			$config = unserialize ( $shipping_data ['configure'] );
 			$shipping_handle = new shipping_factory($shipping_data['shipping_code']);
-// 			$config = $shipping_handle->form_format($config, true);
 			$config = $shipping_handle->form_format($config, false);
 			if (!empty($config)) {
 				foreach ($config as $key => $val) {

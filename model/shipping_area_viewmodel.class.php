@@ -23,7 +23,6 @@ class shipping_area_viewmodel extends Component_Model_View {
 	 *  获取配送区域列表
 	 */
 	public function get_shipareas_list($args = array()){
-// 		$db_shipping_area = RC_DB::table('shipping_area');
 		$db_shipping_area = RC_DB::table('shipping_area as sa')
 		->leftJoin('store_franchisee as s', RC_DB::raw('sa.store_id'), '=', RC_DB::raw('s.store_id'));
 		
@@ -35,7 +34,6 @@ class shipping_area_viewmodel extends Component_Model_View {
 		}
 		if ($filter['keywords']) {
 			$db_shipping_area->whereRaw('(sa.shipping_area_name like "%'.mysql_like_quote($filter['keywords']).'%" or s.merchants_name like "%'.mysql_like_quote($filter['keywords']).'%")');
-// 			$db_shipping_area->where('shipping_area_name', 'like', '%'. mysql_like_quote($filter['keywords']). '%');
 		}
 		
 		isset($_SESSION['store_id']) ? $db_shipping_area->where(RC_DB::raw('sa.store_id'), $_SESSION['store_id']) : '';
@@ -51,7 +49,6 @@ class shipping_area_viewmodel extends Component_Model_View {
 		if (!empty($list)) {
 			foreach ($list as $row) {
 				$db_region = RC_Model::model('shipping/shipping_area_region_viewmodel');
-				//				$region_names = $db_region->join('region')->where(array( 'a.shipping_area_id' => $row['shipping_area_id']))->field('r.region_name')->select();
 				
 				$region_names = RC_DB::table('area_region as a')
 					->leftJoin('region as r', RC_DB::raw('r.region_id'), '=', RC_DB::raw('a.region_id'))

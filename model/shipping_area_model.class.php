@@ -35,7 +35,6 @@ class shipping_area_model extends Component_Model_Model {
 		if (!empty($list)) {
 			foreach ($list as $row) {
 				$db_region = RC_Model::model('shipping/shipping_area_region_viewmodel');
-//				$region_names = $db_region->join('region')->where(array( 'a.shipping_area_id' => $row['shipping_area_id']))->field('r.region_name')->select();
 				$region_names = RC_DB::table('area_region')->leftJoin('region', 'region.region_id', '=', 'area_region.region_id')
 						->where('area_region.shipping_area_id', $row['shipping_area_id'])
 						->select('region.region_name')->get();
@@ -62,7 +61,6 @@ class shipping_area_model extends Component_Model_Model {
 	}
 	
 	public function is_only($where) {
-//		return $this->where($where)->count();
 		$db_shipping_area = RC_DB::table('shipping_area');
 		if(!empty($where)){
 			foreach($where as $key => $val){

@@ -24,13 +24,9 @@ class merchant extends ecjia_merchant {
 		
 		RC_Script::enqueue_script('merchant_shipping', RC_App::apps_url('statics/js/merchant_shipping.js', __FILE__));
 		RC_Style::enqueue_style('merchant_shipping', RC_App::apps_url('statics/css/merchant_shipping.css', __FILE__), array(), false, false);
-// 		RC_Style::enqueue_style('bootstrap-editable', RC_Uri::admin_url('statics/lib/x-editable/bootstrap-editable/css/bootstrap-editable.css'));
-// 		RC_Script::enqueue_script('bootstrap-editable.min', RC_Uri::admin_url('statics/lib/x-editable/bootstrap-editable/js/bootstrap-editable.min.js'));
 		RC_Script::enqueue_script('ecjia.utils');
 		RC_Script::enqueue_script('ecjia.common');
 		RC_Style::enqueue_style('chosen');
-// 		RC_Style::enqueue_style('uniform-aristo');
-// 		RC_Script::enqueue_script('jquery-uniform');
 		RC_Script::enqueue_script('jquery-chosen');
 		RC_Loader::load_app_class('shipping_factory', null, false);
 		

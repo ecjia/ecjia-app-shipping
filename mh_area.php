@@ -20,11 +20,7 @@ class mh_area extends ecjia_merchant {
 		RC_Script::enqueue_script('jquery-validate');
 		RC_Script::enqueue_script('jquery-form');
 		RC_Script::enqueue_script('smoke');	
-// 		RC_Script::enqueue_script('shopping_admin', RC_App::apps_url('statics/js/shipping_admin.js', __FILE__));
 		RC_Script::enqueue_script('merchant_shipping', RC_App::apps_url('statics/js/merchant_shipping.js', __FILE__));
-// 		RC_Style::enqueue_style('chosen');
-// 		RC_Style::enqueue_style('chosen_style', RC_Theme::get_template_directory_uri().'/assets/chosen/chosen.css', array());
-// 		RC_Script::enqueue_script('chosen_script', RC_Theme::get_template_directory_uri().'/assets/chosen/chosen.jquery.min.js', array(), false, false);
 		RC_Style::enqueue_style('merchant_shipping', RC_App::apps_url('statics/css/merchant_shipping.css', __FILE__), array(), false, false);
 		
 		//时间
@@ -94,7 +90,6 @@ class mh_area extends ecjia_merchant {
 		
 		$shipping_id 	= !empty($_GET['shipping_id']) ? intval($_GET['shipping_id']) : 0;
 		$code 			= !empty($_GET['code']) ? trim($_GET['code']) : '';
-//		$shipping_data  = $this->db_shipping->shipping_find(array('shipping_id' => $shipping_id), 'shipping_name, shipping_code, support_cod');
 		$shipping_data  = $this->db_shipping->shipping_find(array('shipping_id' => $shipping_id), array('shipping_name', 'shipping_code', 'support_cod'));
 
 		$fields = array();
@@ -158,7 +153,6 @@ class mh_area extends ecjia_merchant {
 		if ($area_count > 0) {
 		    return $this->showmessage(RC_Lang::get('shipping::shipping_area.repeat_area_name'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
 		} else {
-//			$shipping_data = $this->db_shipping->shipping_find(array('shipping_id' => $shipping_id), 'shipping_code, support_cod, shipping_name');
 			$shipping_data = $this->db_shipping->shipping_find(array('shipping_id' => $shipping_id), array('shipping_code', 'support_cod', 'shipping_name'));
 
 			$config = array();
@@ -322,16 +316,6 @@ class mh_area extends ecjia_merchant {
 			array_unshift($fields, $field );
 		}
 		$regions = array ();
-// 		$db_region_view = RC_Loader::load_app_model('shipping_area_region_viewmodel');
-// 		$db_region->view = array(
-// 			'region' => array(
-// 				'type' 	=> Component_Model_View::TYPE_LEFT_JOIN,
-// 				'alias' => 'r',
-// 				'field' => 'a.region_id, r.region_name',
-// 				'on' 	=> 'r.region_id = a.region_id' 
-// 			) 
-// 		);
-// 		$region_data = $db_region_view->shipping_region_select(array('a.shipping_area_id' => $ship_area_id), 'a.region_id, r.region_name', 'region');
 
 		$region_data = RC_DB::table('area_region')->leftJoin('region', 'area_region.region_id', '=', 'region.region_id')
 			->select('area_region.region_id', 'region.region_name')->where('area_region.shipping_area_id', $ship_area_id)->get();
@@ -393,14 +377,12 @@ class mh_area extends ecjia_merchant {
 		if ($ship_area_count > 0) {
 			return $this->showmessage(RC_Lang::get('shipping::shipping_area.repeat_area_name'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
 		} else {
-//			$shipping_data = $this->db_shipping->shipping_find(array('shipping_id' => $shipping_id), 'shipping_code, shipping_name, support_cod');
 			$shipping_data = $this->db_shipping->shipping_find(array('shipping_id' => $shipping_id), array('shipping_code', 'shipping_name', 'support_cod'));
 
 			$shipping_data['configure'] = $this->db_shipping_area->shipping_area_field(array('shipping_id' => $shipping_id, 'shipping_area_name' => $shipping_area_name), 'configure');
 
 			$config = unserialize ( $shipping_data ['configure'] );
 			$shipping_handle = new shipping_factory($shipping_data['shipping_code']);
-// 			$config = $shipping_handle->form_format($config, true);
 			$config = $shipping_handle->form_format($config, false);
 			if (!empty($config)) {
 				foreach ($config as $key => $val) {
@@ -443,7 +425,6 @@ class mh_area extends ecjia_merchant {
 			}
 			
 			$data = array(
-// 				'shipping_area_id' 		=> $shipping_area_id,
 				'shipping_area_name' 	=> $shipping_area_name,
 				'configure'          	=> serialize($config)
 			);	
@@ -533,7 +514,6 @@ class mh_area extends ecjia_merchant {
 		$shipping_id 	= !empty($_GET['shipping_id']) 	? intval($_GET['shipping_id']) 	: 0;
 		$code 			= !empty($_GET['code']) 		? trim($_GET['code']) 			: '';
 		$ids = explode(',', $ids);
-// 		$row = $this->db_shipping_area->shipping_area_batch(array('shipping_area_id' => $ids), 'select');
 		
 		$row = $this->db_shipping_area->where(array('shipping_area_id' => $ids, 'store_id' => $_SESSION['store_id']))->select();
 		$ids = $this->db_shipping_area->where(array('shipping_area_id' => $ids, 'store_id' => $_SESSION['store_id']))->get_field('shipping_area_id', true);
