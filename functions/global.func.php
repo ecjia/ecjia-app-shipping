@@ -1,11 +1,13 @@
 <?php
 defined('IN_ECJIA') or exit('No permission resources.');
+
 /**
  * 获取站点根目录网址
  *
  * @access  private
  * @return  Bool
  */
+ 
 function get_site_root_url() {
 	return 'http://' . $_SERVER['HTTP_HOST'] . str_replace('/' . '/shipping.php', '', PHP_SELF);
 
@@ -69,4 +71,5 @@ function is_print_bg_default($print_bg) {
 function assign_adminlog_content() {
 	ecjia_admin_log::instance()->add_object('shipping_print_template', RC_Lang::get('shipping::shipping.shipping_print_template'));
 }
+
 // end

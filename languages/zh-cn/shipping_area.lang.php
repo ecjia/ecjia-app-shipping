@@ -1,5 +1,6 @@
 <?php
 defined('IN_ECJIA') or exit('No permission resources.');
+
 /**
  * ECJia 管理中心配送方式管理语言文件
  */

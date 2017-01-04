@@ -1,8 +1,10 @@
 <?php
 defined('IN_ECJIA') or exit('No permission resources.');
+
 /**
  * ECJia 管理中心配送方式管理语言文件
  */
+ 
 $LANG['03_shipping_list'] = '配送方式';
 
 
@@ -87,6 +89,5 @@ $LANG['js_languages']['no_select_lable'] = "操作终止！您未选择任何标
 $LANG['js_languages']['no_add_repeat_lable'] = "操作失败！不允许添加重复标签。";
 $LANG['js_languages']['no_select_lable_del'] = "删除失败！您没有选中任何标签。";
 $LANG['js_languages']['recovery_default_suer'] = "您确认恢复默认吗？恢复默认后将显示安装时的内容。";
-
 
 // end

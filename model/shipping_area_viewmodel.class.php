@@ -77,7 +77,6 @@ class shipping_area_viewmodel extends Component_Model_View {
 		$filter['keywords'] = stripslashes($filter['keywords']);
 		return array('areas_list' => $shipping_areas_list, 'filter' => $filter, 'page' => $page->show(10), 'desc' => $page->page_desc());
 	}
-	
 }
 
 // end

@@ -70,7 +70,6 @@ class shipping_model extends Component_Model_Model {
 		}
 		return $shipping->update($data);
 	}
-	
 }
 
 // end

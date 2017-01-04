@@ -1,5 +1,6 @@
 <?php
 defined('IN_ECJIA') or exit('No permission resources.');
+
 /**
  * 配送方式安装API
  * @author royalwang
@@ -80,7 +81,6 @@ class shipping_plugin_install_api extends Component_Event_Api
 	        
 	        return true;
 	    }
-
 	}
 }
 
