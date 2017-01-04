@@ -12,7 +12,7 @@ return array(
 	'shipping_desc' 	=> '描述',
 	'shipping_author' 	=> '插件作者',
 	'insure' 			=> '保价费用',
-	'support_cod' 		=> '货到付款？',
+	'support_cod' 		=> '货到付款：',
 	'shipping_area' 	=> '设置区域',
 	'shipping_print_edit' 		=> '编辑打印模板',
 	'shipping_print_template'	=> '快递单模板',
