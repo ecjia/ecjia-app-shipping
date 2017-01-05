@@ -43,7 +43,7 @@
 				</div>
 				<!-- 货到付款-->
 				<div class="control-group formSep">
-					<label  class="control-label">{lang key='shipping::shipping.support_cod'}</label>
+					<label  class="control-label">{lang key='shipping::shipping.support_cod_label'}</label>
 					<div class="controls">
 						<label class="p_t5">{if $shipping.support_cod == "1"}{lang key='system::system.yes'}{else}{lang key='system::system.no'}{/if}</label>
 					</div>
