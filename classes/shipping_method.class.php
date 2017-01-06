@@ -1,10 +1,12 @@
 <?php
 defined('IN_ECJIA') or exit('No permission resources.');
+
 /**
  * 配送方法
  * @author royalwang
  *
  */
+ 
 class shipping_method  
 {
 	private $db;

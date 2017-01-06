@@ -1,8 +1,9 @@
 <?php
+defined('IN_ECJIA') or exit('No permission resources.');
+
 /**
  * ECJia 配送区域管理程序
  */
-defined('IN_ECJIA') or exit('No permission resources.');
 
 class mh_area extends ecjia_merchant {
 	private $db_shipping;
@@ -578,4 +579,5 @@ class mh_area extends ecjia_merchant {
 // 		return array('areas_list' => $shipping_areas_list, 'filter' => $filter, 'page' => $page->show(10), 'desc' => $page->page_desc());
 // 	}
 }
+
 // end

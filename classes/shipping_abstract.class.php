@@ -1,9 +1,11 @@
 <?php
 defined('IN_ECJIA') or exit('No permission resources.');
+
 /**
  * 插件抽象类
  * @author royalwang
  */
+ 
 abstract class shipping_abstract 
 {
 

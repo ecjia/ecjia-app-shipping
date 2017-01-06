@@ -1,8 +1,9 @@
 <?php
+defined('IN_ECJIA') or exit('No permission resources.');
+
 /**
  * ECJia 配送区域管理程序
  */
-defined('IN_ECJIA') or exit('No permission resources.');
 
 class admin_area extends ecjia_admin {
 	private $db_shipping;
@@ -353,12 +354,12 @@ class admin_area extends ecjia_admin {
 			'<p><strong>' . RC_Lang::get('shipping::shipping_area.more_info') . '</strong></p>' .
 			'<p>' . __('<a href="https://ecjia.com/wiki/帮助:ECJia智能后台:配送方式" target="_blank">'. RC_Lang::get('shipping::shipping_area.about_edit_area') .'</a>') . '</p>'
 		);
-		
+
 		$this->assign('ur_here', RC_Lang::get('shipping::shipping_area.edit_area'));
-		$this->assign('area_id', $ship_area_id );
-		$this->assign('fields', $fields );
-		$this->assign('shipping_area', $shipping_data );
-		$this->assign('regions', $regions );
+		$this->assign('area_id', $ship_area_id);
+		$this->assign('fields', $fields);
+		$this->assign('shipping_area', $shipping_data);
+		$this->assign('regions', $regions);
 		$this->assign('action_link', array('text' => $shipping_data['shipping_name'].RC_Lang::get('shipping::shipping_area.list'), 'href' => RC_Uri::url('shipping/admin_area/init', array('shipping_id' => $shipping_data['shipping_id'], 'code' => $code))));
 		
 		$this->assign('countries', $this->db_region->get_regions());
@@ -367,7 +368,7 @@ class admin_area extends ecjia_admin {
 		$this->assign('form_action', RC_Uri::url('shipping/admin_area/update', array('shipping_id' => $shipping_id, 'code' => $code)));
 		
 		$this->assign_lang();
-		$this->display('shipping_area_info.dwt' );
+		$this->display('shipping_area_info.dwt');
 	}
 	
 	public function update() {
@@ -578,4 +579,5 @@ class admin_area extends ecjia_admin {
 // 		return array('areas_list' => $shipping_areas_list, 'filter' => $filter, 'page' => $page->show(10), 'desc' => $page->page_desc());
 // 	}
 }
+
 // end
