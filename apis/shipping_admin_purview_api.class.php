@@ -16,6 +16,9 @@ class shipping_admin_purview_api extends Component_Event_Api {
         	array('action_name' => RC_Lang::get('shipping::shipping_area.new_area'), 		'action_code' => 'shiparea_add', 	'relevance' => ''),
         	array('action_name' => RC_Lang::get('shipping::shipping_area.edit_area'), 		'action_code' => 'shiparea_update', 'relevance' => ''),
         	array('action_name' => RC_Lang::get('shipping::shipping_area.shiparea_delete'), 'action_code' => 'shiparea_delete', 'relevance' => ''),
+        		
+        	//配送列表
+        	array('action_name' => RC_Lang::get('shipping::shipping.express_order_list'), 'action_code' => 'admin_express_order_manage', 'relevance' => ''),
         );
         
         return $purviews;
