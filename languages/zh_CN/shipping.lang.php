@@ -4,7 +4,6 @@ defined('IN_ECJIA') or exit('No permission resources.');
 /**
  * ECJia 管理中心配送方式管理语言文件
  */
-
 return array(
 	'03_shipping_list' 	=> '配送方式',
 	'shipping_name' 	=> '名称',
@@ -219,9 +218,6 @@ return array(
     'admin_change_express_user'	=> '变更配送人员',
     'admin_label_express_user'	=> '配送人员：',
     'admin_express_user_pickup'	=> '配送员已取货',
-    
-    
-    
 );
 
 // end

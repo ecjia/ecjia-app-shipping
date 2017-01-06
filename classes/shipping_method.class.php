@@ -4,15 +4,11 @@ defined('IN_ECJIA') or exit('No permission resources.');
 /**
  * 配送方法
  * @author royalwang
- *
  */
- 
-class shipping_method  
-{
+class shipping_method  {
 	private $db;
     
-	public function __construct() 
-	{
+	public function __construct() {
 		$this->db = RC_Model::model('shipping/shipping_model');
 	}
 	
@@ -88,8 +84,7 @@ class shipping_method
      * 取得已安装的配送方式
      * @return  array   已安装的配送方式
      */
-    public function shipping_list() 
-    {
+    public function shipping_list() {
     	$data = RC_DB::table('shipping')->select('shipping_id', 'shipping_name', 'shipping_code')->where('enabled', 1)->get();
     	
     	$plugins = $this->available_shipping_plugins();
@@ -110,8 +105,7 @@ class shipping_method
      * @param   int     $shipping_id    配送方式id
      * @return  array   配送方式信息
      */
-    public function shipping_info($shipping_id) 
-    {
+    public function shipping_info($shipping_id) {
 //         return $this->db->find(array('shipping_id' => $shipping_id , 'enabled' => 1));
         
         return RC_DB::table('shipping')->where('shipping_id', $shipping_id)->where('enabled', 1)->first();
@@ -151,8 +145,7 @@ class shipping_method
      * @param   string       $cfg
      * @return  void
      */
-    public function unserialize_config($cfg)
-    {
+    public function unserialize_config($cfg) {
     	if (is_string($cfg) && ($arr = unserialize($cfg)) !== false) {
     		$config = array();
     		foreach ($arr AS $key => $val) {

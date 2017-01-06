@@ -1,11 +1,9 @@
 <?php
+defined('IN_ECJIA') or exit('No permission resources.');
 
 /**
  * ECJIA 配送方式管理程序
  */
-
-defined('IN_ECJIA') or exit('No permission resources.');
-
 class admin_express_order extends ecjia_admin {
 
 	public function __construct() {
@@ -34,6 +32,7 @@ class admin_express_order extends ecjia_admin {
 	 */
 	public function init() {
 		$this->admin_priv('admin_express_order_manage');
+		
 		ecjia_screen::get_current_screen()->remove_last_nav_here();
 		ecjia_screen::get_current_screen()->add_nav_here(new admin_nav_here(RC_Lang::get('shipping::shipping.express_order_list')));
 		$this->assign('ur_here', RC_Lang::get('shipping::shipping.express_order_list'));

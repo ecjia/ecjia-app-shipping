@@ -1,5 +1,4 @@
 // JavaScript Document
-
 ;(function(app, $) {
 	app.admin_express_order = {
 		init : function() {
@@ -27,4 +26,3 @@
 })(ecjia.admin, jQuery);
 
 // end
-

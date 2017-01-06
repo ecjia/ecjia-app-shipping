@@ -3,7 +3,7 @@
 
 <!-- {block name="footer"} -->
 <script type="text/javascript">
-ecjia.merchant.area_info.init();
+    ecjia.merchant.area_info.init();
 </script>
 <!-- {/block} -->
 

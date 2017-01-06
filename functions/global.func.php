@@ -7,7 +7,6 @@ defined('IN_ECJIA') or exit('No permission resources.');
  * @access  private
  * @return  Bool
  */
- 
 function get_site_root_url() {
 	return 'http://' . $_SERVER['HTTP_HOST'] . str_replace('/' . '/shipping.php', '', PHP_SELF);
 

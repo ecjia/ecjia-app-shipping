@@ -5,7 +5,6 @@ defined('IN_ECJIA') or exit('No permission resources.');
  * 配送方式卸载API
  * @author royalwang
  */
- 
 class shipping_plugin_uninstall_api extends Component_Event_Api 
 {
 	

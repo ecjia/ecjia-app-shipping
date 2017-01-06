@@ -5,13 +5,10 @@ defined('IN_ECJIA') or exit('No permission resources.');
  * 插件调用工厂
  * @author royalwang
  */
- 
-class shipping_factory  
-{
+class shipping_factory {
 	private $adapter_instance 	= null;
 	
-	public function __construct($adapter_name = '', $adapter_config = array()) 
-	{
+	public function __construct($adapter_name = '', $adapter_config = array()) {
 		$this->set_adapter($adapter_name, $adapter_config);
 	}
 	
@@ -21,8 +18,7 @@ class shipping_factory
 	 * @param  $adapter_name 适配器code
 	 * @param  $adapter_config 适配器配置
 	 */
-	public function set_adapter($adapter_name, $adapter_config = array()) 
-	{
+	public function set_adapter($adapter_name, $adapter_config = array()) {
 		if (!is_string($adapter_name)) 
 			return false;
 		else {
@@ -38,8 +34,7 @@ class shipping_factory
 		return $this->adapter_instance;
 	}
 	
-	public function __call($method_name, $method_args) 
-	{
+	public function __call($method_name, $method_args) {
 		if (method_exists($this, $method_name))
 			return call_user_func_array(array(& $this, $method_name), $method_args);
 		elseif (

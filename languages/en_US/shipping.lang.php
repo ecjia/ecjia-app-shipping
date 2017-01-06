@@ -4,7 +4,6 @@ defined('IN_ECJIA') or exit('No permission resources.');
 /**
  * ECJia 管理中心配送方式管理语言文件
  */
-
 return array(
 	'03_shipping_list' 	=> 'Shipping',	//追加
 	'shipping_name'		=> 'Name',

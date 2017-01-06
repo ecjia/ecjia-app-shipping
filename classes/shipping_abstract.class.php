@@ -5,9 +5,7 @@ defined('IN_ECJIA') or exit('No permission resources.');
  * 插件抽象类
  * @author royalwang
  */
- 
-abstract class shipping_abstract 
-{
+abstract class shipping_abstract {
 
 	protected $configure = array();
 
@@ -18,8 +16,7 @@ abstract class shipping_abstract
 	 *
 	 * @return null
 	 */
-	public function __construct($cfg = array())
-	{
+	public function __construct($cfg = array()) {
 	    foreach ($cfg AS $key=>$val) {
 	        $this->configure[$val['name']] = $val['value'];
 	    }
@@ -28,8 +25,7 @@ abstract class shipping_abstract
 	/**
 	 * 配送方式的配置表单信息
 	 */
-    public function form_format($fields, $format = false) 
-    {
+    public function form_format($fields, $format = false) {
 	    $config = $this->configure_config();
 	    $forms = array();
 	    if ($config['forms']) {

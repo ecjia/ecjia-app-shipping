@@ -4,7 +4,6 @@ defined('IN_ECJIA') or exit('No permission resources.');
 /**
  * ECJIA 配送方式管理程序
  */
-
 class admin extends ecjia_admin {
 	private $db_shipping;
 
@@ -228,6 +227,7 @@ class admin extends ecjia_admin {
 	 */
 	public function recovery_default_template() {
 		$this->admin_priv('ship_update', ecjia::MSGTYPE_JSON);
+		
 		$shipping_id = !empty($_POST['shipping_id']) ? intval($_POST['shipping_id']) : 0;
 		/* 取配送代码 */
 		$shipping_data = $this->db_shipping->shipping_find(array('shipping_id' => $shipping_id), array('shipping_code', 'print_bg'));

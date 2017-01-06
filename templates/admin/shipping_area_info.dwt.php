@@ -1,10 +1,11 @@
 <?php defined('IN_ECJIA') or exit('No permission resources.');?>
 <!-- {extends file="ecjia.dwt.php"} -->
+
 <!-- {block name="footer"} -->
 {insert_sys_scripts files="ecjia.region.js"}
 <script type="text/javascript">
 {literal}
-ecjia.admin.area_info.init();
+    ecjia.admin.area_info.init();
 {/literal}
 </script>
 <!-- {/block} -->

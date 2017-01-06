@@ -4,9 +4,7 @@ defined('IN_ECJIA') or exit('No permission resources.');
 /**
  * 获取配送方式下拉列表
  * @author wutifang
- *
  */
- 
 class shipping_shipping_list_api extends Component_Event_Api {
 	
 	public function __construct() {

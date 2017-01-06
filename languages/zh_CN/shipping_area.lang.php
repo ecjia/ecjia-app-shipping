@@ -4,7 +4,6 @@ defined('IN_ECJIA') or exit('No permission resources.');
 /**
  * ECJia 管理中心配送方式管理语言文件
  */
-
 return array(
 	'shipping_area_name' 		=> '配送区域名称',
 	'shipping_area_districts' 	=> '地区列表',

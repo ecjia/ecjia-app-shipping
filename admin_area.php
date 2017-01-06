@@ -4,7 +4,6 @@ defined('IN_ECJIA') or exit('No permission resources.');
 /**
  * ECJia 配送区域管理程序
  */
-
 class admin_area extends ecjia_admin {
 	private $db_shipping;
 	private $db_region;

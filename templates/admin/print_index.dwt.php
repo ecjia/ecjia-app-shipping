@@ -1,3 +1,4 @@
+<?php defined('IN_ECJIA') or exit('No permission resources.');?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
 <head>

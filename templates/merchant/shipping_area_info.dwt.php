@@ -1,10 +1,9 @@
 <?php defined('IN_ECJIA') or exit('No permission resources.');?>
 <!-- {extends file="ecjia-merchant.dwt.php"} -->
 
-
 <!-- {block name="footer"} -->
 <script type="text/javascript">
-ecjia.merchant.area_info.init();
+    ecjia.merchant.area_info.init();
 </script>
 <!-- {/block} -->
 
