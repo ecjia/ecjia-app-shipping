@@ -49,7 +49,6 @@ defined('IN_ECJIA') or exit('No permission resources.');
 /**
  * 配送方式应用
  */
-
 return array(
 	'identifier' 	=> 'ecjia.shipping',
 	'directory' 	=> 'shipping',
