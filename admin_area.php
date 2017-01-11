@@ -341,6 +341,7 @@ class admin_area extends ecjia_admin {
 					unset( $fields [$key] );
 				} else {
 					$fields[$key]['name'] = $val['name'];
+					//todo 语言包升级待确认
 					$fields[$key]['label'] = RC_Lang::lang($val['name']);
 				}
 				
