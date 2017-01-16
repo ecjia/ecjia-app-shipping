@@ -64,10 +64,10 @@ class admin extends ecjia_admin {
 		RC_Script::enqueue_script('jquery-validate');
 		RC_Script::enqueue_script('jquery-form');
 		RC_Script::enqueue_script('smoke');
-		RC_Script::enqueue_script('shopping_admin', RC_App::apps_url('statics/js/shipping_admin.js', __FILE__));
-		RC_Script::enqueue_script('shipping', RC_App::apps_url('statics/js/shipping.js', __FILE__));
+
 		RC_Style::enqueue_style('bootstrap-editable', RC_Uri::admin_url('statics/lib/x-editable/bootstrap-editable/css/bootstrap-editable.css'));
 		RC_Script::enqueue_script('bootstrap-editable.min', RC_Uri::admin_url('statics/lib/x-editable/bootstrap-editable/js/bootstrap-editable.min.js'));
+		
 		RC_Script::enqueue_script('ecjia.utils');
 		RC_Script::enqueue_script('ecjia.common');
 		RC_Style::enqueue_style('chosen');
@@ -75,6 +75,13 @@ class admin extends ecjia_admin {
 		RC_Script::enqueue_script('jquery-uniform');
 		RC_Script::enqueue_script('jquery-chosen');
 		RC_Loader::load_app_class('shipping_factory', null, false);
+		
+        //时间控件
+        RC_Style::enqueue_style('datepicker',RC_Uri::admin_url('statics/lib/datepicker/datepicker.css'));
+        RC_Script::enqueue_script('bootstrap-timepicker',RC_Uri::admin_url('statics/lib/datepicker/bootstrap-timepicker.min.js'));
+		
+		RC_Script::enqueue_script('shopping_admin', RC_App::apps_url('statics/js/shipping_admin.js', __FILE__));
+		RC_Script::enqueue_script('shipping', RC_App::apps_url('statics/js/shipping.js', __FILE__));
 		
 		RC_Script::localize_script('shipping', 'js_lang', RC_Lang::get('shipping::shipping.js_lang'));
 		RC_Script::localize_script('shopping_admin', 'js_lang', RC_Lang::get('shipping::shipping.js_lang'));

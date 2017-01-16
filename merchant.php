@@ -73,8 +73,10 @@ class merchant extends ecjia_merchant {
 		RC_Script::enqueue_script('jquery-chosen');
 		RC_Loader::load_app_class('shipping_factory', null, false);
 		
-		RC_Script::enqueue_script('datepicker', RC_Uri::admin_url('statics/lib/datepicker/bootstrap-datetimepicker.js'));
-		RC_Style::enqueue_style('datepicker', RC_Uri::admin_url('statics/lib/datepicker/bootstrap-datetimepicker.min.css'));
+      	//时间控件
+        RC_Script::enqueue_script('bootstrap-datetimepicker', RC_Uri::admin_url('statics/lib/datepicker/bootstrap-datetimepicker.js'));
+		RC_Style::enqueue_style('datetimepicker', RC_Uri::admin_url('statics/lib/datepicker/bootstrap-datetimepicker.min.css'));
+		
 		
 		RC_Script::localize_script('merchant_shipping', 'js_lang', RC_Lang::get('shipping::shipping.js_lang'));
 		RC_Script::localize_script('shopping_admin', 'js_lang', RC_Lang::get('shipping::shipping.js_lang'));

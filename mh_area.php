@@ -68,9 +68,9 @@ class mh_area extends ecjia_merchant {
 		RC_Script::enqueue_script('merchant_shipping', RC_App::apps_url('statics/js/merchant_shipping.js', __FILE__));
 		RC_Style::enqueue_style('merchant_shipping', RC_App::apps_url('statics/css/merchant_shipping.css', __FILE__), array(), false, false);
 		
-		//时间
-		RC_Script::enqueue_script('datepicker', RC_Uri::admin_url('statics/lib/datepicker/bootstrap-datetimepicker.js'));
-		RC_Style::enqueue_style('datepicker', RC_Uri::admin_url('statics/lib/datepicker/bootstrap-datetimepicker.min.css'));
+      	//时间控件
+        RC_Script::enqueue_script('bootstrap-datetimepicker', RC_Uri::admin_url('statics/lib/datepicker/bootstrap-datetimepicker.js'));
+		RC_Style::enqueue_style('datetimepicker', RC_Uri::admin_url('statics/lib/datepicker/bootstrap-datetimepicker.min.css'));
 		
 		$this->db_shipping 				= RC_Model::model('shipping/shipping_model');
 		$this->db_shipping_area 		= RC_Model::model('shipping/shipping_area_model');
@@ -401,7 +401,7 @@ class mh_area extends ecjia_merchant {
 		$this->assign('form_action', RC_Uri::url('shipping/mh_area/update', array('shipping_id' => $shipping_id, 'code' => $code)));
 		
 		$this->assign_lang();
-		$this->display('shipping_area_info.dwt' );
+		$this->display('shipping_area_info.dwt');
 	}
 	
 	public function update() {
