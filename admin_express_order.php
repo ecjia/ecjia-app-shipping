@@ -177,8 +177,6 @@ class admin_express_order extends ecjia_admin {
 	 * 获取配送列表
 	 */
 	private function get_express_order_list() {
-		$this->admin_priv('admin_express_order_manage');
-		
 		$filter['keywords']				= empty($_GET['keywords'])			? '' 	: trim($_GET['keywords']);
 		$filter['merchant_keywords']	= empty($_GET['merchant_keywords'])	? '' 	: trim($_GET['merchant_keywords']);
 		

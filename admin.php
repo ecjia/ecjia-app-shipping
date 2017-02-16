@@ -93,7 +93,7 @@ class admin extends ecjia_admin {
 	 * 配送方式列表  get
 	 */
 	public function init() { 
-		$this->admin_priv('ship_manage', ecjia::MSGTYPE_JSON);
+		$this->admin_priv('ship_manage');
 
 		ecjia_screen::get_current_screen()->remove_last_nav_here();
 		ecjia_screen::get_current_screen()->add_nav_here(new admin_nav_here(RC_Lang::get('shipping::shipping.shipping')));
@@ -150,7 +150,7 @@ class admin extends ecjia_admin {
 	 * 编辑配送方式 code={$code}
 	 */
 	public function edit() {
-		$this->admin_priv('ship_update', ecjia::MSGTYPE_JSON);
+		$this->admin_priv('ship_update');
 	
 		ecjia_screen::get_current_screen()->add_nav_here(new admin_nav_here(RC_Lang::get('shipping::shipping.edit_shipping')));
 		$this->assign('action_link', array('text' => RC_Lang::get('shipping::shipping.shipping'), 'href' => RC_Uri::url('shipping/admin/init')));
@@ -240,7 +240,7 @@ class admin extends ecjia_admin {
 	 * 模板Flash编辑器
 	 */
 	public function print_index() {	
-		$this->admin_priv('ship_update', ecjia::MSGTYPE_JSON);
+		$this->admin_priv('ship_update');
 		
 		$shipping_id = !empty($_GET['shipping_id']) ? intval($_GET['shipping_id']) : 0;
 		/* 检查该插件是否已经安装 取值 */ 

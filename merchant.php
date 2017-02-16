@@ -89,7 +89,7 @@ class merchant extends ecjia_merchant {
 	 * 配送方式列表  get
 	 */
 	public function init() { 
-		$this->admin_priv('ship_merchant_manage', ecjia::MSGTYPE_JSON);
+		$this->admin_priv('ship_merchant_manage');
 
 		ecjia_screen::get_current_screen()->add_nav_here(new admin_nav_here('我的配送'));
 		ecjia_screen::get_current_screen()->add_help_tab(array(

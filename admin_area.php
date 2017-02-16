@@ -93,7 +93,7 @@ class admin_area extends ecjia_admin {
 	 * 配送区域列表
 	 */
 	public function init() {
-		$this->admin_priv('shiparea_manage', ecjia::MSGTYPE_JSON);
+		$this->admin_priv('shiparea_manage');
 		
 		$shipping_id = !empty($_GET['shipping_id']) ? intval($_GET['shipping_id']) : 0;
 		$args = array('shipping_id' => $shipping_id);
@@ -139,7 +139,7 @@ class admin_area extends ecjia_admin {
 	 * 
 	 */
 	public function add() {
-	    $this->admin_priv('shiparea_add', ecjia::MSGTYPE_JSON);
+	    $this->admin_priv('shiparea_add');
 		
 		$shipping_id 	= !empty($_GET['shipping_id']) ? intval($_GET['shipping_id']) : 0;
 		$code 			= !empty($_GET['code']) ? trim($_GET['code']) : '';
@@ -288,7 +288,7 @@ class admin_area extends ecjia_admin {
 	 * 编辑配送区域
 	 */
 	public function edit() {
-		$this->admin_priv('shiparea_update', ecjia::MSGTYPE_JSON);
+		$this->admin_priv('shiparea_update');
 		
 		$dbview = RC_Model::model('shipping/shipping_viewmodel');
 		// 调用视图查看
@@ -480,7 +480,6 @@ class admin_area extends ecjia_admin {
 				'configure'          	=> serialize($config)
 			);		
 			$this->db_shipping_area->shipping_area_manage($data);
-
 			
 			ecjia_admin::admin_log($shipping_area_name.'，'.RC_Lang::get('shipping::shipping_area.shipping_way').$shipping_data['shipping_name'], 'edit', 'shipping_area');
 		
@@ -575,53 +574,10 @@ class admin_area extends ecjia_admin {
 			}
 			$refresh_url = RC_Uri::url('shipping/admin_area/init', array('shipping_id' => $shipping_id, 'code' => $code));
 			return $this->showmessage(RC_Lang::get('shipping::shipping_area.batch_delete'). RC_Lang::get('shipping::shipping.attradd_succed'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS , array('pjaxurl' => $refresh_url));
-		}else {
+		} else {
 			return $this->showmessage(RC_Lang::get('shipping::shipping_area.batch_no_select_falid'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
 		}
 	}
-	
-// 	/**
-// 	 *  获取配送区域分页列表
-// 	 */
-// 	public function get_shipareas_list($args = array()){
-// 		/* 过滤条件  为查询*/
-// 		$filter['keywords'] = empty($args['keywords']) ? '' : trim($args['keywords']);
-// 		$ex_where = array('shipping_id' => $args['shipping_id']);
-// 		if ($filter['keywords']) {
-// 			$ex_where['shipping_area_name'] = array('like' => "%". mysql_like_quote($filter['keywords']). "%" );
-// 		}
-// 		$count = $this->db_shipping_area->where($ex_where)->count();
-			
-// 		$page = new ecjia_page($count, 10, 6);
-			
-// 		/* 查询所有配送方式信息  */
-// 		$shipping_areas_list=array();
-// 		$list = $this->db_shipping_area->where($ex_where)->limit($page->limit())->select();
-// 		if (!empty($list)) {
-// 			foreach ($list as $row) {
-// 				$db_region = RC_Loader::load_app_model ( 'shipping_region_viewmodel' );
-// 				$region_names = $db_region->join('region')->where(array( 'a.shipping_area_id' => $row['shipping_area_id']))->field('r.region_name')->select();
-// 				if (is_array($region_names) && count($region_names)>0 ) {
-// 					$region_array = array();
-// 					foreach ($region_names as $name) {
-// 						//如果所对应的区域已在区域列表设置中被删除
-// 						if (empty($name['region_name'])) {
-// 							$region_array[] = '<lable  style="color:red">' .RC_Lang::get('shipping::shipping_area.removed_region'). '</lable>';
-// 						} else{
-// 							$region_array[] = $name['region_name'];
-// 						}
-// 					}
-// 					$regions = implode(',', $region_array);
-// 				}
-					
-// 				$row['shipping_area_regions'] = empty($regions) ? '<lable  style="color:red">' .RC_Lang::get('shipping::shipping_area.empty_regions'). '</lable>': $regions;
-// 				$shipping_areas_list[] = $row;
-// 			}
-// 		}
-			
-// 		$filter['keywords'] = stripslashes($filter['keywords']);
-// 		return array('areas_list' => $shipping_areas_list, 'filter' => $filter, 'page' => $page->show(10), 'desc' => $page->page_desc());
-// 	}
 }
 
 // end
