@@ -116,26 +116,46 @@
             app.area_info.selected_area();
             app.area_info.quick_search();
             app.area_info.tpicker();
-
-			$('.tp_1').timepicker({
-				minuteStep: 5,
-				disableFocus: true,
-				template: 'modal',
-				showMeridian: false
-			});
+            app.area_info.datepicker();
         },
         tpicker : function () {
 			$('.fontello-icon-plus').click(function(e) {
 				setTimeout(function () { 
-					$('.tp_1').timepicker({
-						minuteStep: 5,
-						disableFocus: true,
-						template: 'modal',
-						showMeridian: false
+					$(".tp_1").datetimepicker({
+						format: "hh:ii",
+		                weekStart: 1,
+		                todayBtn: 1,
+		                autoclose: 1,
+		                todayHighlight: 1,
+		                startView: 1,
+		                forceParse: 0,
+		                minuteStep: 5
 					});
 			    }, 1000);
 			});
 		},
+		
+		datepicker : function(){
+			$.fn.datetimepicker.dates['zh'] = {  
+                days:       ["星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六","星期日"],  
+                daysShort:  ["日", "一", "二", "三", "四", "五", "六","日"],  
+                daysMin:    ["日", "一", "二", "三", "四", "五", "六","日"],  
+                months:     ["一月", "二月", "三月", "四月", "五月", "六月", "七月", "八月", "九月", "十月", "十一月","十二月"],  
+                monthsShort:  ["一月", "二月", "三月", "四月", "五月", "六月", "七月", "八月", "九月", "十月", "十一月","十二月"], 
+                meridiem:    ["上午", "下午"],  
+                today:       "今天"  
+	        };
+            $(".tp_1").datetimepicker({
+				format: "hh:ii",
+                weekStart: 1,
+                todayBtn: 1,
+                autoclose: 1,
+                todayHighlight: 1,
+                startView: 1,
+                forceParse: 0,
+                minuteStep: 5
+			});
+        },
  
         shipping_submit: function () {
             $('form[name="theForm"]').on('submit', function (e) {

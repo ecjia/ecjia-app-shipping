@@ -75,8 +75,8 @@ class admin_area extends ecjia_admin {
 		RC_Script::enqueue_script('jquery-chosen');
 		
         //时间控件
-        RC_Style::enqueue_style('datepicker', RC_Uri::admin_url('statics/lib/datepicker/datepicker.css'));
-        RC_Script::enqueue_script('bootstrap-timepicker', RC_Uri::admin_url('statics/lib/datepicker/bootstrap-timepicker.min.js'));
+        RC_Style::enqueue_style('datepicker', RC_Uri::admin_url('statics/lib/datepicker/bootstrap-datetimepicker.min.css'));
+        RC_Script::enqueue_script('bootstrap-timepicker', RC_Uri::admin_url('statics/lib/datepicker/bootstrap-datetimepicker.js'));
 		
 		$this->db_shipping 				= RC_Model::model('shipping/shipping_model');
 		$this->db_shipping_area 		= RC_Model::model('shipping/shipping_area_model');
