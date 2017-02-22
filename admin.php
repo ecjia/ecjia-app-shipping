@@ -77,8 +77,8 @@ class admin extends ecjia_admin {
 		RC_Loader::load_app_class('shipping_factory', null, false);
 		
         //时间控件
-        RC_Style::enqueue_style('datepicker',RC_Uri::admin_url('statics/lib/datepicker/datepicker.css'));
-        RC_Script::enqueue_script('bootstrap-timepicker',RC_Uri::admin_url('statics/lib/datepicker/bootstrap-timepicker.min.js'));
+        RC_Style::enqueue_style('datepicker', RC_Uri::admin_url('statics/lib/datepicker/bootstrap-datetimepicker.min.css'));
+        RC_Script::enqueue_script('bootstrap-timepicker', RC_Uri::admin_url('statics/lib/datepicker/bootstrap-datetimepicker.js'));
 		
 		RC_Script::enqueue_script('shopping_admin', RC_App::apps_url('statics/js/shipping_admin.js', __FILE__));
 		RC_Script::enqueue_script('shipping', RC_App::apps_url('statics/js/shipping.js', __FILE__));
