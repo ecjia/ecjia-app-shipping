@@ -202,10 +202,10 @@ class admin_area extends ecjia_admin {
 	public function insert() {
 	    $this->admin_priv('shiparea_add', ecjia::MSGTYPE_JSON);
 	    
-	    $shipping_id 		= !empty($_GET['shipping_id']) ? intval($_GET['shipping_id']) : 0;
-	    $shipping_area_name = !empty($_POST['shipping_area_name']) ? trim($_POST['shipping_area_name']) : '';
-	    $code 				= !empty($_GET['code']) ? trim($_GET['code']) : '';
-	    $store_id 			= !empty($_POST['store_id']) ? intval($_POST['store_id']) : 0;
+	    $shipping_id 		= !empty($_GET['shipping_id']) 			? intval($_GET['shipping_id']) 			: 0;
+	    $shipping_area_name = !empty($_POST['shipping_area_name']) 	? trim($_POST['shipping_area_name']) 	: '';
+	    $code 				= !empty($_GET['code']) 				? trim($_GET['code']) 					: '';
+	    $store_id 			= !empty($_POST['store_id']) 			? intval($_POST['store_id']) 			: 0;
 
 		/* 检查同类型的配送方式下有没有重名的配送区域 */	
 		$area_count = $this->db_shipping_area->where(array('shipping_id' => $shipping_id, 'store_id' => $store_id, 'shipping_area_name' => $shipping_area_name))->count();
@@ -291,15 +291,7 @@ class admin_area extends ecjia_admin {
 		$this->admin_priv('shiparea_update');
 		
 		$dbview = RC_Model::model('shipping/shipping_viewmodel');
-		// 调用视图查看
-// 		$dbview->view = array (
-// 			'shipping_area' => array (
-// 				'type' 	=> Component_Model_View::TYPE_LEFT_JOIN,
-// 				'alias' => 'b',
-// 				'field' => 's.shipping_name, s.shipping_code, s.support_cod, b.*',
-// 				'on' 	=> 'b.shipping_id = s.shipping_id ' 
-// 			) 
-// 		);
+
 		$shipping_id 	= !empty($_GET['shipping_id']) 	? intval($_GET['shipping_id']) 	: 0;
 		$ship_area_id 	= !empty($_GET['id']) 			? intval($_GET['id']) 			: 0;
 		$code 			= !empty($_GET['code']) 		? trim($_GET['code']) 			: '';

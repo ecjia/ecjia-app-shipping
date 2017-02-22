@@ -133,8 +133,9 @@ class mh_area extends ecjia_merchant {
 	public function add() {
 	    $this->admin_priv('ship_merchant_update');
 		
-		$shipping_id 	= !empty($_GET['shipping_id']) ? intval($_GET['shipping_id']) : 0;
-		$code 			= !empty($_GET['code']) ? trim($_GET['code']) : '';
+		$shipping_id 	= !empty($_GET['shipping_id']) 	? intval($_GET['shipping_id']) 	: 0;
+		$code 			= !empty($_GET['code']) 		? trim($_GET['code']) 			: '';
+		
 		$shipping_data  = $this->db_shipping->shipping_find(array('shipping_id' => $shipping_id), array('shipping_name', 'shipping_code', 'support_cod'));
 
 		$fields = array();
@@ -283,15 +284,7 @@ class mh_area extends ecjia_merchant {
 		$this->admin_priv('ship_merchant_update');
 		
 		$dbview = RC_Model::model('shipping/shipping_viewmodel');
-		// 调用视图查看
-// 		$dbview->view = array (
-// 			'shipping_area' => array (
-// 				'type' 	=> Component_Model_View::TYPE_LEFT_JOIN,
-// 				'alias' => 'b',
-// 				'field' => 's.shipping_name, s.shipping_code, s.support_cod, b.*',
-// 				'on' 	=> 'b.shipping_id = s.shipping_id ' 
-// 			) 
-// 		);
+
 		$shipping_id 	= !empty($_GET['shipping_id']) 	? intval($_GET['shipping_id']) 	: 0;
 		$ship_area_id 	= !empty($_GET['id']) 			? intval($_GET['id']) 			: 0;
 		$code 			= !empty($_GET['code']) 		? trim($_GET['code']) 			: '';

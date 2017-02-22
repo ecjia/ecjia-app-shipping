@@ -54,7 +54,6 @@ class region extends ecjia_front {
 		parent::__construct();
 	}
 	
-	
 	public function init() {
 		$db_region 	= RC_Model::model('shipping/region_model');
 		$type      	= !empty($_GET['type'])   ? intval($_GET['type'])   : 0;
