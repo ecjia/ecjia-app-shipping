@@ -74,19 +74,19 @@ class shipping_method  {
 			->get();	
 		$plugins = $this->available_shipping_plugins();
 
-		$pay_list = array();
+		$shipping_list = array();
         if (!empty($data)) {
         	foreach ($data as $row) {
         		if (isset($plugins[$row['shipping_code']])) {
-        			$pay_list[] = $row;
+        			$shipping_list[] = $row;
         		}
         	}
         }
-        return $pay_list;
+        return $shipping_list;
     }
 	
     /**
-     * 激活的支付插件列表
+     * 激活的配送方式插件列表
      */
     public function available_shipping_plugins() {
     	return ecjia_config::instance()->get_addon_config('shipping_plugins', true);
