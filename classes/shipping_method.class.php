@@ -170,16 +170,10 @@ class shipping_method  {
     	if (!is_array($shipping_config)) {
     		$shipping_config = unserialize($shipping_config);
     	}
-    	RC_Logger::getlogger('info')->info('shipping_fee');
-    	RC_Logger::getlogger('info')->info($shipping_code);
-    	RC_Logger::getlogger('info')->info($shipping_config);
-    	RC_Logger::getlogger('info')->info('goods_weight:'.$goods_weight.',goods_amount:'. $goods_amount.',goods_number:'. $goods_number);
     	
     	RC_Loader::load_app_class('shipping_factory', 'shipping', false);
     	$handler = new shipping_factory($shipping_code, $shipping_config);
     	$shipping_fee = $handler->calculate($goods_weight, $goods_amount, $goods_number);
-    	RC_Logger::getlogger('info')->info($shipping_fee);
-    	RC_Logger::getlogger('info')->info('shipping_fee-end');
     	if (empty($shipping_fee)) {
     		return 0;
     	} else {
