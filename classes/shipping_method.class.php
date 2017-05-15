@@ -71,16 +71,55 @@ class shipping_method  {
 			->where('shipping_area.store_id', $store_id)
 			->whereIn('area_region.region_id', $region_id_list)
 			->orderby('shipping.shipping_order', 'asc')
-			->get();	
+			->get();
 		$plugins = $this->available_shipping_plugins();
 
+		$has_no_express = false;
 		$shipping_list = array();
         if (!empty($data)) {
         	foreach ($data as $row) {
         		if (isset($plugins[$row['shipping_code']])) {
         			$shipping_list[] = $row;
+        			if ($row['shipping_code'] == 'ship_no_express') {
+        			    $has_no_express = true;
+        			}
         		}
         	}
+        }
+        if (!$has_no_express) {
+            $shipping_list[] = RC_DB::table('shipping')->leftJoin('shipping_area', 'shipping_area.shipping_id', '=', 'shipping.shipping_id')
+            ->leftJoin('area_region', 'area_region.shipping_area_id', '=', 'shipping_area.shipping_area_id')
+            ->select('shipping.shipping_id', 'shipping.shipping_code', 'shipping.shipping_name', 'shipping.shipping_desc', 'shipping.insure', 'shipping.support_cod', 'shipping_area.configure')
+            ->where('shipping.enabled', 1)
+            ->where('shipping.shipping_code', 'ship_no_express')
+            ->first();
+        }
+        return $shipping_list;
+    }
+    
+    /**
+     * 取得可用的配送方式列表-前台
+     * @param   array   $region_id_list     收货人地区id数组（包括国家、省、市、区）
+     * @return  array   配送方式数组
+     */
+    public function available_shipping_list_front($region_id_list, $store_id = 0) {
+        $data = RC_DB::table('shipping')->leftJoin('shipping_area', 'shipping_area.shipping_id', '=', 'shipping.shipping_id')
+        ->leftJoin('area_region', 'area_region.shipping_area_id', '=', 'shipping_area.shipping_area_id')
+        ->select('shipping.shipping_id', 'shipping.shipping_code', 'shipping.shipping_name', 'shipping.shipping_desc', 'shipping.insure', 'shipping.support_cod', 'shipping_area.configure')
+        ->where('shipping.enabled', 1)
+        ->where('shipping_area.store_id', $store_id)
+        ->whereIn('area_region.region_id', $region_id_list)
+        ->orderby('shipping.shipping_order', 'asc')
+        ->get();
+        $plugins = $this->available_shipping_plugins();
+    
+        $shipping_list = array();
+        if (!empty($data)) {
+            foreach ($data as $row) {
+                if (isset($plugins[$row['shipping_code']]) && $row['shipping_code'] != 'ship_no_express') {
+                    $shipping_list[] = $row;
+                }
+            }
         }
         return $shipping_list;
     }
