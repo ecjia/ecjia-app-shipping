@@ -142,7 +142,7 @@ class shipping_method  {
         $shipping_code = $this->get_shipping_code($shipping_id);
         if ($shipping_code == 'ship_no_express') {
             $db = RC_DB::table('shipping');
-            $db->select('shipping_code', 'shipping_name', 'shipping_desc', 'insure', 'support_cod', 'shipping_area.configure')
+            $db->select('shipping_code', 'shipping_name', 'shipping_desc', 'insure', 'support_cod')
             	->where('shipping_id', $shipping_id)
             	->where('enabled', 1);
         } else {
