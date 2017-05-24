@@ -87,6 +87,7 @@ class admin_plugin extends ecjia_admin {
 		RC_Script::localize_script('shopping_admin', 'js_lang', RC_Lang::get('shipping::shipping.js_lang'));
 		
 		ecjia_screen::get_current_screen()->add_nav_here(new admin_nav_here(RC_Lang::get('shipping::shipping.shipping'), RC_Uri::url('shipping/admin_plugin/init')));
+		ecjia_screen::get_current_screen()->set_parentage('shipping', 'shipping/admin_plugin.php');
 	}
 
 	/**
