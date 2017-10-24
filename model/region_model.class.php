@@ -49,7 +49,7 @@ defined('IN_ECJIA') or exit('No permission resources.');
 class region_model extends Component_Model_Model {
 	public $table_name = '';
 	public function __construct() {
-		$this->table_name 	= 'region';
+		$this->table_name 	= 'regions';
 		parent::__construct();
 	}
 
@@ -61,11 +61,11 @@ class region_model extends Component_Model_Model {
 	 * @return      array
 	 */
 	function get_regions($type = 0, $parent = 0) {
-		return RC_DB::table('region')->where('region_type', $type)->where('parent_id', $parent)->select('region_id', 'region_name')->get();
+		return RC_DB::table('regions')->where('region_type', $type)->where('parent_id', $parent)->select('region_id', 'region_name')->get();
 	}
 	
 	public function region_select($field='*') {
-		return RC_DB::table('region')->select($field)->get();
+		return RC_DB::table('regions')->select($field)->get();
 	}
 }
 
