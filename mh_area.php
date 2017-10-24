@@ -355,7 +355,7 @@ class mh_area extends ecjia_merchant {
 		}
 		$regions = array ();
 
-		$region_data = RC_DB::table('area_region')->leftJoin('region', 'area_region.region_id', '=', 'region.region_id')
+		$region_data = RC_DB::table('area_region')->leftJoin('regions', 'area_region.region_id', '=', 'region.region_id')
 			->select('area_region.region_id', 'region.region_name')->where('area_region.shipping_area_id', $ship_area_id)->get();
 		
 		if (!empty($region_data)) {
