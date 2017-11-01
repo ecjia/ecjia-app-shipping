@@ -68,9 +68,11 @@ class shipping_shipping_list_api extends Component_Event_Api {
 	 * 取得配送方式列表
 	 */
 	private function get_shipping_list() {
-		$db_shipping = RC_Model::model('shipping/shipping_model');
-
-		$data = $db_shipping->shipping_select(array('shipping_id', 'shipping_code', 'shipping_name', 'shipping_desc', 'insure', 'support_cod', 'shipping_order', 'enabled'), array('enabled' => 1), 'shipping_order');
+		$data = RC_DB::table('shipping')
+			->select('shipping_id', 'shipping_code', 'shipping_name', 'shipping_desc', 'insure', 'support_cod', 'shipping_order', 'enabled')
+			->where('enabled', 1)
+			->orderBy('shipping_order', 'asc')
+			->get();
 		$data or $data = array();
 		
 		$plugins = ecjia_config::instance()->get_addon_config('shipping_plugins', true);

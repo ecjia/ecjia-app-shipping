@@ -80,24 +80,20 @@ class shipping_plugin_uninstall_api extends Component_Event_Api
 	        
 	        RC_Loader::load_app_func('global', 'shipping');
 	        
-	        $db = RC_Model::model('shipping/shipping_model');
-	        $db_area = RC_Model::model('shipping/shipping_area_model');
-	        $db_region = RC_Model::model('shipping/shipping_area_region_model');
-	        
 	        /* 获得该配送方式的ID */
-	        $row = $db->field('shipping_id, shipping_name, print_bg')->find("`shipping_code` = '" . $options['config']['shipping_code'] . "'");
+	        $row = RC_DB::table('shipping')->selectRaw('shipping_id, shipping_name, print_bg')->where('shipping_code', $options['config']['shipping_code'])->first();
 	        $shipping_id = $row['shipping_id'];
 	        $shipping_name = $row['shipping_name'];
 	        
 	        /* 删除 shipping_fee 以及 shipping 表中的数据 */
 	        if ($row) {
-	            $all_area_ids = $db_area->where("`shipping_id` = $shipping_id")->get_field('shipping_area_id', true);
+	            $all_area_ids = RC_DB::table('shipping_area')->where('shipping_id', $shipping_id)->lists('shipping_area_id');
 	        
 	            if (!empty($all_area_ids)) {
-	                $db_region->in(array('shipping_area_id' => $all_area_ids))->delete();
-	                $db_area->where("`shipping_id` = $shipping_id")->delete();
+	                RC_DB::table('area_region')->whereIn('shipping_id', $shipping_id)->delete();
+	                RC_DB::table('shipping_area')->where('shipping_id', $all_area_ids)->delete();
 	            }
-	            $db->where("`shipping_id` = $shipping_id")->delete();
+	            RC_DB::table('shipping')->where('shipping_id', $shipping_id)->delete();
 	            	
 	            //删除上传的非默认快递单
 // 	            if (($row['print_bg'] != '') && (!is_print_bg_default($row['print_bg']))) {
@@ -111,7 +107,6 @@ class shipping_plugin_uninstall_api extends Component_Event_Api
 // 	                unlink(ROOT_PATH . $row['print_bg']);
 	            }
 
-	            	
 	            //记录管理员操作
 	            ecjia_admin::admin_log(addslashes($shipping_name), 'uninstall', 'shipping');
 	            

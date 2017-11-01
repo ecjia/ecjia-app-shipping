@@ -51,12 +51,7 @@ defined('IN_ECJIA') or exit('No permission resources.');
  * @author royalwang
  */
 class shipping_method  {
-	private $db;
-    
-	public function __construct() {
-		$this->db = RC_Model::model('shipping/shipping_model');
-	}
-	
+	public function __construct() {}
 	
 	/**
      * 取得可用的配送方式列表
