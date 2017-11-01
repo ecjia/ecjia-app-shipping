@@ -93,8 +93,6 @@ class shipping_area_viewmodel extends Component_Model_View {
 	
 		if (!empty($list)) {
 			foreach ($list as $row) {
-				$db_region = RC_Model::model('shipping/shipping_area_region_viewmodel');
-				
 				$region_names = RC_DB::table('area_region as a')
 					->leftJoin('region as r', RC_DB::raw('r.region_id'), '=', RC_DB::raw('a.region_id'))
 					->where(RC_DB::raw('a.shipping_area_id'), $row['shipping_area_id'])

@@ -68,12 +68,6 @@ class shipping_viewmodel extends Component_Model_View {
 		);
 		parent::__construct();
 	}
-	
-	public function shipping_area_find($where, $field='*', $join='') {
-		if (!empty($join)) {
-			return $this->join($join)->field($field)->find($where);
-		}
-	}
 }
 
 // end

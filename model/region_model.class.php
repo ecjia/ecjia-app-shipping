@@ -63,10 +63,6 @@ class region_model extends Component_Model_Model {
 	function get_regions($type = 0, $parent = 0) {
 		return RC_DB::table('region')->where('region_type', $type)->where('parent_id', $parent)->select('region_id', 'region_name')->get();
 	}
-	
-	public function region_select($field='*') {
-		return RC_DB::table('region')->select($field)->get();
-	}
 }
 
 // end

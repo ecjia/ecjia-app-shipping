@@ -50,16 +50,12 @@ defined('IN_ECJIA') or exit('No permission resources.');
  * ECJIA 配送方式管理程序
  */
 class admin_plugin extends ecjia_admin {
-	private $db_shipping;
-
 	public function __construct() {
 		parent::__construct();
 
 		RC_Loader::load_app_func('global');
 		assign_adminlog_content();
 
-		$this->db_shipping 	= RC_Model::model('shipping/shipping_model');
-		
 		/* 加载全局 js/css */
 		RC_Script::enqueue_script('jquery-validate');
 		RC_Script::enqueue_script('jquery-form');
@@ -111,7 +107,11 @@ class admin_plugin extends ecjia_admin {
 		$this->assign('ur_here', RC_Lang::get('shipping::shipping.shipping'));
 		
 		//替换数据库获取数据方式
-		$data = $this->db_shipping->shipping_select(array('shipping_id', 'shipping_code', 'shipping_name', 'shipping_desc', 'insure', 'support_cod', 'shipping_order', 'enabled'), '', 'shipping_order');
+		$data = RC_DB::table('shipping')
+			->select('shipping_id', 'shipping_code', 'shipping_name', 'shipping_desc', 'insure', 'support_cod', 'shipping_order', 'enabled')
+			->orderBy('shipping_order', 'asc')
+			->get();
+		
 		$data or $data = array();
 		
 		$plugins = ecjia_config::instance()->get_addon_config('shipping_plugins', true);
@@ -163,7 +163,8 @@ class admin_plugin extends ecjia_admin {
 			return $this->showmessage(__('invalid parameter'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
 		}
 		/* 查询该支付方式内容 */
-		$shipping = $this->db_shipping->shipping_find(array('shipping_code' => $shipping_code, 'enabled' => 1));
+		$shipping = RC_DB::table('shipping')->where('shipping_code', $shipping_code)->where('enabled', 1)->first();
+		
 		if (empty($shipping)) {
 			return $this->showmessage(RC_Lang::get('shipping::shipping.shipping_not_available'), ecjia::MSGTYPE_HTML | ecjia::MSGSTAT_ERROR);
 		}
@@ -186,8 +187,8 @@ class admin_plugin extends ecjia_admin {
 			return $this->showmessage(RC_Lang::get('shipping::shipping.shipping_name') . RC_Lang::get('system::system.empty'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
 		}
 	
-		$data = $this->db_shipping->is_only(array('shipping_name' => $name, 'shipping_code' => array('neq' => $code)));
-		if ($data > 0) {
+		$count = RC_DB::table('shipping')->where('shipping_name', $name)->where('shipping_code', '!=', $code)->count();
+		if ($count > 0) {
 			return $this->showmessage(RC_Lang::get('shipping::shipping.shipping_name'). RC_Lang::get('shipping::shipping.repeat'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
 		}
 
@@ -195,7 +196,7 @@ class admin_plugin extends ecjia_admin {
 			'shipping_name'   => $name,
 			'shipping_desc'   => trim($_POST['shipping_desc']),
 		);
-		$this->db_shipping->shipping_update(array('shipping_code' => $code), $array);
+		RC_DB::table('shipping')->where('shipping_code', $code)->update($array);
 
 		/* 记录日志 */
 		ecjia_admin::admin_log($name, 'edit', 'shipping');
@@ -210,10 +211,10 @@ class admin_plugin extends ecjia_admin {
 	
 		$code = trim($_GET['code']); 
 		$data = array('enabled' => 0);
-		$this->db_shipping->shipping_update(array('shipping_code' => $code), $data);
+		RC_DB::table('shipping')->where('shipping_code', $code)->update($data);
 
 		$refresh_url = RC_Uri::url('shipping/admin_plugin/init');
-		$shipping_name = $this->db_shipping->shipping_field(array('shipping_code' => $code), 'shipping_name');
+		$shipping_name = RC_DB::table('shipping')->where('shipping_code', $code)->pluck('shipping_name');
 
 		ecjia_admin::admin_log($shipping_name, 'stop', 'shipping');
 		return $this->showmessage(RC_Lang::get('shipping::shipping.plugin').' <strong>'.RC_Lang::get('shipping::shipping.disabled').'</strong>', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS , array( 'refresh_url' => $refresh_url));
@@ -227,10 +228,10 @@ class admin_plugin extends ecjia_admin {
 	
 		$code = trim($_GET['code']);
 		$data = array('enabled' => 1);
-		$this->db_shipping->shipping_update(array('shipping_code' => $code), $data);
-
+		RC_DB::table('shipping')->where('shipping_code', $code)->update($data);
+		
 		$refresh_url = RC_Uri::url('shipping/admin_plugin/init');
-		$shipping_name = $this->db_shipping->shipping_field(array('shipping_code' => $code), 'shipping_name');
+		$shipping_name = RC_DB::table('shipping')->where('shipping_code', $code)->pluck('shipping_name');
 		
 		ecjia_admin::admin_log($shipping_name, 'use', 'shipping');
 		return $this->showmessage(RC_Lang::get('shipping::shipping.plugin').' <strong>'.RC_Lang::get('shipping::shipping.enabled').'</strong>', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS , array( 'refresh_url' => $refresh_url));
@@ -245,7 +246,7 @@ class admin_plugin extends ecjia_admin {
 		
 		$shipping_id = !empty($_GET['shipping_id']) ? intval($_GET['shipping_id']) : 0;
 		/* 检查该插件是否已经安装 取值 */ 
-		$shipping_data = $this->db_shipping->shipping_find(array('shipping_id' => $shipping_id));
+		$shipping_data = RC_DB::table('shipping')->where('shipping_id', $shipping_id)->first();
 
 		if ($shipping_data) {
 			/* 判断模板图片位置 */
@@ -283,7 +284,7 @@ class admin_plugin extends ecjia_admin {
 		
 		$shipping_id = !empty($_POST['shipping_id']) ? intval($_POST['shipping_id']) : 0;
 		/* 取配送代码 */
-		$shipping_data = $this->db_shipping->shipping_find(array('shipping_id' => $shipping_id), array('shipping_code', 'print_bg'));
+		$shipping_data = RC_DB::table('shipping')->select('shipping_code', 'print_bg')->where('shipping_id', $shipping_id)->first();
 
 		if( isset($shipping_data['shipping_code']) ) {
 			$plugin_handle = new shipping_factory($shipping_data['shipping_code']);
@@ -292,7 +293,8 @@ class admin_plugin extends ecjia_admin {
 				'print_bg'     => '',
 				'config_lable' => $config['config_lable']
 			);
-			$this->db_shipping->shipping_update(array('shipping_code' => $shipping_data['shipping_code']), $data);
+			RC_DB::table('shipping')->where('shipping_code', $shipping_data['shipping_code'])->update($data);
+			
 			/* 如果存在之前的上传的图片，删除图片 */
 			if ($shipping_data['print_bg'] != '') {
 				$uploads_dir_info    = RC_Upload::upload_dir();
@@ -359,15 +361,16 @@ class admin_plugin extends ecjia_admin {
 					$src = '/images/receipt/' . $name;
 				}
 				/* 如果之前存在上传的图片，先删除 */
-				$ship_date = $this->db_shipping->shipping_select('', array('shipping_id' => $shipping_id));
-				if ($ship_date) {
-					if (isset($ship_date['print_bg'])) {
+				$ship_data = RC_DB::table('shipping')->where('shipping_id', $shipping_id)->get();
+				
+				if ($ship_data) {
+					if (isset($ship_data['print_bg'])) {
 						$uploads_dir_info = RC_Upload::upload_dir();
-						@unlink($uploads_dir_info['basedir']. $ship_date['print_bg']);
+						@unlink($uploads_dir_info['basedir']. $ship_data['print_bg']);
 					}
 				}
 				$data = array( 'print_bg' => $src );
-				$res = $this->db_shipping->shipping_update(array('shipping_id' => $shipping_id), $data);
+				$res = RC_DB::table('shipping')->where('shipping_id', $shipping_id)->update($data);
 
 				if($res) {
 					$url = RC_Uri::url('shipping/admin_plugin/edit_print_template', array('shipping_id' => $shipping_id)) ;
@@ -388,15 +391,15 @@ class admin_plugin extends ecjia_admin {
 		$this->admin_priv('ship_update', ecjia::MSGTYPE_JSON);
 		
 		$shipping_id = !empty($_POST['shipping_id']) ? intval($_POST['shipping_id']) : 0;
-		$ship_date = $this->db_shipping->shipping_find(array('shipping_id' => $shipping_id), 'print_bg');
+		$ship_data = RC_DB::table('shipping')->where('shipping_id', $shipping_id)->select('print_bg')->first();
 
-		if ($ship_date) {
-			if ($ship_date['print_bg'] != '') {
+		if ($ship_data) {
+			if ($ship_data['print_bg'] != '') {
 				$uploads_dir_info = RC_Upload::upload_dir();
-				@unlink($uploads_dir_info['basedir']. $ship_date['print_bg']);
+				@unlink($uploads_dir_info['basedir']. $ship_data['print_bg']);
 				
 				$data = array('print_bg' => '');
-				$res = $this->db_shipping->shipping_update(array('shipping_id' => $shipping_id), $data);
+				$res = RC_DB::table('shipping')->where('shipping_id', $shipping_id)->update($data);
 
 				return $this->showmessage(RC_Lang::get('shipping::shipping.remove_success'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS);
 			} else {
@@ -425,7 +428,7 @@ class admin_plugin extends ecjia_admin {
 		);
 		
 		$shipping_id = !empty($_GET['shipping_id']) ? intval($_GET['shipping_id']) : ( $shipid > 0 ? $shipid: 0);
-		$shipping_data = $this->db_shipping->shipping_find(array('shipping_id' => $shipping_id));
+		$shipping_data =  RC_DB::table('shipping')->where('shipping_id', $shipping_id)->first();
 
 		if ($shipping_data) {
 			$shipping_data['shipping_print']	= !empty($shipping_data['shipping_print']) 	? $shipping_data['shipping_print'] 	: '';
@@ -458,8 +461,6 @@ class admin_plugin extends ecjia_admin {
 				'config_lable' => trim($_POST['config_lable']),
 				'print_model'  => $print_model
 			);
-			$this->db_shipping->shipping_update(array('shipping_id' => $shipping_id), $data);
-
 		} elseif ($print_model == 1) {
 			//代码模式
 			$template = !empty($_POST['shipping_print']) ? trim($_POST['shipping_print']) : '';
@@ -467,8 +468,8 @@ class admin_plugin extends ecjia_admin {
 				'shipping_print' 	=> $template,
 				'print_model'  		=> $print_model
 			);
-			$this->db_shipping->shipping_update(array('shipping_id' => $shipping_id), $data);
 		}
+		RC_DB::table('shipping')->where('shipping_id', $shipping_id)->update($data);
 		
 		ecjia_admin::admin_log(addslashes($_POST['shipping_name']), 'edit', 'shipping_print_template');
 		return $this->showmessage(RC_Lang::get('shipping::shipping.edit_template_success'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS);
@@ -488,17 +489,18 @@ class admin_plugin extends ecjia_admin {
 			return $this->showmessage(RC_Lang::get('shipping::shipping.no_shipping_name'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR );
 		} else {
 			/* 检查名称是否重复 */
-			$old_name=$this->db_shipping->shipping_field(array('shipping_id' => $shipping_id), 'shipping_name');
+			$old_name = RC_DB::table('shipping')->where('shipping_id', $shipping_id)->pluck('shipping_name');
+			
 			/* 名称是否有修改 */
-			if ($old_name==$shipping_name ) {
+			if ($old_name == $shipping_name ) {
 				return $this->showmessage(RC_Lang::get('shipping::shipping.repeat_shipping_name'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR );
 			} else {
 				/* 名称是否重复 */
-				if ($this->db_shipping->is_only(array('shipping_name' => $shipping_name, 'shipping_id' => array('neq' => $shipping_id))) != 0) {
-
+				$count = RC_DB::table('shipping')->where('shipping_name', $shipping_name)->where('shipping_id', '!=', $shipping_id)->count();
+				if ($count != 0) {
 					return $this->showmessage(RC_Lang::get('shipping::shipping.repeat_shipping_name'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR );
 				} else {
-					$this->db_shipping->shipping_update(array('shipping_id' => $shipping_id), array('shipping_name' => $shipping_name));
+					RC_DB::table('shipping')->where('shipping_id', $shipping_id)->update(array('shipping_name' => $shipping_name));
 					
 					ecjia_admin::admin_log(addslashes($shipping_name), 'edit', 'shipping');
 					return $this->showmessage(RC_Lang::get('shipping::shipping.attradd_succed'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS);
@@ -532,7 +534,7 @@ class admin_plugin extends ecjia_admin {
 				$shipping_insure = floatval($shipping_insure) . '%';
 			}
 			/* 检查该插件是否支持保价   在此不做检查，在页面上进行控制，不支持保价的不允许修改*/
-			$this->db_shipping->shipping_update(array('shipping_id' => $shipping_id), array('insure' => $shipping_insure));
+			RC_DB::table('shipping')->where('shipping_id', $shipping_id)->update(array('insure' => $shipping_insure));
 
 			return $this->showmessage(RC_Lang::get('shipping::shipping.attradd_succed'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS);
 		}
@@ -552,7 +554,7 @@ class admin_plugin extends ecjia_admin {
 			$shipping_id    = intval($_POST['pk']);
 			$shipping_order = intval($_POST['value']);
 			
-			$this->db_shipping->shipping_update(array('shipping_id' => $shipping_id), array('shipping_order' => $shipping_order));
+			RC_DB::table('shipping')->where('shipping_id', $shipping_id)->update(array('shipping_order' => $shipping_order));
 			return $this->showmessage(RC_Lang::get('shipping::shipping.attradd_succed'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('pjaxurl' => RC_uri::url('shipping/admin_plugin/init')));
 		}
 	}

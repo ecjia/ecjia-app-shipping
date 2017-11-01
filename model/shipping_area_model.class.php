@@ -79,7 +79,6 @@ class shipping_area_model extends Component_Model_Model {
 		
 		if (!empty($list)) {
 			foreach ($list as $row) {
-				$db_region = RC_Model::model('shipping/shipping_area_region_viewmodel');
 				$region_names = RC_DB::table('area_region')->leftJoin('region', 'region.region_id', '=', 'area_region.region_id')
 						->where('area_region.shipping_area_id', $row['shipping_area_id'])
 						->select('region.region_name')->get();
@@ -105,78 +104,6 @@ class shipping_area_model extends Component_Model_Model {
 		return array('areas_list' => $shipping_areas_list, 'filter' => $filter, 'page' => $page->show(10), 'desc' => $page->page_desc());
 	}
 	
-	public function is_only($where) {
-		$db_shipping_area = RC_DB::table('shipping_area');
-		if(!empty($where)){
-			foreach($where as $key => $val){
-				if (is_array($val)){
-					foreach($val as $k => $v){
-						if ($k == 'neq'){
-							$db_shipping_area->where($key, '!=', $v);
-						}
-					}
-				}else{
-					$db_shipping_area->where($key, $val);
-				}
-			}
-		}
-		return $db_shipping_area->count();
-	}
-	
-	public function shipping_area_find($where, $field='*') {
-		$db_shipping_area = RC_DB::table('shipping_area');
-		if (!empty($where)) {
-			foreach ($where as $key => $val) {
-				$db_shipping_area->where($key, $val);
-			}
-		}
-		return $db_shipping_area->select($field)->first();
-	}
-	
-	public function shipping_area_manage($parameter) {
-		if (!isset($parameter['shipping_area_id'])){
-			$id = RC_DB::table('shipping_area')->insertGetId($parameter);
-		}else{
-			RC_DB::table('shipping_area')->where('shipping_area_id', $parameter['shipping_area_id'])->update($parameter);
-			$id = $parameter['shipping_area_id'];
-		}
-		return $id;
-	}
-	
-	public function shipping_area_field($where, $field) {
-		$db_shipping_area = RC_DB::table('shipping_area');
-		if (!empty($where)) {
-			foreach ($where as $key => $val) {
-				$db_shipping_area->where($key, $val);
-			}
-		}
-		return $db_shipping_area->pluck($field);
-	}
-	
-	public function shipping_area_remove($where) {
-		$db_shipping_area = RC_DB::table('shipping_area');
-		if (!empty($where)) {
-			foreach ($where as $key => $val){
-				$db_shipping_area->where($key, $val);
-			}
-		}
-		return $db_shipping_area->delete();
-	}
-	
-	public function shipping_area_batch($where, $type) {
-		$db_shipping_area = RC_DB::table('shipping_area');
-		if ($type == 'select') {
-			foreach($where as $key => $val){
-				$db_shipping_area->whereIn($key, $val);
-			}
-			return $db_shipping_area->get();
-		} elseif ($type == 'delete') {
-			foreach ($where as $key => $val) {
-				$db_shipping_area->whereIn($key, $val);
-			}
-			return $db_shipping_area->delete();
-		}
-	}
 }
 
 // end

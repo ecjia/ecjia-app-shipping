@@ -90,9 +90,7 @@ class admin_area extends ecjia_admin {
 		$args['keywords'] = !empty($_GET['keywords']) ? trim($_GET['keywords']) : '';
 		$args['store_id'] = !empty($_GET['store_id']) ? intval($_GET['store_id']) : 0;
 
-		$shipping_area_db = RC_Model::model('shipping/shipping_area_viewmodel');
-		$ship_areas_list = $shipping_area_db->get_shipareas_list($args);
-		
+		$ship_areas_list = RC_Model::model('shipping/shipping_area_viewmodel')->get_shipareas_list($args);
 		$shipping_name = RC_DB::table('shipping')->where('shipping_id', $shipping_id)->pluck('shipping_name');
 
 		ecjia_screen::get_current_screen()->add_nav_here(new admin_nav_here(__($shipping_name)));

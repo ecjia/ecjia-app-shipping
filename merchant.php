@@ -50,16 +50,12 @@ defined('IN_ECJIA') or exit('No permission resources.');
  * ECJIA 配送方式管理程序
  */
 class merchant extends ecjia_merchant {
-	private $db_shipping;
-
 	public function __construct() {
 		parent::__construct();
 
 		RC_Loader::load_app_func('global');
 		assign_adminlog_content();
 
-		$this->db_shipping 	= RC_Model::model('shipping/shipping_model');
-		
 		/* 加载全局 js/css */
 		RC_Script::enqueue_script('jquery-validate');
 		RC_Script::enqueue_script('jquery-form');
