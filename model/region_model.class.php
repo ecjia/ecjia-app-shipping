@@ -49,7 +49,8 @@ defined('IN_ECJIA') or exit('No permission resources.');
 class region_model extends Component_Model_Model
 {
     public $table_name = '';
-    public function __construct() {
+    public function __construct()
+    {
         $this->table_name = 'region';
         parent::__construct();
     }
@@ -61,7 +62,8 @@ class region_model extends Component_Model_Model
      * @param       int     country    国家的编号
      * @return      array
      */
-    public function get_regions($type = 0, $parent = 0) {
+    public function get_regions($type = 0, $parent = 0)
+    {
         return RC_DB::table('region')->where('region_type', $type)->where('parent_id', $parent)->select('region_id', 'region_name')->get();
     }
 }

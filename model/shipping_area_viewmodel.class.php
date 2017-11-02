@@ -51,7 +51,8 @@ class shipping_area_viewmodel extends Component_Model_View
     public $table_name = '';
     public $view       = array();
 
-    public function __construct() {
+    public function __construct()
+    {
         $this->table_name       = 'shipping_area';
         $this->table_alias_name = 'sa';
 
@@ -68,7 +69,8 @@ class shipping_area_viewmodel extends Component_Model_View
     /**
      *  获取配送区域列表
      */
-    public function get_shipareas_list($args = array()) {
+    public function get_shipareas_list($args = array())
+    {
         $db_shipping_area = RC_DB::table('shipping_area as sa')
             ->leftJoin('store_franchisee as s', RC_DB::raw('sa.store_id'), '=', RC_DB::raw('s.store_id'));
 

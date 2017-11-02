@@ -49,7 +49,8 @@ defined('IN_ECJIA') or exit('No permission resources.');
 class shipping_area_model extends Component_Model_Model
 {
     public $table_name = '';
-    public function __construct() {
+    public function __construct()
+    {
         $this->table_name = 'shipping_area';
         parent::__construct();
     }
@@ -57,7 +58,8 @@ class shipping_area_model extends Component_Model_Model
     /**
      *  获取配送区域列表
      */
-    public function get_shipareas_list($args = array()) {
+    public function get_shipareas_list($args = array())
+    {
         $db_shipping_area = RC_DB::table('shipping_area');
         /* 过滤条件  为查询*/
         $filter['keywords'] = empty($args['keywords']) ? '' : trim($args['keywords']);
@@ -85,7 +87,7 @@ class shipping_area_model extends Component_Model_Model
                     ->where('area_region.shipping_area_id', $row['shipping_area_id'])
                     ->select('region.region_name')
                     ->get();
-                    
+
                 if (is_array($region_names) && count($region_names) > 0) {
                     $region_array = array();
                     foreach ($region_names as $name) {
