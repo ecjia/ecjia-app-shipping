@@ -55,8 +55,7 @@ use Ecjia\System\Plugin\AbstractPlugin;
 abstract class ShippingAbstract extends AbstractPlugin
 {
 
-	
-	/**
+    /**
      * 计算订单的配送费用的函数
      *
      * @param   float   $goods_weight   商品重量
@@ -64,17 +63,17 @@ abstract class ShippingAbstract extends AbstractPlugin
      * @param   float   $goods_number   商品件数
      * @return  decimal
      */
-	abstract public function calculate($goods_weight, $goods_amount, $goods_number);
-	
-	/**
-	 * 查询发货状态
-	 * 该配送方式不支持查询发货状态
-	 *
-	 * @access  public
-	 * @param   string  $delivery_sn     发货单号
-	 * @return  string
-	 */
-	abstract public function query($delivery_sn);
+    abstract public function calculate($goods_weight, $goods_amount, $goods_number);
+
+    /**
+     * 查询发货状态
+     * 该配送方式不支持查询发货状态
+     *
+     * @access  public
+     * @param   string  $delivery_sn     发货单号
+     * @return  string
+     */
+    abstract public function query($delivery_sn);
 
 }
 
