@@ -278,8 +278,6 @@ class mh_area extends ecjia_merchant {
 	 */
 	public function edit() {
 		$this->admin_priv('ship_merchant_update');
-		
-		$dbview = RC_Model::model('shipping/shipping_viewmodel');
 
 		$shipping_id 	= !empty($_GET['shipping_id']) 	? intval($_GET['shipping_id']) 	: 0;
 		$ship_area_id 	= !empty($_GET['id']) 			? intval($_GET['id']) 			: 0;
