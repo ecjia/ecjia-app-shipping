@@ -79,17 +79,22 @@ class admin_store_shipping extends ecjia_admin
         RC_Script::enqueue_script('bootstrap-datepicker', RC_Uri::admin_url('statics/lib/datepicker/bootstrap-datepicker.min.js'));
         RC_Style::enqueue_style('datepicker', RC_Uri::admin_url('statics/lib/datepicker/datepicker.css'));
 
-        ecjia_screen::get_current_screen()->add_nav_here(new admin_nav_here(RC_Lang::get('store::store.store'), RC_Uri::url('store/admin/init')));
+        $store_id = intval($_GET['store_id']);
+        $store_info = RC_DB::table('store_franchisee')->where('store_id', $store_id)->first();
+        $nav_here = '入驻商家';
+        $url = RC_Uri::url('store/admin/join');
+        if ($store_info['manage_mode'] == 'self') {
+        	$nav_here = '自营店铺';
+        	$url = RC_Uri::url('store/admin/init');
+        }
+        ecjia_screen::get_current_screen()->add_nav_here(new admin_nav_here($nav_here, $url));
     }
 
     //查看配送方式
     public function init()
     {
         $this->admin_priv('store_shipping_manage');
-
         RC_Loader::load_app_class('shipping_factory', 'shipping', false);
-        $this->assign('action_link', array('href' => RC_Uri::url('store/admin/init'), 'text' => RC_Lang::get('store::store.store_list')));
-        
         $store_id = intval($_GET['store_id']);
         if (empty($store_id)) {
             return $this->showmessage(__('请选择您要操作的店铺'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
@@ -149,6 +154,11 @@ class admin_store_shipping extends ecjia_admin
 
         $store = RC_DB::table('store_franchisee')->where('store_id', $store_id)->first();
         
+        if ($store['manage_mode'] == 'self') {
+        	$this->assign('action_link', array('href' => RC_Uri::url('store/admin/init'), 'text' => '自营店铺列表'));
+        } else {
+        	$this->assign('action_link', array('href' => RC_Uri::url('store/admin/join'), 'text' => RC_Lang::get('store::store.store_list')));
+        }
         ecjia_screen::get_current_screen()->add_nav_here(new admin_nav_here($store['merchants_name'], RC_Uri::url('store/admin/preview', array('store_id' => $store_id))));
         ecjia_screen::get_current_screen()->add_nav_here(new admin_nav_here('配送方式'));
         
