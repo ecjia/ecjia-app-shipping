@@ -88,15 +88,12 @@ class admin_store_shipping extends ecjia_admin
         $this->admin_priv('store_shipping_manage');
 
         RC_Loader::load_app_class('shipping_factory', 'shipping', false);
-
         $this->assign('action_link', array('href' => RC_Uri::url('store/admin/init'), 'text' => RC_Lang::get('store::store.store_list')));
-        ecjia_screen::get_current_screen()->add_nav_here(new admin_nav_here('配送方式'));
+        
         $store_id = intval($_GET['store_id']);
         if (empty($store_id)) {
             return $this->showmessage(__('请选择您要操作的店铺'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
         }
-
-        $menu = set_store_menu($store_id, 'shipping');
 
         //全部
         $shipping_all = RC_DB::table('shipping')
@@ -151,12 +148,18 @@ class admin_store_shipping extends ecjia_admin
         $this->assign('disabled', $all_modules['disabled']);
 
         $store = RC_DB::table('store_franchisee')->where('store_id', $store_id)->first();
+        
+        ecjia_screen::get_current_screen()->add_nav_here(new admin_nav_here($store['merchants_name'], RC_Uri::url('store/admin/preview', array('store_id' => $store_id))));
+        ecjia_screen::get_current_screen()->add_nav_here(new admin_nav_here('配送方式'));
+        
+        ecjia_screen::get_current_screen()->set_sidebar_display(false);
+        ecjia_screen::get_current_screen()->add_option('store_name', $store['merchants_name']);
+        ecjia_screen::get_current_screen()->add_option('current_code', 'store_shipping');
 
         $this->assign('ur_here', $store['merchants_name'] . ' - 配送方式');
         $this->assign('form_action', RC_Uri::url('store/admin/auth_update'));
         $this->assign('store', $store);
         $this->assign('store_id', $store_id);
-        $this->assign('menu', $menu);
         $this->display('store_shipping.dwt');
     }
 }
