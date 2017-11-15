@@ -189,7 +189,10 @@ class admin_area extends ecjia_admin {
 		
 		$this->assign('fields', $fields);
 		$this->assign('form_action', 'insert');
-		$this->assign('countries', $this->db_region->get_regions());
+		//$this->assign('countries', $this->db_region->get_regions());
+		
+		$provinces = with(new Ecjia\App\Setting\Region)->getProvinces(ecjia::config('shop_country'));//获取当前国家的所有省份
+		$this->assign('provinces', $provinces);
 
 		$this->assign('action_link', array('text' => $shipping_data['shipping_name'].RC_Lang::get('shipping::shipping_area.list'), 'href' => RC_Uri::url('shipping/admin_area/init', array('shipping_id' => $shipping_id, 'code' => $code ))));
 		$this->assign('default_country', ecjia::config('shop_country'));
@@ -365,8 +368,8 @@ class admin_area extends ecjia_admin {
 		}
 		$regions = array ();
 
-		$region_data = RC_DB::table('area_region')->leftJoin('regions', 'area_region.region_id', '=', 'region.region_id')
-			->select('area_region.region_id', 'region.region_name')->where('area_region.shipping_area_id', $ship_area_id)->get();
+		$region_data = RC_DB::table('area_region')->leftJoin('regions', 'area_region.region_id', '=', 'regions.region_id')
+			->select('area_region.region_id', 'regions.region_name')->where('area_region.shipping_area_id', $ship_area_id)->get();
 		
 		if (!empty($region_data)) {
 			foreach ($region_data as $key => $val) {
@@ -397,10 +400,12 @@ class admin_area extends ecjia_admin {
 		$this->assign('shipping_area', $shipping_data);
 		$this->assign('regions', $regions);
 		$this->assign('action_link', array('text' => $shipping_data['shipping_name'].RC_Lang::get('shipping::shipping_area.list'), 'href' => RC_Uri::url('shipping/admin_area/init', array('shipping_id' => $shipping_data['shipping_id'], 'code' => $code))));
+		//$this->assign('countries', $this->db_region->get_regions());
+		//$this->assign('default_country', 1);
+		$provinces = with(new Ecjia\App\Setting\Region)->getProvinces(ecjia::config('shop_country'));//获取当前国家的所有省份
+		$this->assign('provinces', $provinces);
 		
-		$this->assign('countries', $this->db_region->get_regions());
-		$this->assign('default_country', 1);
-		$this->assign('region_get_url', RC_Uri::url('shipping/region/init'));//区域联动使用
+		$this->assign('region_get_url', RC_Uri::url('setting/region/init'));//区域联动使用
 		$this->assign('form_action', RC_Uri::url('shipping/admin_area/update', array('shipping_id' => $shipping_id, 'code' => $code)));
 		
 		$this->assign_lang();
