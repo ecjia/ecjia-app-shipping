@@ -182,41 +182,41 @@
 							<div class="ms-container ms-shipping" id="ms-custom-navigation">
 								<div class="ms-selectable col-lg-3">
 									<div class="search-header">
-										<input class="form-control" type="text" placeholder="{lang key='shipping::shipping_area.search_country_name'}" autocomplete="off" id="selCountry" />
+										<input class="form-control" type="text" placeholder="搜索省份" autocomplete="off" id="selProvinces" />
 									</div>
-									<ul class="ms-list nav-list-ready selCountry" data-url="{url path='shipping/region/init' args='target=selProvinces&type=1'}" data-next="selProvinces">
-										<!-- {foreach from=$countries item=country key=key} -->
-										<li class="ms-elem-selectable" data-val="{$country.region_id}"><span>{$country.region_name|escape:html}</span><span class="edit-list"><a href="javascript:;">{lang key='shipping::shipping_area.add'}</a></span></li>
+									<ul class="ms-list nav-list-ready selProvinces" data-url="{url path='setting/region/init' args='target=selCities&type=1'}" data-next="selCities">
+										<!-- {foreach from=$provinces item=province key=key} -->
+										<li class="ms-elem-selectable" data-val="{$province.region_id}"><span>{$province.region_name|escape:html}</span><span class="edit-list"><a href="javascript:;">{lang key='shipping::shipping_area.add'}</a></span></li>
 										<!-- {foreachelse} -->
-										<li class="ms-elem-selectable" data-val="0"><span>{lang key='shipping::shipping_area.no_country_choose'}</span></li>
+										<li class="ms-elem-selectable" data-val="0"><span>没有可选的省份地区……</span></li>
 										<!-- {/foreach} -->
 									</ul>
 								</div>
 		
 								<div class="ms-selectable col-lg-3">
 									<div class="search-header">
-										<input class="form-control" type="text" placeholder="{lang key='shipping::shipping_area.search_province_name'}" autocomplete="off" id="selProvinces" />
+										<input class="form-control" type="text" placeholder="搜索市" autocomplete="off" id="selCities" />
 									</div>
-									<ul class="ms-list nav-list-ready selProvinces" data-url="{url path='shipping/region/init' args='target=selCities&type=2'}" data-next="selCities">
-										<li class="ms-elem-selectable" data-val="0"><span>{lang key='shipping::shipping_area.choose_province_first'}</span></li>
+									<ul class="ms-list nav-list-ready selCities" data-url="{url path='setting/region/init' args='target=selDistricts&type=2'}" data-next="selDistricts">
+										<li class="ms-elem-selectable" data-val="0"><span>请选择市</span></li>
 									</ul>
 								</div>
 								
 								<div class="ms-selectable col-lg-3">
 									<div class="search-header">
-										<input class="form-control" type="text" placeholder="{lang key='shipping::shipping_area.search_city_name'}" autocomplete="off" id="selCities" />
+										<input class="form-control" type="text" placeholder="搜索区/县" autocomplete="off" id="selDistricts" />
 									</div>
-									<ul class="ms-list nav-list-ready selCities" data-url="{url path='shipping/region/init' args='target=selDistricts&type=3'}" data-next="selDistricts">
+									<ul class="ms-list nav-list-ready selDistricts" data-url="{url path='setting/region/init' args='target=selStreets&type=3'}" data-next="selStreets">
 										<li class="ms-elem-selectable" data-val="0"><span>{lang key='shipping::shipping_area.choose_city_first'}</span></li>
 									</ul>
 								</div>
 								
 								<div class="ms-selectable col-lg-3">
 									<div class="search-header">
-										<input class="form-control" type="text" placeholder="{lang key='shipping::shipping_area.search_districe_name'}" autocomplete="off" id="selDistricts" />
+										<input class="form-control" type="text" placeholder="搜索街道镇" autocomplete="off" id="selStreets" />
 									</div>
-									<ul class="ms-list nav-list-ready selDistricts">
-										<li class="ms-elem-selectable" data-val="0"><span>{lang key='shipping::shipping_area.choose_districe_first'}</span></li>
+									<ul class="ms-list nav-list-ready selStreets">
+										<li class="ms-elem-selectable" data-val="0"><span>请选择街道/镇</span></li>
 									</ul>
 								</div>
 							</div>
