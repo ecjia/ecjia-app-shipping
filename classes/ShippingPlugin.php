@@ -44,16 +44,130 @@
 //
 //  ---------------------------------------------------------------------------------
 //
-defined('IN_ECJIA') or exit('No permission resources.');
+namespace Ecjia\App\Shipping;
+
+use Ecjia\System\Plugin\PluginModel;
+use ecjia_error;
 
 /**
  * 配送方法
  * @author royalwang
  */
-class shipping_method
+class ShippingPlugin extends PluginModel
 {
-    public function __construct()
-    {}
+
+    protected $table = 'shipping';
+
+    /**
+     * 当前插件种类的唯一标识字段名
+     */
+    public function codeFieldName()
+    {
+        return 'shipping_code';
+    }
+
+    /**
+     * 激活的支付插件列表
+     */
+    public function getInstalledPlugins()
+    {
+        return ecjia_config::getAddonConfig('shipping_plugins', true, true);
+    }
+
+    /**
+     * 获取数据库中启用的插件列表
+     */
+    public function getEnableList()
+    {
+        $data = $this->enabled()->orderBy('shipping_code', 'asc')->get()->toArray();
+        return $data;
+    }
+
+    /**
+     * 获取数据库中插件数据
+     */
+    public function getPluginDataById($id)
+    {
+        return $this->where('shipping_id', $id)->where('enabled', 1)->first();
+    }
+
+    public function getPluginDataByCode($code)
+    {
+        return $this->where('shipping_code', $code)->where('enabled', 1)->first();
+    }
+
+    public function getPluginDataByName($name)
+    {
+        return $this->where('shipping_name', $name)->where('enabled', 1)->first();
+    }
+
+    /**
+     * 获取数据中的Config配置数据，并处理
+     */
+    public function configData($code)
+    {
+        $pluginData = $this->getPluginDataByCode($code);
+
+        $config['shipping_code'] = $code;
+        $config['shipping_name'] = $pluginData['shipping_name'];
+
+        return $config;
+    }
+
+    /**
+     * 限制查询只包括启动的配送渠道。
+     *
+     * @return \Royalcms\Component\Database\Eloquent\Builder
+     */
+    public function scopeEnabled($query)
+    {
+        return $query->where('enabled', 1);
+    }
+
+    /**
+     * 获取默认插件实例
+     */
+    public function defaultChannel()
+    {
+        $data = $this->enabled()->orderBy('shipping_order', 'asc')->first();
+
+        $handler = $this->pluginInstance($data->shipping_code, []);
+
+        if (!$handler) {
+            return new ecjia_error('code_not_found', $data->shipping_code . ' plugin not found!');
+        }
+
+        return $handler;
+    }
+
+    /**
+     * 获取某个插件的实例对象
+     * @param string|integer $code 类型为string时是shipping_code，类型是integer时是shipping_id
+     * @return Ambigous <\ecjia_error, \Ecjia\System\Plugin\AbstractPlugin>|\ecjia_error|\Ecjia\System\Plugin\AbstractPlugin
+     */
+    public function channel($code = null)
+    {
+        if (is_null($code)) {
+            return $this->defaultChannel();
+        }
+
+        if (is_int($code)) {
+            $data = $this->getPluginDataById($code);
+        } else {
+            $data = $this->getPluginDataByCode($code);
+        }
+
+        if (empty($data)) {
+            return new ecjia_error('shipping_not_found', $code . ' shipping not found!');
+        }
+
+        $handler = $this->pluginInstance($data->shipping_code, []);
+        if (!$handler) {
+            return new ecjia_error('plugin_not_found', $data->shipping_code . ' plugin not found!');
+        }
+
+        return $handler;
+    }
 
     /**
      * 取得可用的配送方式列表
@@ -235,27 +349,6 @@ class shipping_method
     }
 
     /**
-     * 处理序列化的支付、配送的配置参数
-     * 返回一个以name为索引的数组
-     *
-     * @access  public
-     * @param   string       $cfg
-     * @return  void
-     */
-    public function unserialize_config($cfg)
-    {
-        if (is_string($cfg) && ($arr = unserialize($cfg)) !== false) {
-            $config = array();
-            foreach ($arr as $key => $val) {
-                $config[$val['name']] = $val['value'];
-            }
-            return $config;
-        } else {
-            return false;
-        }
-    }
-
-    /**
      * 获取指定配送的保价费用
      *
      * @access  public
@@ -285,15 +378,6 @@ class shipping_method
         }
     }
 
-    public function get_shipping_code($shipping_id)
-    {
-        return RC_DB::table('shipping')->where('shipping_id', $shipping_id)->pluck('shipping_code');
-    }
-
-    public function get_shipping_id($shipping_code)
-    {
-        return RC_DB::table('shipping')->where('shipping_code', $shipping_code)->pluck('shipping_id');
-    }
 }
 
 // end

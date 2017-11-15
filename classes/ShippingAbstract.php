@@ -44,26 +44,36 @@
 //
 //  ---------------------------------------------------------------------------------
 //
-defined('IN_ECJIA') or exit('No permission resources.');
+namespace Ecjia\App\Shipping;
 
-class shipping_installer extends ecjia_installer
+use Ecjia\System\Plugin\AbstractPlugin;
+
+/**
+ * 插件抽象类
+ * @author royalwang
+ */
+abstract class ShippingAbstract extends AbstractPlugin
 {
 
-    protected $dependent = array(
-        'ecjia.system' => '1.0',
-    );
+    /**
+     * 计算订单的配送费用的函数
+     *
+     * @param   float   $goods_weight   商品重量
+     * @param   float   $goods_amount   商品金额
+     * @param   float   $goods_number   商品件数
+     * @return  decimal
+     */
+    abstract public function calculate($goods_weight, $goods_amount, $goods_number);
 
-    public function __construct()
-    {
-        $id = 'ecjia.shipping';
-        parent::__construct($id);
-    }
-
-    public function install()
-    {}
-
-    public function uninstall()
-    {}
+    /**
+     * 查询发货状态
+     * 该配送方式不支持查询发货状态
+     *
+     * @access  public
+     * @param   string  $delivery_sn     发货单号
+     * @return  string
+     */
+    abstract public function query($delivery_sn);
 
 }
 

@@ -1,10 +1,10 @@
 // JavaScript Document
-;(function (app, $) {
+;
+(function(app, $) {
     app.shippingObj = {
-        init: function () {},
- 
+        init: function() {},
         /* 配送费用计算方式 */
-        area_compute_mode: function (shipping_code, mode) {
+        area_compute_mode: function(shipping_code, mode) {
             var base_fee = document.getElementById("base_fee");
             var step_fee = document.getElementById("step_fee");
             var item_fee = document.getElementById("item_fee");
@@ -27,13 +27,13 @@
                 }
             }
         },
-        area_region_add: function () {
+        area_region_add: function() {
             var selCountry = document.forms['theForm'].elements['country'];
             var selProvince = document.forms['theForm'].elements['province'];
             var selCity = document.forms['theForm'].elements['city'];
             var selDistrict = document.forms['theForm'].elements['district'];
             var regionCell = '';
-            $("#regionCell").children().each(function (i) {
+            $("#regionCell").children().each(function(i) {
                 if (i % 2 == 0) {
                     regionCell += $(this).find(".uni-checked").html();
                 } else {
@@ -78,12 +78,12 @@
             if (!exists) {
                 regionCell += "<input type='checkbox' class='uni_style' name='regions[]' value='" + regionId + "' checked='true' /><span>" + regionName + "  </span>";
                 $("#regionCell").html(regionCell);
-//                $(".uni_style").uniform();
+                //                $(".uni_style").uniform();
                 /* 显示 */
                 $(".select_region").css("display", "block");
             }
         },
-        valid: function (input) {
+        valid: function(input) {
             if (input) {
                 if (input.value.length == 0 || input.value.match(/[^0-9]/) != null) {
                     return true;
@@ -92,13 +92,10 @@
                 return false;
             }
         },
- 
         /* *配送区域列表界面js初始化* */
-        shipping_area_init: function () {
- 
-        },
+        shipping_area_init: function() {},
         /* 搜索 */
-        shipping_area_list_search: function (url) {
+        shipping_area_list_search: function(url) {
             var keywords = $('input[name="keywords"]').val();
             var code = $('[name=code]').val();
             var shipping_id = $('[name=shipping_id]').val();
@@ -106,10 +103,9 @@
             ecjia.pjax(url);
         },
     };
- 
     /* 添加编辑配送区域js初始化 */
     app.area_info = {
-        init: function () {
+        init: function() {
             /* 添加编辑配送区域form提交 */
             app.area_info.shipping_submit();
             app.area_info.choose_area();
@@ -117,21 +113,19 @@
             app.area_info.quick_search();
             app.area_info.tpicker();
             app.area_info.datepicker();
-            
         },
-        
-        datepicker : function(){
-			$.fn.datetimepicker.dates['zh'] = {  
-                days:       ["星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六","星期日"],  
-                daysShort:  ["日", "一", "二", "三", "四", "五", "六","日"],  
-                daysMin:    ["日", "一", "二", "三", "四", "五", "六","日"],  
-                months:     ["一月", "二月", "三月", "四月", "五月", "六月", "七月", "八月", "九月", "十月", "十一月","十二月"],  
-                monthsShort:  ["一月", "二月", "三月", "四月", "五月", "六月", "七月", "八月", "九月", "十月", "十一月","十二月"], 
-                meridiem:    ["上午", "下午"],  
-                today:       "今天"  
-	        };
+        datepicker: function() {
+            $.fn.datetimepicker.dates['zh'] = {
+                days: ["星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六", "星期日"],
+                daysShort: ["日", "一", "二", "三", "四", "五", "六", "日"],
+                daysMin: ["日", "一", "二", "三", "四", "五", "六", "日"],
+                months: ["一月", "二月", "三月", "四月", "五月", "六月", "七月", "八月", "九月", "十月", "十一月", "十二月"],
+                monthsShort: ["一月", "二月", "三月", "四月", "五月", "六月", "七月", "八月", "九月", "十月", "十一月", "十二月"],
+                meridiem: ["上午", "下午"],
+                today: "今天"
+            };
             $(".tp_1").datetimepicker({
-				format: "hh:ii",
+                format: "hh:ii",
                 weekStart: 1,
                 todayBtn: 1,
                 autoclose: 1,
@@ -139,28 +133,26 @@
                 startView: 1,
                 forceParse: 0,
                 minuteStep: 5
-			});
+            });
         },
-        
-        tpicker : function () {
-			$('.fontello-icon-plus').click(function(e) {
-				setTimeout(function () { 
-					$(".tp_1").datetimepicker({
-						format: "hh:ii",
-		                weekStart: 1,
-		                todayBtn: 1,
-		                autoclose: 1,
-		                todayHighlight: 1,
-		                startView: 1,
-		                forceParse: 0,
-		                minuteStep: 5
-					});
-			    }, 1000);
-			});
-		},
- 
-        shipping_submit: function () {
-            $('form[name="theForm"]').on('submit', function (e) {
+        tpicker: function() {
+            $('.fontello-icon-plus').click(function(e) {
+                setTimeout(function() {
+                    $(".tp_1").datetimepicker({
+                        format: "hh:ii",
+                        weekStart: 1,
+                        todayBtn: 1,
+                        autoclose: 1,
+                        todayHighlight: 1,
+                        startView: 1,
+                        forceParse: 0,
+                        minuteStep: 5
+                    });
+                }, 1000);
+            });
+        },
+        shipping_submit: function() {
+            $('form[name="theForm"]').on('submit', function(e) {
                 e.preventDefault();
                 var objform = $('form[name="theForm"]')[0];
                 var mesObj = new Object();
@@ -215,11 +207,11 @@
                 }
                 $(objform).ajaxSubmit({
                     dataType: "json",
-                    success: function (data) {
+                    success: function(data) {
                         if (data.state == "success") {
                             if (data.refresh_url != undefined) {
                                 var url = data.refresh_url;
-                                ecjia.pjax(url, function () {
+                                ecjia.pjax(url, function() {
                                     ecjia.merchant.showmessage(data);
                                 });
                             } else {
@@ -232,17 +224,15 @@
                 });
             });
         },
- 
-        choose_area: function () {
-            $('.ms-elem-selectable').on('click', function (e) {
+        choose_area: function() {
+            $('.ms-elem-selectable').on('click', function(e) {
                 e.preventDefault();
                 var $this = $(this),
                     val = $this.attr('data-val'),
                     url = $this.parent().attr('data-url'),
                     $next = $('.' + $this.parent().attr('data-next'));
-                	$next_attr = $this.parent().attr('data-next');
                 /* 如果是县乡级别的，不触发后续操作 */
-                if ($this.parent().hasClass('selStreets')) {
+                if ($this.parent().hasClass('selDistricts')) {
                     $this.siblings().removeClass('disabled');
                     if (val != 0) $this.addClass('disabled');
                     return;
@@ -257,37 +247,22 @@
                 /* 请求参数 */
                 $.get(url, {
                     parent: val
-                }, function (data) {
+                }, function(data) {
                     $this.siblings().removeClass('disabled');
                     $this.addClass('disabled');
                     var html = '';
                     /* 如果有返回参数，则赋值并触发下一级别的选中 */
                     if (data.regions) {
-//                        for (var i = data.regions.length - 1; i >= 0; i--) {
-//                            html += '<li class="ms-elem-selectable" data-val="' + data.regions[i].region_id + '"><span>' + data.regions[i].region_name +
-//                                '</span><span class="edit-list"><a href="javascript:;">' + js_lang.add + '</a></span></li>';
-//                        };
-                    	  for (var i = 0; i <= data.regions.length - 1; i++) {
-                              html += '<li class="ms-elem-selectable select_hot_city" data-val="' + data.regions[i].region_id + '"><span>' +
-                              	data.regions[i].region_name + '</span>';
-                              if ($next_attr == 'selCities') {
-                                  html += '<span class="edit-list"><a href="javascript:;">' + js_lang.add + '</a></span>';
-                              }
-                              if ($next_attr == 'selDistricts') {
-                                  html += '<span class="edit-list"><a href="javascript:;">' + js_lang.add + '</a></span>';
-                              }
-                              if ($next_attr == 'selStreets') {
-                                  html += '<span class="edit-list"><a href="javascript:;">' + js_lang.add + '</a></span>';
-                              }
-                              html += '</li>';
-                          };
+                        for (var i = data.regions.length - 1; i >= 0; i--) {
+                            html += '<li class="ms-elem-selectable" data-val="' + data.regions[i].region_id + '"><span>' + data.regions[i].region_name + '</span><span class="edit-list"><a href="javascript:;">' + js_lang.add + '</a></span></li>';
+                        };
                         $next.html(html);
                         app.area_info.quick_search();
-                        //$('.ms-elem-selectable').unbind("click");
-                        //$('.ms-elem-selectable .edit-list a').unbind("click");
+                        $('.ms-elem-selectable').unbind("click");
+                        $('.ms-elem-selectable .edit-list a').unbind("click");
                         app.area_info.choose_area();
                         app.area_info.selected_area();
-                        //$next.find('.ms-elem-selectable').eq(0).trigger('click');
+                        $next.find('.ms-elem-selectable').eq(0).trigger('click');
                         /* 如果没有返回参数，则直接触发选中0的操作 */
                     } else {
                         var $tmp = $('<li class="ms-elem-selectable" data-val="0"><span>' + js_lang.no_select_region + '</span></li>');
@@ -298,9 +273,8 @@
                 }, 'json');
             });
         },
- 
-        selected_area: function () {
-            $('.ms-elem-selectable .edit-list a').on('click', function (e) {
+        selected_area: function() {
+            $('.ms-elem-selectable .edit-list a').on('click', function(e) {
                 e.preventDefault();
                 e.stopPropagation();
                 var bool = true;
@@ -309,7 +283,7 @@
                     val = $parent.attr('data-val'),
                     name = $parent.find('span').eq(0).text(),
                     $tmp = $('<input type="checkbox" checked="checked" value="' + val + '" name="regions[]" id="regions_' + val + '"/><label for="regions_' + val + '">' + name + '</label>');
-                $('.selected_area input').each(function (i) {
+                $('.selected_area input').each(function(i) {
                     if ($(this).val() == val) {
                         var data = {
                             message: js_lang.region_selected,
@@ -322,24 +296,23 @@
                 });
                 if (bool) {
                     $('.selected_area').append($tmp);
-//                    $tmp.uniform();
+                    //                    $tmp.uniform();
                 }
             });
         },
- 
-        quick_search: function () {
+        quick_search: function() {
             var opt = {
-                onAfter: function () {
-                    $('.ms-group').each(function (index) {
+                onAfter: function() {
+                    $('.ms-group').each(function(index) {
                         $(this).find('.isShow').length ? $(this).css('display', 'block') : $(this).css('display', 'none');
                     });
                     return;
                 },
-                show: function () {
+                show: function() {
                     this.style.display = "";
                     $(this).addClass('isShow');
                 },
-                hide: function () {
+                hide: function() {
                     this.style.display = "none";
                     $(this).removeClass('isShow');
                 },
@@ -350,7 +323,5 @@
             $('#selDistricts').quicksearch($('.selDistricts .ms-elem-selectable'), opt);
         },
     }
- 
 })(ecjia.merchant, jQuery);
- 
 // end
