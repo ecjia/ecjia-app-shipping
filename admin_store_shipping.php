@@ -51,12 +51,10 @@ defined('IN_ECJIA') or exit('No permission resources.');
  */
 class admin_store_shipping extends ecjia_admin
 {
-    private $db_region;
     public function __construct()
     {
         parent::__construct();
 
-        $this->db_region = RC_Model::model('store/region_model');
         RC_Loader::load_app_func('global', 'store');
         RC_Loader::load_app_func('merchant_store', 'store');
         assign_adminlog_content();

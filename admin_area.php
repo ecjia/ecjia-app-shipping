@@ -183,9 +183,8 @@ class admin_area extends ecjia_admin
 
         $this->assign('fields', $fields);
         $this->assign('form_action', 'insert');
-//         $this->assign('countries', RC_Model::model('shipping/region_model')->get_regions());
 
-        $provinces = with(new Ecjia\App\Setting\Region)->getProvinces(ecjia::config('shop_country'));//获取当前国家的所有省份
+        $provinces = ecjia_region::getSubarea(ecjia::config('shop_country'));//获取当前国家的所有省份
         $this->assign('provinces', $provinces);
         
         $this->assign('action_link', array('text' => $shipping_data['shipping_name'] . RC_Lang::get('shipping::shipping_area.list'), 'href' => RC_Uri::url('shipping/admin_area/init', array('shipping_id' => $shipping_id, 'code' => $code))));
@@ -404,9 +403,7 @@ class admin_area extends ecjia_admin
         $this->assign('regions', $regions);
         $this->assign('action_link', array('text' => $shipping_data['shipping_name'] . RC_Lang::get('shipping::shipping_area.list'), 'href' => RC_Uri::url('shipping/admin_area/init', array('shipping_id' => $shipping_data['shipping_id'], 'code' => $code))));
 
-//         $this->assign('countries', RC_Model::model('shipping/region_model')->get_regions());
-//         $this->assign('default_country', 1);
-        $provinces = with(new Ecjia\App\Setting\Region)->getProvinces(ecjia::config('shop_country'));//获取当前国家的所有省份
+        $provinces = ecjia_region::getSubarea(ecjia::config('shop_country'));//获取当前国家的所有省份
         $this->assign('provinces', $provinces);
         
         $this->assign('region_get_url', RC_Uri::url('setting/region/init')); //区域联动使用
