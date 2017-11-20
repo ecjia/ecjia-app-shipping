@@ -154,6 +154,7 @@ div.file-group span.uni-action {
 		<input type="hidden" name="config_lable" value=""> 
 		<input type="hidden" name="print_model" value="2">
 		<input type="hidden" name="shipping_name" value="{$shipping.shipping_name}">
+		
 		<!--菜单栏 start-->
 		<table id="header" width="100%" cellpadding="0" cellspacing="0" border="0" height="50">
 			<tr id="top-row">
@@ -190,52 +191,53 @@ div.file-group span.uni-action {
 					<input type="button" name="upload_del" class="btn" id="upload_del" value="{lang key='shipping::shipping.del_shipping_bg'}" data-url="{$post_links.print_img_del}"
 					onclick="javascript:pintObj.bg_del(this);" {if $shipping.print_bg== ''} disabled="disabled"{/if}>
 				</td>
-				<td align="right" style="margin-right: 5px;">
-					<button class="btn" type="button" data-url="{$post_links.do_edit}" onclick="javascript:pintObj.save(this);">{lang key='shipping::shipping.save_setting'}</button>&nbsp;&nbsp;
-					<button class="btn" type="button" data-url="{$post_links.recovery}" onclick="javascript:pintObj.recovery_default(this);">{lang key='shipping::shipping.recovery_default'}</button>
-				</td>
+				
 			</tr>
 			<tr>
 				<td colspan="3">&nbsp;</td>
 			</tr>
 		</table>
+		
 		<table width="100%" cellpadding="0" cellspacing="0" border="0" class="table_box">
 			<tr>
 				<td style="overflow: hidden;">
-					<table width="100%" cellpadding="0" cellspacing="0" border="0"
-					class="table_line">
-					<tr style="display: none">
-						<td colspan="3"></td>
-					</tr>
-				</table>
-			</td>
-		</tr>
-		<!--编辑区 start-->
-		<tr>
-			<td id="xEditingArea" valign="top" height="620" width="100%"><div
-				class="div_play_aray">
-				<object classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000"
-				codebase="http://fpdownload.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,0,0"
-				width="1024" height="600" id="test">
-				<param name="movie" value="{RC_App::apps_url('shipping/statics/print/pint.swf')}">
-				<param name="quality" value="high">
-				<param name="menu" value="false">
-				<param name="wmode" value="transparent">
-				<param name="FlashVars" value="bcastr_config_bg={$shipping.print_bg}&swf_config_lable={$shipping.config_lable}">
-				<param name="allowScriptAccess" value="sameDomain" />
-				<embed src="{RC_App::apps_url('shipping/statics/print/pint.swf')}" wmode="transparent"
-				FlashVars="bcastr_config_bg={$shipping.print_bg}&swf_config_lable={$shipping.config_lable}"
-				menu="false" quality="high" width="1024" height="600"
-				type="application/x-shockwave-flash"
-				pluginspage="http://www.macromedia.com/go/getflashplayer"
-				allowScriptAccess="sameDomain" name="test" swLiveConnect="true" />
-			</object>
-		</div></td>
-	</tr>
-	<!--编辑区 end-->
-</form>
-</table>
-
+					<table width="100%" cellpadding="0" cellspacing="0" border="0" class="table_line">
+						<tr style="display: none">
+							<td colspan="3"></td>
+						</tr>
+					</table>
+				</td>
+			</tr>
+			<!--编辑区 start-->
+			<tr>
+				<td id="xEditingArea" valign="top" height="620" width="100%"><div
+					class="div_play_aray">
+					<object classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000"
+					codebase="http://fpdownload.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,0,0"
+					width="1024" height="600" id="test">
+					<param name="movie" value="{RC_App::apps_url('shipping/statics/print/pint.swf')}">
+					<param name="quality" value="high">
+					<param name="menu" value="false">
+					<param name="wmode" value="transparent">
+					<param name="FlashVars" value="bcastr_config_bg={$shipping.print_bg}&swf_config_lable={$shipping.config_lable}">
+					<param name="allowScriptAccess" value="sameDomain" />
+					<embed src="{RC_App::apps_url('shipping/statics/print/pint.swf')}" wmode="transparent"
+					FlashVars="bcastr_config_bg={$shipping.print_bg}&swf_config_lable={$shipping.config_lable}"
+					menu="false" quality="high" width="1024" height="600"
+					type="application/x-shockwave-flash"
+					pluginspage="http://www.macromedia.com/go/getflashplayer"
+					allowScriptAccess="sameDomain" name="test" swLiveConnect="true" />
+					</object>
+					</div>
+				</td>
+		   </tr>
+		<!--编辑区 end-->
+		</table>
+		<div style="margin-top: 10px;">
+			<button class="btn btn-gebo" type="button" data-url="{$post_links.do_edit}" onclick="javascript:pintObj.save(this);">保存设置</button>&nbsp;&nbsp;
+			<button class="btn btn-gebo" type="button" data-url="{$post_links.recovery}" onclick="javascript:pintObj.recovery_default(this);">恢复默认</button>
+		</div>
+	</form>
 </body>
 </html>
 

@@ -20,12 +20,10 @@
 
 	<div class="edit-page">
 		<table id="general-table" class="w900">
-			<tr>
-				<td colspan="2" class="chk_radio">
-					<span><strong>{lang key='shipping::shipping.select_template_mode'}</strong></span>
-					<input type="radio" name="model" class="uni_style" id="model_1" value="1" {if $shipping.print_model == 1}checked="checked"{/if} onclick="javascript:ecjia.admin.shipTemplate.template_radio_click('1');"><span>{lang key='shipping::shipping.code_mode'}</span>&nbsp;&nbsp;&nbsp;&nbsp;
-					<input type="radio" name="model" class="uni_style" id="model_2" value="2" {if $shipping.print_model == 2}checked="checked"{/if} onclick="javascript:ecjia.admin.shipTemplate.template_radio_click('2');"><span>{lang key='shipping::shipping.income_model'}</span>
-					<span class="help-block cl_both" {if $help_open}style="display:block" {else} style="display:none" {/if} id="noticeGoodsSN">{lang key='shipping::shipping.mode_notice'}</span>
+			<tr style="text-align: center;">
+				<td>
+				    <button type="button" id="model_2" {if $shipping.print_model == 2}class="btn btn-gebo" {else} class="btn" {/if} onclick="javascript:ecjia.admin.shipTemplate.template_radio_click('2');" >所见即所得模式</button>
+				    <button type="button" id="model_1" {if $shipping.print_model == 1}class="btn btn-gebo" {else} class="btn" {/if} onclick="javascript:ecjia.admin.shipTemplate.template_radio_click('1');">代码模式</button>
 				</td>
 			</tr>
 			<tr id="visual" {if $shipping.print_model == 1}style="display:none"{else} style="display:block" {/if}>

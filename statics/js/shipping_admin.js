@@ -13,6 +13,8 @@
                     document.getElementById('code_shipping_help').style.display = 'block';
                     document.getElementById('code_submit').style.display = 'block';
                     document.getElementById('visual').style.display = 'none';
+                    document.getElementById("model_1").setAttribute("class","btn btn-gebo");
+                    document.getElementById("model_2").setAttribute("class","btn");
                     break;
                 case '2':
                     //所见即所得模式
@@ -20,6 +22,8 @@
                     document.getElementById('code_shipping_help').style.display = 'none';
                     document.getElementById('code_submit').style.display = 'none';
                     document.getElementById('visual').style.display = 'block';
+                    document.getElementById("model_2").setAttribute("class","btn btn-gebo");
+                    document.getElementById("model_1").setAttribute("class","btn");
                     break;
             }
             return true;
