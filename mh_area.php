@@ -173,8 +173,7 @@ class mh_area extends ecjia_merchant {
 		$this->assign('provinces', $provinces);
 		
 		$this->assign('action_link', array('text' => $shipping_data['shipping_name'].RC_Lang::get('shipping::shipping_area.list'), 'href' => RC_Uri::url('shipping/mh_area/init', array('shipping_id' => $shipping_id, 'code' => $code ))));
-		$this->assign('default_country', ecjia::config('shop_country'));
-		$this->assign('region_get_url', RC_Uri::url('shipping/region/init'));
+
 		$this->assign('form_action', RC_Uri::url('shipping/mh_area/insert', array('shipping_id' => $shipping_id, 'code' => $code)));
 		
 		$this->display('shipping_area_info.dwt');
@@ -392,8 +391,6 @@ class mh_area extends ecjia_merchant {
 		$provinces = ecjia_region::getSubarea(ecjia::config('shop_country'));//获取当前国家的所有省份
 		$this->assign('provinces', $provinces);
 		
-		$this->assign('default_country', 1);
-		$this->assign('region_get_url', RC_Uri::url('shipping/region/init'));//区域联动使用
 		$this->assign('form_action', RC_Uri::url('shipping/mh_area/update', array('shipping_id' => $shipping_id, 'code' => $code)));
 		
 		$this->assign_lang();
