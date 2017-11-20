@@ -27,8 +27,7 @@
 <div class="row-fluid edit-page">
 	<div class="span12">
 		<input type="hidden" id="region_warn" value="{lang key='shipping::shipping_area.js_languages.region_exists'}" />
-		<input type="hidden" id="region_get_url" date-toggle="{$region_get_url}" />
-		
+
 		<form id="form-privilege" class="form-horizontal" name="theForm" action="{$form_action}" method="post" enctype="multipart/form-data">
 			<fieldset>
 			    {if $store.merchants_name}
