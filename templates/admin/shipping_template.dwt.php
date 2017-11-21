@@ -350,164 +350,171 @@
 
 <!-- {block name="main_content"} -->
 <div class="admin_shipping">
-	<div>
-		<h3 class="heading">
-			<!-- {if $ur_here}{$ur_here}{/if} -->
-			{if $action_link}
-			<a href="{$action_link.href}" class="btn plus_or_reply data-pjax" id="sticky_a"><i class="fontello-icon-reply"></i>{$action_link.text}</a>
-			{/if}
-		</h3>
-	</div>
+	<h3 class="heading">
+		<!-- {if $ur_here}{$ur_here}{/if} -->
+		{if $action_link}
+		<a href="{$action_link.href}" class="btn plus_or_reply data-pjax" id="sticky_a"><i class="fontello-icon-reply"></i>{$action_link.text}</a>
+		{/if}
+	</h3>
 
-	<div class="edit-page">
-		<div style="text-align: center;margin:20px 0 20px 0;">
-		    <button type="button" id="model_2" {if $shipping.print_model == 2}class="btn btn-gebo" {else} class="btn" {/if} onclick="javascript:ecjia.admin.shipTemplate.template_radio_click('2');" >所见即所得模式</button>&nbsp;&nbsp;&nbsp;
-		    <button type="button" id="model_1" {if $shipping.print_model == 1}class="btn btn-gebo" {else} class="btn" {/if} onclick="javascript:ecjia.admin.shipTemplate.template_radio_click('1');">代码模式</button>
-		</div>
+	<div style="text-align: center;margin:20px 0 20px 0;">
+	    <button type="button" id="model_2" {if $shipping.print_model == 2}class="btn btn-gebo" {else} class="btn" {/if} onclick="javascript:ecjia.admin.shipTemplate.template_radio_click('2');" >所见即所得模式</button>&nbsp;&nbsp;&nbsp;
+	    <button type="button" id="model_1" {if $shipping.print_model == 1}class="btn btn-gebo" {else} class="btn" {/if} onclick="javascript:ecjia.admin.shipTemplate.template_radio_click('1');">代码模式</button>
+	</div>
 		
-		<!--模版模式-->
-		<table id="general-table" {if $shipping.print_model == 2}class="w900"{/if}>
-			<tr id="visual" {if $shipping.print_model == 1}style="display:none"{else} style="display:block" {/if}>
-				<td colspan="2" style="display: inherit;">
-					<form action="{$post_links.print_img_upload}" enctype="multipart/form-data" method="post" name="theForm"  id="theForm">
-						<!--菜单栏 -->
-						<table id="header" width="100%" cellpadding="0" cellspacing="0" border="0" height="50">
-							<tr id="top-row">
-								<td align="left">
-									<div class="btn-group">
-										<button class="btn dropdown-toggle" data-toggle="dropdown">	
-											{lang key='shipping::shipping.lable_select_notice'}<span id="label_select" class="caret"></span>
-										</button>
-										
-										<ul class="dropdown-menu">
-											<li>
-												<a class="batch-del-btn add-lable" data-val="" data-text="" href="javascript:;"> <i class="fontello-icon-trash"></i>
-													{lang key='shipping::shipping.lable_select_notice'}
-												</a>
-											</li>
-											<!-- {foreach from=$lang_lable_box key=Key item=lable_box} -->
-											<li>
-												<a class="batch-del-btn add-lable" data-text="{$lable_box}" data-val="{$Key}" href="javascript:;"> 
-													<i class="fontello-icon-trash"></i> {$lable_box}
-												</a>
-											</li>
-											<!-- {/foreach} -->
-										</ul>
-									</div> 
-									<button class="btn" type="button" name="del" id="del" onclick="javascript:pintObj.call_flash('lable_del', this);">{lang key='shipping::shipping.del_lable'}</button>
-								</td>
-								
-								<td id="pic_control_upload" {if $shipping.print_bg !=''} class="display_no"{/if}>
-									<div class="btn-group file-group" style="margin-top: 5px;">
-										<input type="file" onchange='checkFileType(this.value);' class="btn_file" name="bg" id="bg" {if $shipping.print_bg !=''} disabled="disabled"{/if}>
-										<span id="uni-filename" class="uni-filename" style="-moz-user-select: none;">{lang key='shipping::shipping.upload_shipping_bg'},{lang key='shipping::shipping.file_empty'}</span>
-										<span class="uni-action" style="-moz-user-select: none;">{lang key='shipping::shipping.select_image'}</span>
-										<input type="button" class="btn btn-primary" name="upload" id="upload" value="{lang key='shipping::shipping.upload'}" data-url="{$post_links.print_img_upload}"
-										onclick="javascript:pintObj.bg_upload(this);" {if $shipping.print_bg !=''} disabled="disabled"{/if}> 
-									</div> 
-									<iframe id="bg_upload_hidden" name="bg_upload_hidden" frameborder="0" scrolling="no" class="display_no"></iframe>
-								</td>
-								
-								<td id="pic_control_del" {if $shipping.print_bg== '' } class="display_no"{/if}>
-									<input type="button" name="upload_del" class="btn" id="upload_del" value="{lang key='shipping::shipping.del_shipping_bg'}" data-url="{$post_links.print_img_del}"
-									onclick="javascript:pintObj.bg_del(this);" {if $shipping.print_bg== ''} disabled="disabled"{/if}>
-								</td>
-							</tr>
-							<tr>
-								<td colspan="3">&nbsp;</td>
-							</tr>
-						</table>
-						
-						<!--编辑区-->
-						<table width="100%" cellpadding="0" cellspacing="0" border="0" class="table_box">
-							<tr>
-								<td style="overflow: hidden;">
-									<table width="100%" cellpadding="0" cellspacing="0" border="0" class="table_line">
-										<tr style="display: none">
-											<td colspan="3"></td>
-										</tr>
-									</table>
-								</td>
-							</tr>
-							<tr>
-								<td id="xEditingArea" valign="top" height="620" width="100%"><div
-									class="div_play_aray">
-									<object classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000"
-									codebase="http://fpdownload.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,0,0"
-									width="1024" height="600" id="test">
-									<param name="movie" value="{RC_App::apps_url('shipping/statics/print/pint.swf')}">
-									<param name="quality" value="high">
-									<param name="menu" value="false">
-									<param name="wmode" value="transparent">
-									<param name="FlashVars" value="bcastr_config_bg={$shipping.print_bg}&swf_config_lable={$shipping.config_lable}">
-									<param name="allowScriptAccess" value="sameDomain" />
-									<embed src="{RC_App::apps_url('shipping/statics/print/pint.swf')}" wmode="transparent"
-									FlashVars="bcastr_config_bg={$shipping.print_bg}&swf_config_lable={$shipping.config_lable}"
-									menu="false" quality="high" width="1024" height="600"
-									type="application/x-shockwave-flash"
-									pluginspage="http://www.macromedia.com/go/getflashplayer"
-									allowScriptAccess="sameDomain" name="test" swLiveConnect="true" />
-									</object>
-									</div>
-								</td>
-						    </tr>
-						</table>
-						
-						<div style="margin-top: 15px;">
-							<input type="hidden" name="shipping_id" value="{$shipping_id}">
-							<input type="hidden" name="config_lable" value=""> 
-							<input type="hidden" name="print_model" value="2">
-							<input type="hidden" name="shipping_name" value="{$shipping.shipping_name}">
-							<button type="button" class="btn btn-gebo"  data-url="{$post_links.do_edit}"  onclick="javascript:pintObj.save(this);">保存设置</button>&nbsp;&nbsp;
-							<button type="button" class="btn btn-gebo"  data-url="{$post_links.recovery}" onclick="javascript:pintObj.recovery_default(this);">恢复默认</button>
-						</div>
-					</form>
-				</td>
-			</tr>
-		</table>
-		
-		
-		
-		
-		<!--代码模式-->
-		<div class="row-fluid edit-page">
+	<!--模版模式-->
+	<div id="visual" {if $shipping.print_model == 1}style="display:none"{else} style="display:block"{/if}>
+	
+		<div class="row-fluid">
 		    <div class="span12">
-				<div class="tabbable">
-				    <form class="form-horizontal" name="templateForm_1" action='{url path="shipping/admin/do_edit_print_template"}' method="post">
-				    	<fieldset>
-					        <div class="chat_box library-content">
-				                <div id="code_shipping_print" {if $shipping.print_model == 2}style="display:none"{/if} class="span9">
-				       				<textarea style="width:750px;height:525px;" id="shipping_print" name="shipping_print" rows="40" cols="3" >{$shipping.shipping_print|escape:html}</textarea>
-				                </div>
-				                
-				                <div class="span3 chat_sidebar" id="code_shipping_help" {if $shipping.print_model == 2}style="display:none"{/if}>
-				                    <div class="chat_heading clearfix">
-				                        {t}订单模版变量说明{/t}
-				                    </div>
-				                    <div class="ms-selectable" >
-				                        <div class="template_list" id="ms-custom-navigation" >
-				                            <ul class="unstyled">
-				                                <!-- {foreach from=$shipping_template_info item=val} -->
-				                                <li class="ms-elem-selectable">{$val.variable}&nbsp;{$val.name}</li>
-				                                <!-- {/foreach} -->
-				                            </ul>
-				                        </div>
-				                       
-				                    </div>
-				                </div>
-					        </div>
-					        
-			        		<div id="code_submit" {if $shipping.print_model == 2}style="display:none"{/if}>
-								<button class="btn btn-gebo m_t15 m_b15" type="button" id="save_template_1">{lang key='system::system.button_submit'}</button>
-								<input type="hidden" name="shipping_id" value="{$shipping.shipping_id}">
-								<input type="hidden" name="print_model" value="1">
-								<input type="hidden" name="shipping_name" value="{$shipping.shipping_name}">
-							</div>
-						</fieldset>
-					 </form>
-				 </div>
+		        <div class="chat_box library-content">
+		            <div class="row-fluid">
+		                <div class="span9 chat_content template_info">
+	                        <div class="chat_heading clearfix">
+	                            <div class="pull-right"><i class="ecjiaf-csp fontello-icon-resize-fullenlarge"></i></div>
+	                            <span class="title">{if $library_name}{$library_name}{else}{t}未选择库项目{/t}{/if}</span>
+	                        </div>
+	
+	                        <div class="row-fluid">
+	                           <table width="100%" cellpadding="0" cellspacing="0" border="0" class="table_box">
+								<tr>
+									<td style="overflow: hidden;">
+										<table width="100%" cellpadding="0" cellspacing="0" border="0" class="table_line">
+											<tr style="display: none">
+												<td colspan="3"></td>
+											</tr>
+										</table>
+									</td>
+								</tr>
+								<tr>
+									<td id="xEditingArea" valign="top" height="620" width="100%">
+									<div class="div_play_aray">
+										<object classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000"
+										codebase="http://fpdownload.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,0,0"
+										width="1024" height="600" id="test">
+										<param name="movie" value="{RC_App::apps_url('shipping/statics/print/pint.swf')}">
+										<param name="quality" value="high">
+										<param name="menu" value="false">
+										<param name="wmode" value="transparent">
+										<param name="FlashVars" value="bcastr_config_bg={$shipping.print_bg}&swf_config_lable={$shipping.config_lable}">
+										<param name="allowScriptAccess" value="sameDomain" />
+										<embed src="{RC_App::apps_url('shipping/statics/print/pint.swf')}" wmode="transparent"
+										FlashVars="bcastr_config_bg={$shipping.print_bg}&swf_config_lable={$shipping.config_lable}"
+										menu="false" quality="high" width="1024" height="600"
+										type="application/x-shockwave-flash"
+										pluginspage="http://www.macromedia.com/go/getflashplayer"
+										allowScriptAccess="sameDomain" name="test" swLiveConnect="true" />
+										</object>
+										</div>
+									</td>
+							    </tr>
+							</table>
+	                        </div>
+		                </div>
+		                
+		                <div class="span3 chat_sidebar">
+		                    <div class="chat_heading clearfix">
+		                        {t}设置打印内容{/t}
+		                        <button class="btn" type="button" name="del" id="del" onclick="javascript:pintObj.call_flash('lable_del', this);">{lang key='shipping::shipping.del_lable'}</button>
+		                    </div>
+		                    <div class="ms-selectable">
+		                        <div class="template_list" id="ms-custom-navigation">
+		                            <ul class="unstyled">
+		                                <!-- {foreach from=$lang_lable_box key=Key item=lable_box} -->
+		                                <li>
+											<a class="batch-del-btn add-lable" data-text="{$lable_box}" data-val="{$Key}" href="javascript:;">{$lable_box}</a>
+										</li>
+		                                <!-- {/foreach} -->
+		                            </ul>
+		                        </div>
+		                    </div>
+		                </div>
+		            </div>
+		        </div>
 		    </div>
 		</div>
+	
+	
+	
+		<form action="{$post_links.print_img_upload}" enctype="multipart/form-data" method="post" name="theForm"  id="theForm">
+			<!--菜单栏 -->
+			<table id="header" width="100%" cellpadding="0" cellspacing="0" border="0" height="50">
+				<tr id="top-row">
+					<!-- 删除图片和修改图片 -->
+					<td id="pic_control_upload" {if $shipping.print_bg !=''} class="display_no"{/if}>
+						<div class="btn-group file-group" style="margin-top: 5px;">
+							<input type="file" onchange='checkFileType(this.value);' class="btn_file" name="bg" id="bg" {if $shipping.print_bg !=''} disabled="disabled"{/if}>
+							<span id="uni-filename" class="uni-filename" style="-moz-user-select: none;">{lang key='shipping::shipping.upload_shipping_bg'},{lang key='shipping::shipping.file_empty'}</span>
+							<span class="uni-action" style="-moz-user-select: none;">{lang key='shipping::shipping.select_image'}</span>
+							<input type="button" class="btn btn-primary" name="upload" id="upload" value="{lang key='shipping::shipping.upload'}" data-url="{$post_links.print_img_upload}"
+							onclick="javascript:pintObj.bg_upload(this);" {if $shipping.print_bg !=''} disabled="disabled"{/if}> 
+						</div> 
+						<iframe id="bg_upload_hidden" name="bg_upload_hidden" frameborder="0" scrolling="no" class="display_no"></iframe>
+					</td>
+					
+					<td id="pic_control_del" {if $shipping.print_bg== '' } class="display_no"{/if}>
+						<input type="button" name="upload_del" class="btn" id="upload_del" value="{lang key='shipping::shipping.del_shipping_bg'}" data-url="{$post_links.print_img_del}"
+						onclick="javascript:pintObj.bg_del(this);" {if $shipping.print_bg== ''} disabled="disabled"{/if}>
+					</td>
+				</tr>
+				
+			</table>
+			
+			<!--编辑区-->
+			
+			
+			<div class="m_t15 m_b15">
+				<input type="hidden" name="shipping_id" value="{$shipping_id}">
+				<input type="hidden" name="config_lable" value=""> 
+				<input type="hidden" name="print_model" value="2">
+				<input type="hidden" name="shipping_name" value="{$shipping.shipping_name}">
+				<button type="button" class="btn btn-gebo"  data-url="{$post_links.do_edit}"  onclick="javascript:pintObj.save(this);">保存设置</button>&nbsp;&nbsp;
+				<button type="button" class="btn btn-gebo"  data-url="{$post_links.recovery}" onclick="javascript:pintObj.recovery_default(this);">恢复默认</button>
+			</div>
+		</form>
+	</div>
+	
+		
+		
+		
+	<!--代码模式-->
+	<div class="row-fluid edit-page">
+	    <div class="span12">
+			<div class="tabbable">
+			    <form class="form-horizontal" name="templateForm_1" action='{url path="shipping/admin/do_edit_print_template"}' method="post">
+			    	<fieldset>
+				        <div class="chat_box library-content">
+			                <div id="code_shipping_print" {if $shipping.print_model == 2}style="display:none"{/if} class="span9">
+			       				<textarea style="width:750px;height:525px;" id="shipping_print" name="shipping_print" rows="40" cols="3" >{$shipping.shipping_print|escape:html}</textarea>
+			                </div>
+			                
+			                <div class="span3 chat_sidebar" id="code_shipping_help" {if $shipping.print_model == 2}style="display:none"{/if}>
+			                    <div class="chat_heading clearfix">
+			                        {t}订单模版变量说明{/t}
+			                    </div>
+			                    <div class="ms-selectable" >
+			                        <div class="template_list" id="ms-custom-navigation" >
+			                            <ul class="unstyled">
+			                                <!-- {foreach from=$shipping_template_info item=val} -->
+			                                <li class="ms-elem-selectable">{$val.variable}&nbsp;{$val.name}</li>
+			                                <!-- {/foreach} -->
+			                            </ul>
+			                        </div>
+			                       
+			                    </div>
+			                </div>
+				        </div>
+				        
+		        		<div id="code_submit" {if $shipping.print_model == 2}style="display:none"{/if}>
+							<button class="btn btn-gebo m_t15 m_b15" type="button" id="save_template_1">{lang key='system::system.button_submit'}</button>
+							<input type="hidden" name="shipping_id" value="{$shipping.shipping_id}">
+							<input type="hidden" name="print_model" value="1">
+							<input type="hidden" name="shipping_name" value="{$shipping.shipping_name}">
+						</div>
+					</fieldset>
+				 </form>
+			 </div>
+	    </div>
 	</div>
 </div>
 <!-- {/block} -->
