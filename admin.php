@@ -250,34 +250,6 @@ class admin extends ecjia_admin
     {
         $this->admin_priv('ship_update');
 
-        $shipping_id = !empty($_GET['shipping_id']) ? intval($_GET['shipping_id']) : 0;
-        /* 检查该插件是否已经安装 取值 */
-        $shipping_data = RC_DB::table('shipping')->where('shipping_id', $shipping_id)->first();
-
-        if ($shipping_data) {
-            /* 判断模板图片位置 */
-            if (!empty($shipping_data['print_bg']) && trim($shipping_data['print_bg']) != '') {
-                $uploads_dir_info          = RC_Upload::upload_dir();
-                $shipping_data['print_bg'] = $uploads_dir_info['baseurl'] . $shipping_data['print_bg'];
-            } else {
-                /* 使用插件默认快递单图片 */
-                $plugin_handle             = new shipping_factory($shipping_data['shipping_code']);
-                $config                    = $plugin_handle->configure_config();
-                $shipping_data['print_bg'] = $config['print_bg'];
-            }
-            $shipping_data['shipping_print'] = !empty($shipping_data['shipping_print']) ? $shipping_data['shipping_print'] : '';
-        }
-        $links = array(
-            'recovery'         => RC_Uri::url('shipping/admin/recovery_default_template'),
-            'print_img_upload' => RC_Uri::url('shipping/admin/print_upload'),
-            'print_img_del'    => RC_Uri::url('shipping/admin/print_del'),
-            'do_edit'          => RC_Uri::url('shipping/admin/do_edit_print_template'),
-        );
-        $this->assign('post_links', $links);
-        $this->assign('shipping', $shipping_data);
-        $this->assign('shipping_id', $shipping_id);
-        $this->assign('lang_lable_box', RC_Lang::get('shipping::shipping.lable_box'));
-        $this->assign('lang_js_languages', RC_Lang::get('shipping::shipping.js_languages'));
 
         $this->display('print_index.dwt');
     }
@@ -440,18 +412,39 @@ class admin extends ecjia_admin
         $shipping_data = RC_DB::table('shipping')->where('shipping_id', $shipping_id)->first();
 
         if ($shipping_data) {
+        	
+        	/*代码模式逻辑开始*/
             $shipping_data['shipping_print'] = !empty($shipping_data['shipping_print']) ? $shipping_data['shipping_print'] : '';
             $shipping_data['print_model']    = !empty($shipping_data['print_model']) ? $shipping_data['print_model'] : 1; //兼容以前版本
-            $this->assign('shipping', $shipping_data);
-
             ecjia_screen::get_current_screen()->add_nav_here(new admin_nav_here(RC_Lang::get('shipping::shipping.edit_template')));
-
             $this->assign('ur_here', RC_Lang::get('shipping::shipping.edit_template'));
             $this->assign('action_link', array('text' => RC_Lang::get('shipping::shipping.shipping'), 'href' => RC_Uri::url('shipping/admin/init')));
-            $this->assign('shipping_id', $shipping_id);
-
             $data = RC_Loader::load_app_config('shipping_template_info');
             $this->assign('shipping_template_info', $data);
+            
+            /*模板模式逻辑开始 
+             * 判断模板图片位置
+             */
+            if (!empty($shipping_data['print_bg']) && trim($shipping_data['print_bg']) != '') {
+            	$uploads_dir_info          = RC_Upload::upload_dir();
+            	$shipping_data['print_bg'] = $uploads_dir_info['baseurl'] . $shipping_data['print_bg'];
+            } else {
+            	/* 使用插件默认快递单图片 */
+            	$plugin_handle             = new shipping_factory($shipping_data['shipping_code']);
+            	$config                    = $plugin_handle->configure_config();
+            	$shipping_data['print_bg'] = $config['print_bg'];
+            }
+            $links = array(
+            	'recovery'         => RC_Uri::url('shipping/admin/recovery_default_template'),
+            	'print_img_upload' => RC_Uri::url('shipping/admin/print_upload'),
+            	'print_img_del'    => RC_Uri::url('shipping/admin/print_del'),
+            	'do_edit'          => RC_Uri::url('shipping/admin/do_edit_print_template'),
+            );
+            $this->assign('post_links', $links);
+            $this->assign('shipping', $shipping_data);
+            $this->assign('shipping_id', $shipping_id);
+            $this->assign('lang_lable_box', RC_Lang::get('shipping::shipping.lable_box'));
+            $this->assign('lang_js_languages', RC_Lang::get('shipping::shipping.js_languages'));
             
             $this->display('shipping_template.dwt');
         } else {
