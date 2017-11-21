@@ -44,17 +44,22 @@
 				    	<fieldset>
 					        <div class="chat_box library-content">
 				                <div id="code_shipping_print" {if $shipping.print_model == 2}style="display:none"{/if} class="span9">
-				       				<textarea style="width:750px;height:450px;" id="shipping_print" name="shipping_print" rows="40" cols="3" >{$shipping.shipping_print|escape:html}</textarea>
+				       				<textarea style="width:750px;height:525px;" id="shipping_print" name="shipping_print" rows="40" cols="3" >{$shipping.shipping_print|escape:html}</textarea>
 				                </div>
 				                
 				                <div class="span3 chat_sidebar" id="code_shipping_help" {if $shipping.print_model == 2}style="display:none"{/if}>
 				                    <div class="chat_heading clearfix">
 				                        {t}订单模版变量说明{/t}
 				                    </div>
-				                    <div class="ms-selectable" style="height:425px;" >
-				                        <div class="template_list" id="ms-custom-navigation">
-				                            {lang key='shipping::shipping.shipping_template_info_all'}
+				                    <div class="ms-selectable" >
+				                        <div class="template_list" id="ms-custom-navigation" >
+				                            <ul class="unstyled">
+				                                <!-- {foreach from=$shipping_template_info item=val} -->
+				                                <li class="ms-elem-selectable">{$val.variable}&nbsp;{$val.name}</li>
+				                                <!-- {/foreach} -->
+				                            </ul>
 				                        </div>
+				                       
 				                    </div>
 				                </div>
 					        </div>

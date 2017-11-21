@@ -450,6 +450,9 @@ class admin extends ecjia_admin
             $this->assign('action_link', array('text' => RC_Lang::get('shipping::shipping.shipping'), 'href' => RC_Uri::url('shipping/admin/init')));
             $this->assign('shipping_id', $shipping_id);
 
+            $data = RC_Loader::load_app_config('shipping_template_info');
+            $this->assign('shipping_template_info', $data);
+            
             $this->display('shipping_template.dwt');
         } else {
             return $this->showmessage(RC_Lang::get('shipping::shipping.no_shipping_install'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
