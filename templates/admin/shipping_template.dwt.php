@@ -345,6 +345,10 @@
 	    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15) inset, 0 1px 2px rgba(0, 0, 0, 0.05);
 	    color: #64d1f1;
 	}
+	#pic_control_del{
+		margin:20px 0 20px 20px;
+	}
+
 </style>
 <!-- {/block} -->
 
@@ -364,30 +368,37 @@
 		
 	<!--模版模式-->
 	<div id="visual" {if $shipping.print_model == 1}style="display:none"{else} style="display:block"{/if}>
-	
-		<div class="row-fluid">
-		    <div class="span12">
-		        <div class="chat_box library-content">
-		            <div class="row-fluid">
+		<form action="{$post_links.print_img_upload}" enctype="multipart/form-data" method="post" name="theForm"  id="theForm">
+			<div class="row-fluid">
+			    <div class="span12">
+			        <div class="chat_box library-content">
 		                <div class="span9 chat_content template_info">
 	                        <div class="chat_heading clearfix">
-	                            <div class="pull-right"><i class="ecjiaf-csp fontello-icon-resize-fullenlarge"></i></div>
-	                            <span class="title">{if $library_name}{$library_name}{else}{t}未选择库项目{/t}{/if}</span>
+	                            <span class="title">快递单模板</span>
 	                        </div>
-	
 	                        <div class="row-fluid">
-	                           <table width="100%" cellpadding="0" cellspacing="0" border="0" class="table_box">
-								<tr>
-									<td style="overflow: hidden;">
-										<table width="100%" cellpadding="0" cellspacing="0" border="0" class="table_line">
-											<tr style="display: none">
-												<td colspan="3"></td>
-											</tr>
-										</table>
-									</td>
-								</tr>
-								<tr>
-									<td id="xEditingArea" valign="top" height="620" width="100%">
+								<div id="top-row">
+									<!-- 删除图片 -->
+									<div id="pic_control_upload" {if $shipping.print_bg !=''} class="display_no"{/if}>
+										<div class="btn-group file-group" style="margin-top: 5px;">
+											<input type="file" onchange='checkFileType(this.value);' class="btn_file" name="bg" id="bg" {if $shipping.print_bg !=''} disabled="disabled"{/if}>
+											<span id="uni-filename" class="uni-filename" style="-moz-user-select: none;">{lang key='shipping::shipping.upload_shipping_bg'},{lang key='shipping::shipping.file_empty'}</span>
+											<span class="uni-action" style="-moz-user-select: none;">{lang key='shipping::shipping.select_image'}</span>
+											<input type="button" class="btn btn-primary" name="upload" id="upload" value="{lang key='shipping::shipping.upload'}" data-url="{$post_links.print_img_upload}"
+											onclick="javascript:pintObj.bg_upload(this);" {if $shipping.print_bg !=''} disabled="disabled"{/if}> 
+										</div> 
+										<iframe id="bg_upload_hidden" name="bg_upload_hidden" frameborder="0" scrolling="no" class="display_no"></iframe>
+									</div>
+									
+									<div id="pic_control_del" {if $shipping.print_bg== '' } class="display_no"{/if}>
+										<strong>模板底图：</strong><input type="button" name="upload_del" class="btn btn-warning" id="upload_del" value="删除打印单图片" data-url="{$post_links.print_img_del}"
+										onclick="javascript:pintObj.bg_del(this);" {if $shipping.print_bg== ''} disabled="disabled"{/if}>
+									</div>
+								</div>
+	                        </div>
+	                        
+	                        <div width="100%" cellpadding="0" cellspacing="0" border="0" class="table_box">
+								<div id="xEditingArea" valign="top" height="100%" width="100%">
 									<div class="div_play_aray">
 										<object classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000"
 										codebase="http://fpdownload.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,0,0"
@@ -405,13 +416,11 @@
 										pluginspage="http://www.macromedia.com/go/getflashplayer"
 										allowScriptAccess="sameDomain" name="test" swLiveConnect="true" />
 										</object>
-										</div>
-									</td>
-							    </tr>
-							</table>
-	                        </div>
+									</div>
+								</div>
+							</div>
 		                </div>
-		                
+			                
 		                <div class="span3 chat_sidebar">
 		                    <div class="chat_heading clearfix">
 		                        {t}设置打印内容{/t}
@@ -429,40 +438,10 @@
 		                        </div>
 		                    </div>
 		                </div>
-		            </div>
-		        </div>
-		    </div>
-		</div>
-	
-	
-	
-		<form action="{$post_links.print_img_upload}" enctype="multipart/form-data" method="post" name="theForm"  id="theForm">
-			<!--菜单栏 -->
-			<table id="header" width="100%" cellpadding="0" cellspacing="0" border="0" height="50">
-				<tr id="top-row">
-					<!-- 删除图片和修改图片 -->
-					<td id="pic_control_upload" {if $shipping.print_bg !=''} class="display_no"{/if}>
-						<div class="btn-group file-group" style="margin-top: 5px;">
-							<input type="file" onchange='checkFileType(this.value);' class="btn_file" name="bg" id="bg" {if $shipping.print_bg !=''} disabled="disabled"{/if}>
-							<span id="uni-filename" class="uni-filename" style="-moz-user-select: none;">{lang key='shipping::shipping.upload_shipping_bg'},{lang key='shipping::shipping.file_empty'}</span>
-							<span class="uni-action" style="-moz-user-select: none;">{lang key='shipping::shipping.select_image'}</span>
-							<input type="button" class="btn btn-primary" name="upload" id="upload" value="{lang key='shipping::shipping.upload'}" data-url="{$post_links.print_img_upload}"
-							onclick="javascript:pintObj.bg_upload(this);" {if $shipping.print_bg !=''} disabled="disabled"{/if}> 
-						</div> 
-						<iframe id="bg_upload_hidden" name="bg_upload_hidden" frameborder="0" scrolling="no" class="display_no"></iframe>
-					</td>
+			        </div>
+			    </div>
+			</div>	
 					
-					<td id="pic_control_del" {if $shipping.print_bg== '' } class="display_no"{/if}>
-						<input type="button" name="upload_del" class="btn" id="upload_del" value="{lang key='shipping::shipping.del_shipping_bg'}" data-url="{$post_links.print_img_del}"
-						onclick="javascript:pintObj.bg_del(this);" {if $shipping.print_bg== ''} disabled="disabled"{/if}>
-					</td>
-				</tr>
-				
-			</table>
-			
-			<!--编辑区-->
-			
-			
 			<div class="m_t15 m_b15">
 				<input type="hidden" name="shipping_id" value="{$shipping_id}">
 				<input type="hidden" name="config_lable" value=""> 
