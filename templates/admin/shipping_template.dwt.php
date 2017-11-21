@@ -24,6 +24,7 @@
 		    <button type="button" id="model_1" {if $shipping.print_model == 1}class="btn btn-gebo" {else} class="btn" {/if} onclick="javascript:ecjia.admin.shipTemplate.template_radio_click('1');">代码模式</button>
 		</div>
 		
+		<!--模板模式-->
 		<table id="general-table" {if $shipping.print_model == 2}class="w900"{/if}>
 			<tr id="visual" {if $shipping.print_model == 1}style="display:none"{else} style="display:block" {/if}>
 				<td colspan="2" style="display: inherit;">
@@ -33,60 +34,42 @@
 					<!--Flash播放器 end-->
 				</td>
 			</tr>
-			
-			
-			<!--代码模式-->
-			<tr>
-				<td>
-					{assign var=form_action value=RC_Uri::url('shipping/admin/do_edit_print_template')}
-					<form class="form-horizontal" method="post" name="templateForm_1" action="{$form_action}">
-						<input type="hidden"  name="shipping_id" value="{$shipping.shipping_id}">
-						<fieldset>
-							<div class="formSep">
-								<table id="general-table" >
-									<tr id="code_shipping_help" {if $shipping.print_model == 2}style="display:none"{/if}>
-										<td width="75%"> 						    			
-											<div class="foldable-list">
-												<div class="accordion-group">
-													<div class="accordion-heading">
-														<a class="accordion-toggle acc-in" data-toggle="collapse" data-target="#telescopic1"><strong>{lang key='shipping::shipping.shipping_template_info_t'}</strong></a>
-													</div>
-													<div class="accordion-body in collapse" id="telescopic1">
-														<div class="accordion-inner">
-															<div class="control-group " >
-																<div style=" float: left;width:30%;margin-left:10px;">
-																{lang key='shipping::shipping.shipping_template_info_l'}
-																</div>
-																<div  style=" float: left;width:30%;margin-left:10px;">
-																{lang key='shipping::shipping.shipping_template_info_c'}
-																</div>
-																<div  style=" float: left;width:30%;margin-left:10px;">
-																{lang key='shipping::shipping.shipping_template_info_r'}
-																</div>
-															</div>
-														</div>
-													</div>
-												</div>
-											</div>
-										</td>
-									</tr>
-									<tr id="code_shipping_print" {if $shipping.print_model == 2}style="display:none"{/if}>
-										<td><textarea class="span9" id="shipping_print" name="shipping_print" rows="20" cols="100" >{$shipping.shipping_print|escape:html}</textarea></td>
-									</tr>
-								</table>
-							</div>
-							<div class="control-group" id="code_submit" {if $shipping.print_model == 2}style="display:none"{/if}>
-								<div class="controls" >
-									<button class="btn btn-gebo" type="button" id="save_template_1">{lang key='system::system.button_submit'}</button>
-									<input type="hidden" name="print_model" value="1">
-									<input type="hidden" name="shipping_name" value="{$shipping.shipping_name}">
-								</div>
+		</table>
+		
+		<!--代码模式-->
+		<div class="row-fluid edit-page">
+		    <div class="span12">
+				<div class="tabbable">
+				    <form class="form-horizontal" name="templateForm_1" action='{url path="shipping/admin/do_edit_print_template"}' method="post">
+				    	<fieldset>
+					        <div class="chat_box library-content">
+				                <div id="code_shipping_print" {if $shipping.print_model == 2}style="display:none"{/if} class="span9">
+				       				<textarea style="width:750px;height:450px;" id="shipping_print" name="shipping_print" rows="40" cols="3" >{$shipping.shipping_print|escape:html}</textarea>
+				                </div>
+				                
+				                <div class="span3 chat_sidebar" id="code_shipping_help" style="height:460px;" {if $shipping.print_model == 2}style="display:none"{/if}>
+				                    <div class="chat_heading clearfix">
+				                        {t}订单模版变量说明{/t}
+				                    </div>
+				                    <div class="ms-selectable">
+				                        <div class="template_list" id="ms-custom-navigation">
+				                            {lang key='shipping::shipping.shipping_template_info_all'}
+				                        </div>
+				                    </div>
+				                </div>
+					        </div>
+					        
+			        		<div id="code_submit" {if $shipping.print_model == 2}style="display:none"{/if}>
+								<button class="btn btn-gebo m_t15 m_b15" type="button" id="save_template_1">{lang key='system::system.button_submit'}</button>
+								<input type="hidden" name="shipping_id" value="{$shipping.shipping_id}">
+								<input type="hidden" name="print_model" value="1">
+								<input type="hidden" name="shipping_name" value="{$shipping.shipping_name}">
 							</div>
 						</fieldset>
-					</form>
-				</td>
-			</tr>
-		</table>
+					 </form>
+				 </div>
+		    </div>
+		</div>
 	</div>
 </div>
 <!-- {/block} -->
