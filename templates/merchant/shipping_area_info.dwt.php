@@ -170,7 +170,7 @@
 						
 						<div class="form-group">
 							<label class="control-label label-selected-area col-lg-2">{lang key='shipping::shipping_area.select_shipping_area'}</label>
-							<div class="controls col-lg-3 selected_area">
+							<div class="controls col-lg-8 selected_area">
 								<!-- {foreach from=$regions item=region key=id} -->
 								<input class="uni_style" type="checkbox" name="regions[]" value="{$id}" checked="checked" id="regions_{$id}" />
 								<label for="regions_{$id}">{$region}&nbsp;&nbsp;</label>

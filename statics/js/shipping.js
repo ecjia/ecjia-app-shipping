@@ -71,6 +71,7 @@
                         mesObj.message = $('#region_warn').val();
                         mesObj.state = 'error';
                         ecjia.admin.showmessage(mesObj);
+                        return false;
                     }
                 }
             }
@@ -232,7 +233,7 @@
         },
  
         choose_area: function () {
-            $('.ms-elem-selectable').on('click', function (e) {
+            $('.ms-elem-selectable').off('click').on('click', function (e) {
                 e.preventDefault();
                 var $this = $(this),
                     val = $this.attr('data-val'),
@@ -299,7 +300,7 @@
         },
  
         selected_area: function () {
-            $('.ms-elem-selectable .edit-list a').on('click', function (e) {
+            $('.ms-elem-selectable .edit-list a').off('click').on('click', function (e) {
                 e.preventDefault();
                 e.stopPropagation();
                 var bool = true;

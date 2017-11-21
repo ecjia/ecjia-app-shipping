@@ -71,6 +71,7 @@
                         mesObj.message = $('#region_warn').val();
                         mesObj.state = 'error';
                         ecjia.merchant.showmessage(mesObj);
+                        return false;
                     }
                 }
             }
@@ -234,7 +235,7 @@
         },
  
         choose_area: function () {
-            $('.ms-elem-selectable').on('click', function (e) {
+            $('.ms-elem-selectable').off('click').on('click', function (e) {
                 e.preventDefault();
                 var $this = $(this),
                     val = $this.attr('data-val'),
@@ -300,7 +301,7 @@
         },
  
         selected_area: function () {
-            $('.ms-elem-selectable .edit-list a').on('click', function (e) {
+            $('.ms-elem-selectable .edit-list a').off('click').on('click', function (e) {
                 e.preventDefault();
                 e.stopPropagation();
                 var bool = true;
@@ -309,6 +310,7 @@
                     val = $parent.attr('data-val'),
                     name = $parent.find('span').eq(0).text(),
                     $tmp = $('<input type="checkbox" checked="checked" value="' + val + '" name="regions[]" id="regions_' + val + '"/><label for="regions_' + val + '">' + name + '</label>');
+                
                 $('.selected_area input').each(function (i) {
                     if ($(this).val() == val) {
                         var data = {
