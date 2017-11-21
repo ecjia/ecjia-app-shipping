@@ -202,16 +202,7 @@
 </script>
 
 <style type="text/css">
-	body {
-		background-color: #ffffff;
-		padding: 0px;
-		margin: 0px;
-	}
-	
-	body,td {
-		font-family: Arial, Verdana, sans-serif;
-		font-size: 12px;
-	}
+
 	
 	#top-row td {
 		padding-top: 5px;
