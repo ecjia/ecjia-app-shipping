@@ -13,143 +13,170 @@
 	<script type="text/javascript" src="{RC_Uri::content_url('system/statics/lib/bootstrap/js/bootstrap.min.js')}"></script>
 
 	<script language="JavaScript">
-	<!--
-	// 这里把JS用到的所有语言都赋值到这里
-	{foreach from=$lang_js_languages key=key item=item}
-	var {$key} = "{$item}";
-	{/foreach}
-//-->
-</script>
-<style type="text/css">
-body {
-	background-color: #ffffff;
-	padding: 0px;
-	margin: 0px;
-}
-
-body,td {
-	font-family: Arial, Verdana, sans-serif;
-	font-size: 12px;
-}
-
-#top-row td {
-	padding-top: 5px;
-}
-
-.table_box {
-	border: #ccc 1px solid;
-	table-layout: fixed;
-}
-
-table #header {
-	background: -moz-linear-gradient(center top, #ffffff 0%, #f5f5f5 100%)
-	repeat scroll 0 0 rgba(0, 0, 0, 0);
-	border-radius: 4px;
-}
-
-.table_line {
-	border: #3993ba 1px solid;
-}
-input {
-	display: inline;
-	width: auto;
-	cursor: pointer;
-	outline: medium none !important;
-}
-.display_no {
-	display: none;
-}
-.div_play_aray {
-	border-style: #77776F 1px solid;
-	margin: 0;
-	height: 100%;
-	width: 100%;
-	overflow: auto;
-}
-.file-group{
-	height: 32px;
-	overflow: hidden;
-	position: relative;
-	width: 290px;
-}
-div.file-group input[type="button"] {
-	bottom: 0;
-	float: right;
-	position: absolute;
-	right: 0;
-	top: 0;
-	width: 50px;
-}
-div.file-group input[type="file"] {
-	bottom: 0;
-	float: left;
-	opacity: 0;
-	position: absolute;
-	left: 0;
-	top: 0;
-	width: 240px;
-}
-div.file-group span.uni-filename {
-	border-right: 1px solid #567c91;
-	color: #777;
-	display: block;
-	float: left;
-	font-size: 12px;
-	height: 22px;
-	line-height: 22px;
-	margin-bottom: 0;
-	overflow: hidden;
-	padding: 4px;
-	text-align:center;
-	text-overflow: ellipsis;
-	white-space: nowrap;
-	width: 164px;
-	-moz-border-bottom-colors: none;
-	-moz-border-left-colors: none;
-	-moz-border-right-colors: none;
-	-moz-border-top-colors: none;
-	border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) #b3b3b3;
-	border-image: none;
-	border-style: solid;
-	border-width: 1px;
-	box-shadow: 0 1px 0 rgba(255, 255, 255, 0.2) inset, 0 1px 2px
-	rgba(0, 0, 0, 0.05);
-}
-div.file-group span.uni-action:hover{
-	background-color:#31b0d5;
-}
-div.file-group span.uni-action {
-	cursor: pointer;
-	float: left;
-	overflow: hidden;
-	width: 60px;
-	color: #fff;
-	-moz-border-bottom-colors: none;
-	-moz-border-left-colors: none;
-	-moz-border-right-colors: none;
-	-moz-border-top-colors: none;
-	background-color: #5bc0de;
-	background-image: linear-gradient(to bottom, #5bc0de, #46b8da);
-	background-repeat: repeat-x;
-	border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) #b3b3b3;
-	border-image: none;
-	border-style: solid;
-	border-width: 1px;
-	box-shadow: 0 1px 0 rgba(255, 255, 255, 0.2) inset, 0 1px 2px
-	rgba(0, 0, 0, 0.05);
-	cursor: pointer;
-	display: inline-block;
-	font-size: 14px;
-	line-height: 22px;
-	margin-bottom: 0;
-	padding: 4px;
-	text-align: center;
-	vertical-align: middle;
-}
-</style>
+		// 这里把JS用到的所有语言都赋值到这里
+		{foreach from=$lang_js_languages key=key item=item}
+		var {$key} = "{$item}";
+		{/foreach}
+	</script>
+	
+	<style type="text/css">
+		body {
+			background-color: #ffffff;
+			padding: 0px;
+			margin: 0px;
+		}
+		
+		body,td {
+			font-family: Arial, Verdana, sans-serif;
+			font-size: 12px;
+		}
+		
+		#top-row td {
+			padding-top: 5px;
+		}
+		
+		.table_box {
+			border: #ccc 1px solid;
+			table-layout: fixed;
+		}
+		
+		table #header {
+			background: -moz-linear-gradient(center top, #ffffff 0%, #f5f5f5 100%)
+			repeat scroll 0 0 rgba(0, 0, 0, 0);
+			border-radius: 4px;
+		}
+		
+		.table_line {
+			border: #3993ba 1px solid;
+		}
+		input {
+			display: inline;
+			width: auto;
+			cursor: pointer;
+			outline: medium none !important;
+		}
+		.display_no {
+			display: none;
+		}
+		.div_play_aray {
+			border-style: #77776F 1px solid;
+			margin: 0;
+			height: 100%;
+			width: 100%;
+			overflow: auto;
+		}
+		.file-group{
+			height: 32px;
+			overflow: hidden;
+			position: relative;
+			width: 290px;
+		}
+		div.file-group input[type="button"] {
+			bottom: 0;
+			float: right;
+			position: absolute;
+			right: 0;
+			top: 0;
+			width: 50px;
+		}
+		div.file-group input[type="file"] {
+			bottom: 0;
+			float: left;
+			opacity: 0;
+			position: absolute;
+			left: 0;
+			top: 0;
+			width: 240px;
+		}
+		div.file-group span.uni-filename {
+			border-right: 1px solid #567c91;
+			color: #777;
+			display: block;
+			float: left;
+			font-size: 12px;
+			height: 22px;
+			line-height: 22px;
+			margin-bottom: 0;
+			overflow: hidden;
+			padding: 4px;
+			text-align:center;
+			text-overflow: ellipsis;
+			white-space: nowrap;
+			width: 164px;
+			-moz-border-bottom-colors: none;
+			-moz-border-left-colors: none;
+			-moz-border-right-colors: none;
+			-moz-border-top-colors: none;
+			border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) #b3b3b3;
+			border-image: none;
+			border-style: solid;
+			border-width: 1px;
+			box-shadow: 0 1px 0 rgba(255, 255, 255, 0.2) inset, 0 1px 2px
+			rgba(0, 0, 0, 0.05);
+		}
+		div.file-group span.uni-action:hover{
+			background-color:#31b0d5;
+		}
+		div.file-group span.uni-action {
+			cursor: pointer;
+			float: left;
+			overflow: hidden;
+			width: 60px;
+			color: #fff;
+			-moz-border-bottom-colors: none;
+			-moz-border-left-colors: none;
+			-moz-border-right-colors: none;
+			-moz-border-top-colors: none;
+			background-color: #5bc0de;
+			background-image: linear-gradient(to bottom, #5bc0de, #46b8da);
+			background-repeat: repeat-x;
+			border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) #b3b3b3;
+			border-image: none;
+			border-style: solid;
+			border-width: 1px;
+			box-shadow: 0 1px 0 rgba(255, 255, 255, 0.2) inset, 0 1px 2px
+			rgba(0, 0, 0, 0.05);
+			cursor: pointer;
+			display: inline-block;
+			font-size: 14px;
+			line-height: 22px;
+			margin-bottom: 0;
+			padding: 4px;
+			text-align: center;
+			vertical-align: middle;
+		}
+		.btn-gebo {
+		    background-color: #006d8d;
+		    background-image: -moz-linear-gradient(center top , #1e8bab, #004f6f);
+		    border-color: rgba(0, 0, 0, 0.25) rgba(0, 0, 0, 0.35) rgba(0, 0, 0, 0.35) rgba(0, 0, 0, 0.25);
+		    color: #fff;
+		    text-shadow: 0 -1px 0 #004f6f;
+		}
+		.btn-gebo:hover, .btn-gebo:active, .btn-gebo.active, .btn-gebo.disabled, .btn-gebo[disabled] {
+		    background-color: #004f6f;
+		    color: #fff;
+		}
+		.btn-gebo:hover {
+		    background-position: 0 0;
+		    color: #fff;
+		    text-shadow: 0 -1px 0 #003151;
+		}
+		.btn-gebo:focus {
+		    background-position: 0 0;
+		    border-color: rgba(0, 0, 0, 0.25) rgba(0, 0, 0, 0.35) rgba(0, 0, 0, 0.35) rgba(0, 0, 0, 0.25);
+		    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15) inset, 0 1px 2px rgba(0, 0, 0, 0.05);
+		    color: #fff;
+		}
+		.btn-gebo.active, .btn-gebo:active {
+		    background-image: none;
+		    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15) inset, 0 1px 2px rgba(0, 0, 0, 0.05);
+		    color: #64d1f1;
+		}
+	</style>
 </head>
+
 <body>
-	<form action="{$post_links.print_img_upload}" enctype="multipart/form-data" method="post" name="theForm"   id="theForm">
+	<form action="{$post_links.print_img_upload}" enctype="multipart/form-data" method="post" name="theForm"  id="theForm">
 		<input type="hidden" name="shipping_id" value="{$shipping_id}">
 		<input type="hidden" name="config_lable" value=""> 
 		<input type="hidden" name="print_model" value="2">
@@ -163,20 +190,26 @@ div.file-group span.uni-action {
 						<button class="btn dropdown-toggle" data-toggle="dropdown">	
 							{lang key='shipping::shipping.lable_select_notice'}<span id="label_select" class="caret"></span>
 						</button>
+						
 						<ul class="dropdown-menu">
-							<li><a class="batch-del-btn add-lable" data-val="" data-text="" href="javascript:;"> <i class="fontello-icon-trash"></i>
-								{lang key='shipping::shipping.lable_select_notice'}
-							</a></li>
+							<li>
+								<a class="batch-del-btn add-lable" data-val="" data-text="" href="javascript:;"> <i class="fontello-icon-trash"></i>
+									{lang key='shipping::shipping.lable_select_notice'}
+								</a>
+							</li>
 							<!-- {foreach from=$lang_lable_box key=Key item=lable_box} -->
-							<li><a class="batch-del-btn add-lable" data-text="{$lable_box}"
-								data-val="{$Key}" href="javascript:;"> <i
-								class="fontello-icon-trash"></i> {$lable_box}
-							</a></li>
+							<li>
+								<a class="batch-del-btn add-lable" data-text="{$lable_box}" data-val="{$Key}" href="javascript:;"> 
+									<i class="fontello-icon-trash"></i> {$lable_box}
+								</a>
+							</li>
 							<!-- {/foreach} -->
 						</ul>
 					</div> 
+					
 					<button class="btn" type="button" name="del" id="del" onclick="javascript:pintObj.call_flash('lable_del', this);">{lang key='shipping::shipping.del_lable'}</button>
 				</td>
+				
 				<td id="pic_control_upload" {if $shipping.print_bg !=''} class="display_no"{/if}>
 					<div class="btn-group file-group" style="margin-top: 5px;">
 						<input type="file" onchange='checkFileType(this.value);' class="btn_file" name="bg" id="bg" {if $shipping.print_bg !=''} disabled="disabled"{/if}>
@@ -187,11 +220,11 @@ div.file-group span.uni-action {
 					</div> 
 					<iframe id="bg_upload_hidden" name="bg_upload_hidden" frameborder="0" scrolling="no" class="display_no"></iframe>
 				</td>
+				
 				<td id="pic_control_del" {if $shipping.print_bg== '' } class="display_no"{/if}>
 					<input type="button" name="upload_del" class="btn" id="upload_del" value="{lang key='shipping::shipping.del_shipping_bg'}" data-url="{$post_links.print_img_del}"
 					onclick="javascript:pintObj.bg_del(this);" {if $shipping.print_bg== ''} disabled="disabled"{/if}>
 				</td>
-				
 			</tr>
 			<tr>
 				<td colspan="3">&nbsp;</td>
@@ -233,13 +266,15 @@ div.file-group span.uni-action {
 		   </tr>
 		<!--编辑区 end-->
 		</table>
-		<div style="margin-top: 10px;">
-			<button class="btn btn-gebo" type="button" data-url="{$post_links.do_edit}" onclick="javascript:pintObj.save(this);">保存设置</button>&nbsp;&nbsp;
-			<button class="btn btn-gebo" type="button" data-url="{$post_links.recovery}" onclick="javascript:pintObj.recovery_default(this);">恢复默认</button>
+		<div style="margin-top: 15px;">
+			<button type="button" class="btn btn-gebo"  data-url="{$post_links.do_edit}"  onclick="javascript:pintObj.save(this);">保存设置</button>&nbsp;&nbsp;
+			<button type="button" class="btn btn-gebo"  data-url="{$post_links.recovery}" onclick="javascript:pintObj.recovery_default(this);">恢复默认</button>
 		</div>
 	</form>
 </body>
 </html>
+
+
 
 <script type="text/javascript">
 var Browser = new Object();

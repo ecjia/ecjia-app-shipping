@@ -24,6 +24,7 @@
                     document.getElementById('visual').style.display = 'block';
                     document.getElementById("model_2").setAttribute("class","btn btn-gebo");
                     document.getElementById("model_1").setAttribute("class","btn");
+                    document.getElementById("general-table").setAttribute("class","w900");
                     break;
             }
             return true;

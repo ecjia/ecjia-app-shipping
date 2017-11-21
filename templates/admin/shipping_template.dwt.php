@@ -19,13 +19,12 @@
 	</div>
 
 	<div class="edit-page">
-		<table id="general-table" class="w900">
-			<tr style="text-align: center;">
-				<td>
-				    <button type="button" id="model_2" {if $shipping.print_model == 2}class="btn btn-gebo" {else} class="btn" {/if} onclick="javascript:ecjia.admin.shipTemplate.template_radio_click('2');" >所见即所得模式</button>
-				    <button type="button" id="model_1" {if $shipping.print_model == 1}class="btn btn-gebo" {else} class="btn" {/if} onclick="javascript:ecjia.admin.shipTemplate.template_radio_click('1');">代码模式</button>
-				</td>
-			</tr>
+		<div style="text-align: center;margin:20px 0 20px 0;">
+		    <button type="button" id="model_2" {if $shipping.print_model == 2}class="btn btn-gebo" {else} class="btn" {/if} onclick="javascript:ecjia.admin.shipTemplate.template_radio_click('2');" >所见即所得模式</button>&nbsp;&nbsp;&nbsp;
+		    <button type="button" id="model_1" {if $shipping.print_model == 1}class="btn btn-gebo" {else} class="btn" {/if} onclick="javascript:ecjia.admin.shipTemplate.template_radio_click('1');">代码模式</button>
+		</div>
+		
+		<table id="general-table" {if $shipping.print_model == 2}class="w900"{/if}>
 			<tr id="visual" {if $shipping.print_model == 1}style="display:none"{else} style="display:block" {/if}>
 				<td colspan="2" style="display: inherit;">
 					<!--Flash播放器 start-->
@@ -34,6 +33,9 @@
 					<!--Flash播放器 end-->
 				</td>
 			</tr>
+			
+			
+			<!--代码模式-->
 			<tr>
 				<td>
 					{assign var=form_action value=RC_Uri::url('shipping/admin/do_edit_print_template')}
@@ -52,11 +54,14 @@
 													<div class="accordion-body in collapse" id="telescopic1">
 														<div class="accordion-inner">
 															<div class="control-group " >
-																<div style=" float: left;width:30%;margin-left:10px;">{lang key='shipping::shipping.shipping_template_info_l'}
+																<div style=" float: left;width:30%;margin-left:10px;">
+																{lang key='shipping::shipping.shipping_template_info_l'}
 																</div>
-																<div  style=" float: left;width:30%;margin-left:10px;">{lang key='shipping::shipping.shipping_template_info_c'}
+																<div  style=" float: left;width:30%;margin-left:10px;">
+																{lang key='shipping::shipping.shipping_template_info_c'}
 																</div>
-																<div  style=" float: left;width:30%;margin-left:10px;">{lang key='shipping::shipping.shipping_template_info_r'}
+																<div  style=" float: left;width:30%;margin-left:10px;">
+																{lang key='shipping::shipping.shipping_template_info_r'}
 																</div>
 															</div>
 														</div>
