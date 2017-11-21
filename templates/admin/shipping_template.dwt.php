@@ -47,11 +47,11 @@
 				       				<textarea style="width:750px;height:450px;" id="shipping_print" name="shipping_print" rows="40" cols="3" >{$shipping.shipping_print|escape:html}</textarea>
 				                </div>
 				                
-				                <div class="span3 chat_sidebar" id="code_shipping_help" style="height:460px;" {if $shipping.print_model == 2}style="display:none"{/if}>
+				                <div class="span3 chat_sidebar" id="code_shipping_help" {if $shipping.print_model == 2}style="display:none"{/if}>
 				                    <div class="chat_heading clearfix">
 				                        {t}订单模版变量说明{/t}
 				                    </div>
-				                    <div class="ms-selectable">
+				                    <div class="ms-selectable" style="height:425px;" >
 				                        <div class="template_list" id="ms-custom-navigation">
 				                            {lang key='shipping::shipping.shipping_template_info_all'}
 				                        </div>
