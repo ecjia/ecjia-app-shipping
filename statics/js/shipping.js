@@ -348,6 +348,7 @@
             $('#selProvinces').quicksearch($('.selProvinces .ms-elem-selectable'), opt);
             $('#selCities').quicksearch($('.selCities .ms-elem-selectable'), opt);
             $('#selDistricts').quicksearch($('.selDistricts .ms-elem-selectable'), opt);
+            $('#selStreets').quicksearch($('.selStreets .ms-elem-selectable'), opt);
         },
     }
  
