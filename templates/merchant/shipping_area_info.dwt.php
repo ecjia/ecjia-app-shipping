@@ -64,45 +64,45 @@
 						
 						<!-- 500克以内的费用 -->
 						<!--{if $shipping_area.shipping_code != 'ship_cac'}-->
-						<!-- {foreach from=$fields item=field} -->
-						<!--{if $fee_compute_mode == 'by_number'}-->
-						<!--{if $field.name == 'item_fee' || $field.name == 'free_money' || $field.name == 'pay_fee'}-->
-						<div class="form-group"  id="{$field.name}">
-							<label class="control-label col-lg-2">{$field.label}</label>
-							<div class="controls col-lg-3">
-								<input class="form-control" name="{$field.name}" type="text" value="{$field.value}"/> 
-							</div>
-							<span class="input-must">{lang key='system::system.require_field'}</span>
-						</div>
-						<!--{else}-->
-						<div class="form-group"  id="{$field.name}" style="display: none;">
-							<label class="control-label col-lg-2">{$field.label}</label>
-							<div class="controls col-lg-3">
-								<input class="form-control" name="{$field.name}" type="text" value="{$field.value}" />
-							</div>
-							<span class="input-must">{lang key='system::system.require_field'}</span>
-						</div>
-						<!--{/if}-->
-						<!--{else}-->
-						<!--{if $field.name != 'item_fee'}-->
-						<div class="form-group"  id="{$field.name}">
-							<label class="control-label col-lg-2">{$field.label}</label>
-							<div class="controls col-lg-3">
-								<input class="form-control" name="{$field.name}" type="text" value="{$field.value}"/>
-							</div>
-							<span class="input-must">{lang key='system::system.require_field'}</span>
-						</div>
-						<!--{else}-->
-						<div class="form-group"  id="{$field.name}"  style="display: none;">
-							<label class="control-label col-lg-2">{$field.label}</label>
-							<div class="controls col-lg-3">
-								<input class="form-control" name="{$field.name}" type="text" value="{$field.value}" size="40" />
-							</div>
-							<span class="input-must">{lang key='system::system.require_field'}</span>
-						</div>
-						<!--{/if}-->
-						<!--{/if}-->
-						<!-- {/foreach} -->
+							<!-- {foreach from=$fields item=field} -->
+								<!--{if $fee_compute_mode == 'by_number'}-->
+									<!--{if $field.name == 'item_fee' || $field.name == 'free_money' || $field.name == 'pay_fee'}-->
+										<div class="form-group"  id="{$field.name}">
+											<label class="control-label col-lg-2">{$field.label}</label>
+											<div class="controls col-lg-3">
+												<input class="form-control" name="{$field.name}" type="text" value="{$field.value}"/> 
+											</div>
+											<span class="input-must">{lang key='system::system.require_field'}</span>
+										</div>
+									<!--{else}-->
+										<div class="form-group"  id="{$field.name}" style="display: none;">
+											<label class="control-label col-lg-2">{$field.label}</label>
+											<div class="controls col-lg-3">
+												<input class="form-control" name="{$field.name}" type="text" value="{$field.value}" />
+											</div>
+											<span class="input-must">{lang key='system::system.require_field'}</span>
+										</div>
+									<!--{/if}-->
+								<!--{else}-->
+									<!--{if $field.name != 'item_fee'}-->
+										<div class="form-group"  id="{$field.name}">
+											<label class="control-label col-lg-2">{$field.label}</label>
+											<div class="controls col-lg-3">
+												<input class="form-control" name="{$field.name}" type="text" value="{$field.value}"/>
+											</div>
+											<span class="input-must">{lang key='system::system.require_field'}</span>
+										</div>
+									<!--{else}-->
+										<div class="form-group"  id="{$field.name}"  style="display: none;">
+											<label class="control-label col-lg-2">{$field.label}</label>
+											<div class="controls col-lg-3">
+												<input class="form-control" name="{$field.name}" type="text" value="{$field.value}" size="40" />
+											</div>
+											<span class="input-must">{lang key='system::system.require_field'}</span>
+										</div>
+									<!--{/if}-->
+								<!--{/if}-->
+							<!-- {/foreach} -->
 						<!--{/if}-->
 						
 						<!-- {if $shipping_area.shipping_code eq 'ship_o2o_express'} -->
