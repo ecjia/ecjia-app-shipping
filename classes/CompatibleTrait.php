@@ -119,11 +119,11 @@ trait CompatibleTrait
     }
     
     /**
-     * 激活的配送方式插件列表
+     * @see ShippingPlugin::getInstalledPlugins
      */
     public function available_shipping_plugins()
     {
-        return ecjia_config::instance()->get_addon_config('shipping_plugins', true);
+        return $this->getInstalledPlugins();
     }
     
     /**
@@ -171,23 +171,11 @@ trait CompatibleTrait
     }
     
     /**
-     * 取得已安装的配送方式
-     * @return  array   已安装的配送方式
+     * @see ECJia\System\Plugin\PluginModel::availablePluginList
      */
     public function shipping_list()
     {
-        $data = RC_DB::table('shipping')->select('shipping_id', 'shipping_name', 'shipping_code')->where('enabled', 1)->get();
-    
-        $plugins  = $this->available_shipping_plugins();
-        $pay_list = array();
-        if (!empty($data)) {
-            foreach ($data as $row) {
-                if (isset($plugins[$row['shipping_code']])) {
-                    $pay_list[] = $row;
-                }
-            }
-        }
-        return $pay_list;
+        return $this->availablePluginList();
     }
     
     /**

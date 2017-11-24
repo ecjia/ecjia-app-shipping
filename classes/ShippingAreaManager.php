@@ -2,8 +2,9 @@
 
 namespace Ecjia\App\Shipping;
 
-class ShippingManager
+class ShippingAreaManager
 {
+    
     
     
     
