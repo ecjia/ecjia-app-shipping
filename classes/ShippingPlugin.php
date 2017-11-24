@@ -255,6 +255,8 @@ class ShippingPlugin extends PluginModel
         return $data->mapWithKeys(function ($item, $key) use ($plugins) {
             if (array_get($plugins, $item['shipping_code']) && $item['shipping_code'] != 'ship_no_express') {
                 return [$key => $item];
+            } else {
+                return [];
             }
         })->toArray();
     }
