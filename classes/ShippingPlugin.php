@@ -48,6 +48,8 @@ namespace Ecjia\App\Shipping;
 
 use Ecjia\System\Plugin\PluginModel;
 use ecjia_error;
+use ecjia_region;
+use ecjia_config;
 
 /**
  * 配送方法
@@ -234,7 +236,11 @@ class ShippingPlugin extends PluginModel
      */
     public function availableUserShippings($region_id, $store_id = 0)
     {
-        $region_ids = ecjia_region::getSplitRegion($region_id);
+        if (is_array($region_id)) {
+            $region_ids = $region_id;
+        } else {
+            $region_ids = ecjia_region::getSplitRegion($region_id);
+        }
         
         $data = $this->leftJoin('shipping_area', 'shipping_area.shipping_id', '=', 'shipping.shipping_id')
                     ->leftJoin('area_region', 'area_region.shipping_area_id', '=', 'shipping_area.shipping_area_id')
@@ -244,10 +250,13 @@ class ShippingPlugin extends PluginModel
                     ->whereIn('area_region.region_id', $region_ids)
                     ->orderby('shipping.shipping_order', 'asc')
                     ->get();
-    
-    
-    
-    
+        $plugins = $this->getInstalledPlugins();
+
+        return $data->mapWithKeys(function ($item, $key) use ($plugins) {
+            if (array_get($plugins, $item['shipping_code']) && $item['shipping_code'] != 'ship_no_express') {
+                return [$key => $item];
+            }
+        })->toArray();
     }
 
 }
