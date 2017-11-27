@@ -83,11 +83,11 @@ class ShipNoExpress extends ShippingAbstract
     public function loadLanguage($key = null, $default = null)
     {
         $lang = array(
-            'no_express'            => '无需物流',
-            'no_express_desc'       => '不需要物流时选择此插件（本配送方式只支持商家发货时使用）',
+            'ship_no_express'            => '无需物流',
+            'ship_no_express_desc'       => '不需要物流时选择此插件（本配送方式只支持商家发货时使用）',
         );
     
-        return $this->loadPluginData($lang, $key, $default);
+        return $this->getArrayData($lang, $key, $default);
     }
     
     /**
@@ -116,6 +116,19 @@ class ShipNoExpress extends ShippingAbstract
     }
     
     
+    public function export() 
+    {
+        return [
+        	'shipping_id' => 0,
+            'shipping_code' => $this->getCode(),
+            'shipping_name' => $this->loadLanguage('ship_no_express'),
+            'shipping_desc' => $this->loadLanguage('ship_no_express_desc'),
+            'insure' => 0,
+            'support_code' => 0,
+            'configure' => null,
+        ];
+        
+    }
     
 }
 

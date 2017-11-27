@@ -50,6 +50,7 @@ use Ecjia\System\Plugin\PluginModel;
 use ecjia_error;
 use ecjia_region;
 use ecjia_config;
+use Ecjia\App\Shipping\Plugins\ShipNoExpress;
 
 /**
  * 配送方法
@@ -153,20 +154,27 @@ class ShippingPlugin extends PluginModel
         if (is_null($code)) {
             return $this->defaultChannel();
         }
-
-        if (is_int($code)) {
-            $data = $this->getPluginDataById($code);
+        
+        if ($code == 'ship_no_express' || $code === 0) {
+            
+            $handler = new ShipNoExpress();
+            
         } else {
-            $data = $this->getPluginDataByCode($code);
-        }
-
-        if (empty($data)) {
-            return new ecjia_error('shipping_not_found', $code . ' shipping not found!');
-        }
-
-        $handler = $this->pluginInstance($data->shipping_code, []);
-        if (!$handler) {
-            return new ecjia_error('plugin_not_found', $data->shipping_code . ' plugin not found!');
+            if (is_int($code)) {
+                $data = $this->getPluginDataById($code);
+            } else {
+                $data = $this->getPluginDataByCode($code);
+            }
+            
+            if (empty($data)) {
+                return new ecjia_error('shipping_not_found', $code . ' shipping not found!');
+            }
+            
+            $handler = $this->pluginInstance($data->shipping_code, []);
+            
+            if (!$handler) {
+                return new ecjia_error('plugin_not_found', $data->shipping_code . ' plugin not found!');
+            }
         }
 
         return $handler;
@@ -259,6 +267,43 @@ class ShippingPlugin extends PluginModel
                 return [];
             }
         })->toArray();
+    }
+    
+    /**
+     * 取得用户可用的配送方式列表
+     * @param   array   $region_id     收货人地区最后一级id（包括国家、省、市、区、街道）
+     * @param   integer $store_id      商家
+     * @return  array   配送方式数组
+     */
+    public function availableMerchantShippings($region_id, $store_id = 0)
+    {
+        if (is_array($region_id)) {
+            $region_ids = $region_id;
+        } else {
+            $region_ids = ecjia_region::getSplitRegion($region_id);
+        }
+        
+        $data = $this->leftJoin('shipping_area', 'shipping_area.shipping_id', '=', 'shipping.shipping_id')
+                    ->leftJoin('area_region', 'area_region.shipping_area_id', '=', 'shipping_area.shipping_area_id')
+                    ->select('shipping.shipping_id', 'shipping.shipping_code', 'shipping.shipping_name', 'shipping.shipping_desc', 'shipping.insure', 'shipping.support_cod', 'shipping_area.configure')
+                    ->where('shipping.enabled', 1)
+                    ->where('shipping_area.store_id', $store_id)
+                    ->whereIn('area_region.region_id', $region_ids)
+                    ->orderby('shipping.shipping_order', 'asc')
+                    ->get();
+        $plugins = $this->getInstalledPlugins();
+        
+        $ships = $data->mapWithKeys(function ($item, $key) use ($plugins) {
+            if (array_get($plugins, $item['shipping_code']) && $item['shipping_code'] != 'ship_no_express') {
+                return [$key => $item];
+            } else {
+                return [];
+            }
+        });
+        
+        $ships->push($this->channel('ship_no_express')->export());
+        
+        return $ships->toArray();
     }
 
 }
