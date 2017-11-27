@@ -22,27 +22,36 @@
 	window.onload = function() {
 	//   callFromFlash();
 	}
+
+	
 	$(document).ready(function(){
-	$(document).on('click','.add-lable',function(){
-		pintObj.call_flash('lable_add', this);
+		$(document).on('click','.add-lable',function(){
+			pintObj.call_flash('lable_add', this);
+		});
+
+// 		$('input:checkbox').click(function () {
+// 			if(this.checked === true){
+// 				pintObj.call_flash('lable_add', this);
+// 			}
+// 		}); 
 	});
-	});
+	
 	/***文件上传验证***/
 	var html=document.getElementById('uni-filename').innerHTML; 
 	function resetFile(){ 
-	document.getElementById('uni-filename').innerHTML=html; 
+		document.getElementById('uni-filename').innerHTML=html; 
 	}
 	function checkFileType(str){
-	var pos = str.lastIndexOf("."); 
-	var lastname = str.substring(pos+1,str.length); 
-	var resultName=lastname.toLowerCase(); 
-	var allow_suffix = ['jpg', 'png', 'jpeg']; 
-	if($.inArray(resultName.toString(), allow_suffix) < 0){
-		alert('只能上传jpg,png,jpeg文件，您上传的文件类型为'+lastname+'，请重新上传'); 
-		resetFile(); 
-	}else{
-		document.getElementById('uni-filename').innerHTML=str;
-	}
+		var pos = str.lastIndexOf("."); 
+		var lastname = str.substring(pos+1,str.length); 
+		var resultName=lastname.toLowerCase(); 
+		var allow_suffix = ['jpg', 'png', 'jpeg']; 
+		if($.inArray(resultName.toString(), allow_suffix) < 0){
+			alert('只能上传jpg,png,jpeg文件，您上传的文件类型为'+lastname+'，请重新上传'); 
+			resetFile(); 
+		}else{
+			document.getElementById('uni-filename').innerHTML=str;
+		}
 	}
 
 	var pintObj ={
@@ -64,6 +73,8 @@
 			this.submit(btn_f, false);
 			return true;
 		}	
+
+
 		/*** 打印单背景图片删除 */
 		, bg_del : function(btn_f){
 			if (!confirm(upload_del_confirm)) {
@@ -76,6 +87,8 @@
 		, bg_del_call_back : function(){
 			pintObj.call_flash('bg_delete', '');
 		}
+
+		
 		/*** 打印单背景图片上传 */
 		, bg_upload : function (btn_f){
 			//获取表单对象
@@ -92,29 +105,33 @@
 			the_form.submit();
 			  // this.submit(btn_f, false);
 			}
+
+		
 			/** * 与模板Flash编辑器通信 */
 			,call_flash : function(type, currt_obj){
+				
 			//获取flash对象
 			var obj = this.this_obj("test");
 			//执行操作
 			switch (type) {
 				case 'bg_delete': //删除打印单背景图片
 				var result_del = obj.bg_delete();
-					//执行成功 修改页面上传窗口为显示 生效
-					if (result_del) {
-						document.getElementById('pic_control_upload').style.display = display_yes;
-						document.getElementById('pic_control_del').style.display = 'none';
+				//执行成功 修改页面上传窗口为显示 生效
+				if (result_del) {
+					document.getElementById('pic_control_upload').style.display = display_yes;
+					document.getElementById('pic_control_del').style.display = 'none';
 
-						var the_form = this.this_obj("theForm");
-						the_form.bg.disabled = "";
-						the_form.bg.value = "";
-						the_form.upload.disabled = "";
-						the_form.upload_del.disabled = "disabled";
-	//		 						$("#print_bg_default_info")[0].html('要删除的图片是默认图片，恢复模板可再次使用');
-					}
-					break;
-			    case 'bg_add': //添加打印单背景图片
-			    var result_add = obj.bg_add(currt_obj);
+					var the_form = this.this_obj("theForm");
+					the_form.bg.disabled = "";
+					the_form.bg.value = "";
+					the_form.upload.disabled = "";
+					the_form.upload_del.disabled = "disabled";
+//		 						$("#print_bg_default_info")[0].html('要删除的图片是默认图片，恢复模板可再次使用');
+				}
+				break;
+				
+		   		case 'bg_add': //添加打印单背景图片
+			   		var result_add = obj.bg_add(currt_obj);
 					//执行成功 修改页面上传窗口为隐藏 失效
 					if (result_add) {
 						document.getElementById('pic_control_upload').style.display = 'none';
@@ -126,8 +143,11 @@
 						the_form.upload_del.disabled = "";
 	//		 						$("#print_bg_default_info")[0].disabled = "disabled";
 					}
-					break;
-					case 'lable_add': 
+				break;
+
+
+				//添加标签
+				case 'lable_add': 
 					if (typeof(currt_obj) != 'object'){
 						return false;
 					}
@@ -140,22 +160,29 @@
 						alert(no_add_repeat_lable);
 						return false;
 					}
-					break;
-					case 'lable_del': 
+				break;
+
+				
+				//删除标签
+				case 'lable_del': 
 					var result_del = obj.lable_del();
 					if (result_del) {
-					}
-					else {
+					} else {
 						alert(no_select_lable_del);
 					}
-					break;
-					case 'lable_Location_info':
+				break;
+
+				
+				case 'lable_Location_info':
 					var result_info = obj.lable_Location_info();
 					return result_info;
-					break;
+				break;
+				
 				}
 				return true;
 			}
+
+			
 			/*** 获取页面Flash编辑器对象*/
 			, this_obj : function(flash_name){
 				var _obj; 
@@ -169,6 +196,8 @@
 				}
 				return _obj;
 			},
+
+			
 			/* 提交数据到后台 */
 			submit : function(btn_f,callback){
 			//获取表单对象
@@ -202,8 +231,6 @@
 </script>
 
 <style type="text/css">
-
-	
 	#top-row td {
 		padding-top: 5px;
 	}
@@ -424,15 +451,14 @@
 		                <div class="span3 chat_sidebar">
 		                    <div class="chat_heading clearfix">
 		                        {t}设置打印内容{/t}
-		                        <button class="btn" type="button" name="del" id="del" onclick="javascript:pintObj.call_flash('lable_del', this);">{lang key='shipping::shipping.del_lable'}</button>
+		                     <button class="btn" type="button" name="del" id="del" onclick="javascript:pintObj.call_flash('lable_del', this);">{lang key='shipping::shipping.del_lable'}</button>
+		                        
 		                    </div>
 		                    <div class="ms-selectable">
 		                        <div class="template_list" id="ms-custom-navigation">
 		                            <ul class="unstyled">
-		                                <!-- {foreach from=$lang_lable_box key=Key item=lable_box} -->
-		                                <li>
-											<a class="batch-del-btn add-lable" data-text="{$lable_box}" data-val="{$Key}" href="javascript:;">{$lable_box}</a>
-										</li>
+		                                <!-- {foreach from=$lang_lable_box key=Key item=val} -->
+											<li><input type="checkbox" name="lable_box" id="{$Key}" {if in_array($val, $config_lable_list)}checked="true"{/if}>{$val}</li>	
 		                                <!-- {/foreach} -->
 		                            </ul>
 		                        </div>

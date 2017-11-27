@@ -440,10 +440,26 @@ class admin extends ecjia_admin
             	'print_img_del'    => RC_Uri::url('shipping/admin/print_del'),
             	'do_edit'          => RC_Uri::url('shipping/admin/do_edit_print_template'),
             );
+            
+            
+            $lang_lable_box = RC_Lang::get('shipping::shipping.lable_box');
+
+            $config_lable = explode("||,||",$shipping_data['config_lable']);
+            $config_lable_list = array();
+            foreach ($config_lable as $key=>$val) {
+            	$config_lable[$key] = explode(",",$val);
+            }
+            
+            foreach ($config_lable as $val) {
+            	$config_lable_list[] = $val[1];
+            }
+            $config_lable_list = array_filter($config_lable_list);
+            
             $this->assign('post_links', $links);
             $this->assign('shipping', $shipping_data);
             $this->assign('shipping_id', $shipping_id);
-            $this->assign('lang_lable_box', RC_Lang::get('shipping::shipping.lable_box'));
+            $this->assign('lang_lable_box', $lang_lable_box);
+            $this->assign('config_lable_list', $config_lable_list);
             $this->assign('lang_js_languages', RC_Lang::get('shipping::shipping.js_languages'));
             
             $this->display('shipping_template.dwt');
