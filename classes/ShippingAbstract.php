@@ -87,6 +87,18 @@ abstract class ShippingAbstract extends AbstractPlugin
         return ceil($goodsAmount * $insure);
     }
     
+    
+    /**
+     * 返回快递单打印背景图片
+     * @return NULL
+     */
+    public function printBcakgroundImage()
+    {
+        return null;
+    }
+    
+    
+    
 
 }
 
