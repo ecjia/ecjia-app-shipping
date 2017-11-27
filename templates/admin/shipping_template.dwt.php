@@ -25,15 +25,18 @@
 
 	
 	$(document).ready(function(){
-		$(document).on('click','.add-lable',function(){
-			pintObj.call_flash('lable_add', this);
-		});
+// 		$(document).on('click','.add-lable',function(){
+// 			pintObj.call_flash('lable_add', this);
+// 		});
 
-// 		$('input:checkbox').click(function () {
-// 			if(this.checked === true){
-// 				pintObj.call_flash('lable_add', this);
-// 			}
-// 		}); 
+		$('input:checkbox').click(function () {
+			if(this.checked === true){
+				pintObj.call_flash('lable_add', this);
+			} else {
+				pintObj.call_flash('lable_del', this);
+			}
+			
+		}); 
 	});
 	
 	/***文件上传验证***/
@@ -451,14 +454,13 @@
 		                <div class="span3 chat_sidebar">
 		                    <div class="chat_heading clearfix">
 		                        {t}设置打印内容{/t}
-		                     <button class="btn" type="button" name="del" id="del" onclick="javascript:pintObj.call_flash('lable_del', this);">{lang key='shipping::shipping.del_lable'}</button>
 		                        
 		                    </div>
 		                    <div class="ms-selectable">
 		                        <div class="template_list" id="ms-custom-navigation">
 		                            <ul class="unstyled">
 		                                <!-- {foreach from=$lang_lable_box key=Key item=val} -->
-											<li><input type="checkbox" name="lable_box" id="{$Key}" {if in_array($val, $config_lable_list)}checked="true"{/if}>{$val}</li>	
+											<li><input type="checkbox" data-text="{$val}" data-val="{$Key}" {if in_array($val, $config_lable_list)}checked="true"{/if}>{$val}</li>	
 		                                <!-- {/foreach} -->
 		                            </ul>
 		                        </div>
