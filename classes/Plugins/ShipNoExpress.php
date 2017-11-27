@@ -116,9 +116,9 @@ class ShipNoExpress extends ShippingAbstract
     }
     
     
-    public function export() 
+    public function express() 
     {
-        return [
+        return collect([
         	'shipping_id' => 0,
             'shipping_code' => $this->getCode(),
             'shipping_name' => $this->loadLanguage('ship_no_express'),
@@ -126,7 +126,8 @@ class ShipNoExpress extends ShippingAbstract
             'insure' => 0,
             'support_code' => 0,
             'configure' => null,
-        ];
+            'pay_fee' => 0.00,
+        ]);
         
     }
     

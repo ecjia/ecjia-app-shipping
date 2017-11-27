@@ -92,16 +92,25 @@ class ShippingPlugin extends PluginModel
      */
     public function getPluginDataById($id)
     {
+        if ($id === 0) {
+            return with(new ShipNoExpress)->express();
+        }
         return $this->where('shipping_id', $id)->where('enabled', 1)->first();
     }
 
     public function getPluginDataByCode($code)
     {
+        if ($code == 'ship_no_express') {
+            return with(new ShipNoExpress)->express();
+        }
         return $this->where('shipping_code', $code)->where('enabled', 1)->first();
     }
 
     public function getPluginDataByName($name)
     {
+        if ($name == '无需物流') {
+            return with(new ShipNoExpress)->express();
+        }
         return $this->where('shipping_name', $name)->where('enabled', 1)->first();
     }
 
@@ -242,7 +251,7 @@ class ShippingPlugin extends PluginModel
      * @param   integer $store_id      商家
      * @return  array   配送方式数组
      */
-    public function availableUserShippings($region_id, $store_id = 0)
+    public function availableUserShippings($region_id, $store_id)
     {
         if (is_array($region_id)) {
             $region_ids = $region_id;
@@ -270,12 +279,12 @@ class ShippingPlugin extends PluginModel
     }
     
     /**
-     * 取得用户可用的配送方式列表
+     * 取得商家可用的配送方式列表
      * @param   array   $region_id     收货人地区最后一级id（包括国家、省、市、区、街道）
      * @param   integer $store_id      商家
      * @return  array   配送方式数组
      */
-    public function availableMerchantShippings($region_id, $store_id = 0)
+    public function availableMerchantShippings($region_id, $store_id)
     {
         if (is_array($region_id)) {
             $region_ids = $region_id;
@@ -301,9 +310,61 @@ class ShippingPlugin extends PluginModel
             }
         });
         
-        $ships->push($this->channel('ship_no_express')->export());
+        $ships->push($this->channel('ship_no_express')->express()->toArray());
         
         return $ships->toArray();
+    }
+    
+    /**
+     * 取得某配送方式对应于指定收货地址的区域信息
+     * @param   int     $shipping_code      配送方式id|code
+     * @param   array   $region_id          收货人地区最后一级id（包括国家、省、市、区、街道）
+     * @return  array   配送区域信息（config 对应着反序列化的 configure）
+     */
+    public function shippingArea($shippingCode, $region_id, $store_id)
+    {
+        if (is_array($region_id)) {
+            $region_ids = $region_id;
+        } else {
+            $region_ids = ecjia_region::getSplitRegion($region_id);
+        }
+        
+        if (is_int($shippingCode)) {
+            $shippingCode = $this->getPluginDataById($shippingCode)->get('shipping_code');
+        }
+        
+        if ($shippingCode == 'ship_no_express') {
+            
+            return $this->getPluginDataByCode($shippingCode)->toArray();
+            
+        } else {
+        
+            $model = $this->leftJoin('shipping_area', 'shipping_area.shipping_id', '=', 'shipping.shipping_id')
+                        ->leftJoin('area_region', 'area_region.shipping_area_id', '=', 'shipping_area.shipping_area_id')
+                        ->select('shipping.shipping_id', 'shipping.shipping_code', 'shipping.shipping_name', 'shipping.shipping_desc', 'shipping.insure', 'shipping.support_cod', 'shipping_area.configure')
+                        ->where('shipping.shipping_code', $shippingCode)
+                        ->where('shipping.enabled', 1)
+                        ->whereIn('area_region.region_id', $region_ids)
+                        ->where('shipping_area.store_id', $store_id)
+                        ->first();
+            
+            if ($model) {
+                $model->configure = $this->unserializeConfig($model->configure);
+                if (isset($model->configure['pay_fee'])) {
+                    if (strpos($model->configure['pay_fee'], '%') !== false) {
+                        $model['pay_fee'] = floatval($model->configure['pay_fee']) . '%';
+                    } else {
+                        $model['pay_fee'] = floatval($model->configure['pay_fee']);
+                    }
+                } else {
+                    $model['pay_fee'] = 0.00;
+                }
+
+                return $model->toArray();
+            }
+            
+            return $model;
+        }
     }
 
 }
