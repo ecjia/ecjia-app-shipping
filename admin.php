@@ -418,7 +418,7 @@ class admin extends ecjia_admin
             	'do_edit'          => RC_Uri::url('shipping/admin/do_edit_print_template'),
             );
 
-            $lang_lable_box = RC_Lang::get('shipping::shipping.lable_box');
+            $lang_lable_box = with(new Ecjia\App\Shipping\PrintConfigLabel)->getLabels()->all();
 
             $config_lable = explode("||,||",$shipping_data['config_lable']);
             $config_lable_list = array();
