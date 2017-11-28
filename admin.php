@@ -132,9 +132,10 @@ class admin extends ecjia_admin
                 $modules[$_key]['enabled']        = $_value['enabled'];
 
                 /* 判断该派送方式是否支持保价 支持报价的允许在页面修改保价费 */
-                $shipping_handle = new shipping_factory($_value['shipping_code']);
-                $config          = $shipping_handle->configure_config();
-
+//                 $shipping_handle = new shipping_factory($_value['shipping_code']);
+//                 $config          = $shipping_handle->configure_config();
+                $plugin_handle = ecjia_shipping::channel($shipping_data['shipping_code']);
+                $config = $plugin_handle->loadConfig();
                 /* 只能根据配置判断是否支持保价  只有配置项明确说明不支持保价，才是不支持*/
                 if (isset($config['insure']) && ($config['insure'] === false)) {
                     $modules[$_key]['is_insure'] = false;
@@ -266,8 +267,10 @@ class admin extends ecjia_admin
         $shipping_data = RC_DB::table('shipping')->select('shipping_code', 'print_bg')->where('shipping_id', $shipping_id)->first();
 
         if (isset($shipping_data['shipping_code'])) {
-            $plugin_handle = new shipping_factory($shipping_data['shipping_code']);
-            $config        = $plugin_handle->configure_config();
+//             $plugin_handle = new shipping_factory($shipping_data['shipping_code']);
+//             $config        = $plugin_handle->configure_config();
+        	$plugin_handle = ecjia_shipping::channel($shipping_data['shipping_code']);
+        	$config = $plugin_handle->loadConfig();
             $data          = array(
                 'print_bg'     => '',
                 'config_lable' => $config['config_lable'],
@@ -405,9 +408,10 @@ class admin extends ecjia_admin
             	$shipping_data['print_bg'] = RC_Upload::upload_url($shipping_data['print_bg']);
             } else {
             	/* 使用插件默认快递单图片 */
-            	$plugin_handle             = new shipping_factory($shipping_data['shipping_code']);
-            	$config                    = $plugin_handle->configure_config();
-            	$shipping_data['print_bg'] = $config['print_bg'];
+//             	$plugin_handle             = new shipping_factory($shipping_data['shipping_code']);
+//             	$config                    = $plugin_handle->configure_config();
+            	$plugin_handle = ecjia_shipping::channel($shipping_data['shipping_code']);
+                $shipping_data['print_bg'] = $plugin_handle->defaultPrintBackgroundImage();
             }
             $links = array(
             	'recovery'         => RC_Uri::url('shipping/admin/recovery_default_template'),
@@ -415,8 +419,7 @@ class admin extends ecjia_admin
             	'print_img_del'    => RC_Uri::url('shipping/admin/print_del'),
             	'do_edit'          => RC_Uri::url('shipping/admin/do_edit_print_template'),
             );
-            
-            
+
             $lang_lable_box = RC_Lang::get('shipping::shipping.lable_box');
 
             $config_lable = explode("||,||",$shipping_data['config_lable']);
