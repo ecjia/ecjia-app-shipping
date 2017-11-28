@@ -105,7 +105,17 @@ abstract class ShippingAbstract extends AbstractPlugin
         return $this->loadConfig('print_support');
     }
     
-    
+    /**
+     * 打印快递单标签位置信息
+     * @return NULL|string
+     */
+    public function getConfigLabel()
+    {
+        if ($this->loadConfig('config_lable')) {
+            return with(new PrintConfigLabel)->translantConfigLabel($this->loadConfig('config_lable'));
+        }
+        return null;
+    }
     
 
 }
