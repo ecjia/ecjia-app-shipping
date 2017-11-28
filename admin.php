@@ -130,6 +130,8 @@ class admin extends ecjia_admin
                 $modules[$_key]['shipping_order'] = $_value['shipping_order'];
                 $modules[$_key]['insure_fee']     = $_value['insure'];
                 $modules[$_key]['enabled']        = $_value['enabled'];
+                $plugin_handle = ecjia_shipping::channel($_value['shipping_code']);
+                $modules[$_key]['print_support'] = $plugin_handle->isSupportPrint();
 
                 /* 判断该派送方式是否支持保价 支持报价的允许在页面修改保价费 */
 //                 $shipping_handle = new shipping_factory($_value['shipping_code']);
@@ -144,8 +146,8 @@ class admin extends ecjia_admin
                 }
             }
         }
+       
         $this->assign('modules', $modules);
-
         $this->display('shipping_list.dwt');
     }
 
