@@ -309,57 +309,33 @@ class admin extends ecjia_admin
     /**
      * 模板Flash编辑器 上传图片
      */
-    public function print_upload()
-    {
+    public function print_upload() {
         $this->admin_priv('ship_update', ecjia::MSGTYPE_JSON);
 
-        //设置上传文件类型
         $allow_suffix     = array('jpg', 'png', 'jpeg');
         $shipping_id      = !empty($_POST['shipping_id']) ? intval($_POST['shipping_id']) : 0;
-        $uploads_dir_info = RC_Upload::upload_dir();
-        //接收上传文件
         if (!empty($_FILES['bg']['name'])) {
             /*在前端已做对文件上传类型的限制*/
             if (!RC_File::file_suffix($_FILES['bg']['name'], $allow_suffix)) {
-                $url = RC_Uri::url('shipping/admin/edit_print_template', array('shipping_id' => $shipping_id));
-                $this->header("Location: $url\n");
-                return $this->showmessage(RC_Lang::get('shipping::shipping.js_languages.upload_falid') . implode(',', $allow_suffix), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
+                return $this->showmessage(RC_Lang::get('shipping::shipping.js_languages.upload_falid') . implode(',', $allow_suffix), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR, array('pjaxurl' =>RC_Uri::url('shipping/admin/edit_print_template', array('shipping_id' => $shipping_id))));
             } else {
-                $name = date('Ymd');
-                for ($i = 0; $i < 6; $i++) {
-                    $name .= chr(mt_rand(97, 122));
-                }
-                $name .= '.' . end(explode('.', $_FILES['bg']['name']));
-
-                $target = $uploads_dir_info['basedir'] . '/images/receipt/';
-                if (!is_dir($target)) {
-                    mkdir($target, 0777, true); // 使用最大权限0777创建文件
-                }
-                $target = $target . $name;
-                if ($this->move_upload_file($_FILES['bg']['tmp_name'], $target)) {
-                    $src = '/images/receipt/' . $name;
-                }
-                /* 如果之前存在上传的图片，先删除 */
-                $ship_data = RC_DB::table('shipping')->where('shipping_id', $shipping_id)->get();
-
-                if ($ship_date) {
-                    if (isset($ship_date['print_bg'])) {
-                        $uploads_dir_info = RC_Upload::upload_dir();
-                        @unlink($uploads_dir_info['basedir'] . $ship_date['print_bg']);
-                    }
-                }
-                $data = array('print_bg' => $src);
-                $res  = RC_DB::table('shipping')->where('shipping_id', $shipping_id)->update($data);
-
+            	$upload = RC_Upload::uploader('image', array('save_path' => 'data/receipt', 'auto_sub_dirs' => false));
+            	$info 	= $upload->upload($_FILES['bg']);
+            	if (!empty($info)) {
+            		$print_bg = $upload->get_position($info);
+            	} else {
+            		return $this->showmessage($upload->error(), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
+            	}
+            	
+                $res = RC_DB::table('shipping')->where('shipping_id', $shipping_id)->update(array('print_bg' => $print_bg));
                 if ($res) {
-                    $url = RC_Uri::url('shipping/admin/edit_print_template', array('shipping_id' => $shipping_id));
-                    $this->header("Location: $url\n");
+                    return $this->showmessage('上传打印单图片成功', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('pjaxurl' =>RC_Uri::url('shipping/admin/edit_print_template', array('shipping_id' => $shipping_id))));
                 } else {
-                    return $this->showmessage(RC_Lang::get('shipping::shipping.upload_shipping_bg') . RC_Lang::get('shipping::shipping.attradd_faild'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
+                    return $this->showmessage('上传打印单图片操作失败', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
                 }
             }
         } else {
-            return $this->showmessage(RC_Lang::get('shipping::shipping.upload_shipping_bg') . RC_Lang::get('shipping::shipping.attradd_faild'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
+            return $this->showmessage('上传打印单图片操作失败', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
         }
     }
 
@@ -372,11 +348,11 @@ class admin extends ecjia_admin
 
         $shipping_id = !empty($_POST['shipping_id']) ? intval($_POST['shipping_id']) : 0;
         $ship_data   = RC_DB::table('shipping')->where('shipping_id', $shipping_id)->select('print_bg')->first();
-
-        if ($ship_date) {
-            if ($ship_date['print_bg'] != '') {
+        
+        if ($ship_data) {
+            if ($ship_data['print_bg'] != '') {
                 $uploads_dir_info = RC_Upload::upload_dir();
-                @unlink($uploads_dir_info['basedir'] . $ship_date['print_bg']);
+                @unlink($uploads_dir_info['basedir'] . $ship_data['print_bg']);
 
                 $data = array('print_bg' => '');
                 $res  = RC_DB::table('shipping')->where('shipping_id', $shipping_id)->update($data);
@@ -425,9 +401,8 @@ class admin extends ecjia_admin
             /*模板模式逻辑开始 
              * 判断模板图片位置
              */
-            if (!empty($shipping_data['print_bg']) && trim($shipping_data['print_bg']) != '') {
-            	$uploads_dir_info          = RC_Upload::upload_dir();
-            	$shipping_data['print_bg'] = $uploads_dir_info['baseurl'] . $shipping_data['print_bg'];
+            if (!empty($shipping_data['print_bg'])) {
+            	$shipping_data['print_bg'] = RC_Upload::upload_url($shipping_data['print_bg']);
             } else {
             	/* 使用插件默认快递单图片 */
             	$plugin_handle             = new shipping_factory($shipping_data['shipping_code']);
