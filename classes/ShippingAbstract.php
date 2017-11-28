@@ -97,7 +97,13 @@ abstract class ShippingAbstract extends AbstractPlugin
         return null;
     }
     
-    
+    /**
+     * 返回是否支持打印快递单模板
+     */
+    public function isSupportPrint()
+    {
+        return $this->config['print_support'];
+    }
     
 
 }
