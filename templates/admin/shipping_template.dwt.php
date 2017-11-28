@@ -84,8 +84,8 @@
 				return false; //中止执行
 			}
 			this.submit(btn_f, this.bg_del_call_back);
-			// 		  var params = 'shipping=' + the_form.shipping.value;
-			// 		  Ajax.call('index.php?m=shipping&c=admin&a=init&is_ajax=1&act=print_del', params, this.bg_del_call_back, 'GET', 'JSON');		
+// 		    var params = 'shipping=' + the_form.shipping.value;
+// 		    Ajax.call('index.php?m=shipping&c=admin&a=init&is_ajax=1&act=print_del', params, this.bg_del_call_back, 'GET', 'JSON');		
 		}
 		, bg_del_call_back : function(){
 			pintObj.call_flash('bg_delete', '');
@@ -117,23 +117,27 @@
 			var obj = this.this_obj("test");
 			//执行操作
 			switch (type) {
-				case 'bg_delete': //删除打印单背景图片
-				var result_del = obj.bg_delete();
-				//执行成功 修改页面上传窗口为显示 生效
-				if (result_del) {
-					document.getElementById('pic_control_upload').style.display = display_yes;
-					document.getElementById('pic_control_del').style.display = 'none';
-
-					var the_form = this.this_obj("theForm");
-					the_form.bg.disabled = "";
-					the_form.bg.value = "";
-					the_form.upload.disabled = "";
-					the_form.upload_del.disabled = "disabled";
-//		 						$("#print_bg_default_info")[0].html('要删除的图片是默认图片，恢复模板可再次使用');
-				}
+			
+				//删除打印单背景图片
+				case 'bg_delete': 
+					var result_del = obj.bg_delete();
+					//执行成功 修改页面上传窗口为显示 生效
+					if (result_del) {
+						document.getElementById('pic_control_upload').style.display = display_yes;
+						document.getElementById('pic_control_del').style.display = 'none';
+	
+						var the_form = this.this_obj("theForm");
+						the_form.bg.disabled = "";
+						the_form.bg.value = "";
+						the_form.upload.disabled = "";
+						the_form.upload_del.disabled = "disabled";
+	//		 						$("#print_bg_default_info")[0].html('要删除的图片是默认图片，恢复模板可再次使用');
+					}
 				break;
+
 				
-		   		case 'bg_add': //添加打印单背景图片
+				//添加打印单背景图片
+		   		case 'bg_add': 
 			   		var result_add = obj.bg_add(currt_obj);
 					//执行成功 修改页面上传窗口为隐藏 失效
 					if (result_add) {
@@ -203,33 +207,33 @@
 			
 			/* 提交数据到后台 */
 			submit : function(btn_f,callback){
-			//获取表单对象
-			var the_form = this.this_obj("theForm");
-			if (typeof(the_form) == "undefined") {
-				return false; //程序错误
-			}
-			the_form.target = '_parent';
-			var arr = jQuery(the_form).serializeArray(); 
-			$.ajax({
-				url: $(btn_f).attr('data-url'),
-				dataType : "JSON",
-				type : "POST",
-				data : $.param(arr),
-				success : function (data){
-					if(callback) {
-						callback();
-					}
-					alert(data.message);
-					if(data.refresh_url!=undefined) {
-						pintObj.pjax(data.refresh_url);
-					}
+				//获取表单对象
+				var the_form = this.this_obj("theForm");
+				if (typeof(the_form) == "undefined") {
+					return false; //程序错误
 				}
-			});
-			return true;
-		},
-		pjax :function(url){
-			top.document.location.href = url;
-		}
+				the_form.target = '_parent';
+				var arr = jQuery(the_form).serializeArray(); 
+				$.ajax({
+					url: $(btn_f).attr('data-url'),
+					dataType : "JSON",
+					type : "POST",
+					data : $.param(arr),
+					success : function (data){
+						if(callback) {
+							callback();
+						}
+						alert(data.message);
+						if(data.refresh_url!=undefined) {
+							pintObj.pjax(data.refresh_url);
+						}
+					}
+				});
+				return true;
+			},
+			pjax :function(url){
+				top.document.location.href = url;
+			}
 	};
 </script>
 
@@ -378,6 +382,9 @@
 	#pic_control_del{
 		margin:20px 0 20px 20px;
 	}
+	#pic_control_upload{
+		margin:20px 0 20px 20px;
+	}
 
 </style>
 <!-- {/block} -->
@@ -410,6 +417,7 @@
 								<div id="top-row">
 									<!-- 删除图片 -->
 									<div id="pic_control_upload" {if $shipping.print_bg !=''} class="display_no"{/if}>
+										<strong>模板底图：</strong>
 										<div class="btn-group file-group" style="margin-top: 5px;">
 											<input type="file" onchange='checkFileType(this.value);' class="btn_file" name="bg" id="bg" {if $shipping.print_bg !=''} disabled="disabled"{/if}>
 											<span id="uni-filename" class="uni-filename" style="-moz-user-select: none;">{lang key='shipping::shipping.upload_shipping_bg'},{lang key='shipping::shipping.file_empty'}</span>
@@ -420,9 +428,11 @@
 										<iframe id="bg_upload_hidden" name="bg_upload_hidden" frameborder="0" scrolling="no" class="display_no"></iframe>
 									</div>
 									
-									<div id="pic_control_del" {if $shipping.print_bg== '' } class="display_no"{/if}>
-										<strong>模板底图：</strong><input type="button" name="upload_del" class="btn btn-warning" id="upload_del" value="删除打印单图片" data-url="{$post_links.print_img_del}"
-										onclick="javascript:pintObj.bg_del(this);" {if $shipping.print_bg== ''} disabled="disabled"{/if}>
+									
+									<div id="pic_control_del" {if $shipping.print_bg== ''}class="display_no"{/if}>
+										<strong>模板底图：</strong>
+										<input type="button" name="upload_del" class="btn btn-warning" id="upload_del" value="删除打印单图片" data-url="{$post_links.print_img_del}"
+										onclick="javascript:pintObj.bg_del(this);" {if $shipping.print_bg== ''}disabled="disabled"{/if}>
 									</div>
 								</div>
 	                        </div>
