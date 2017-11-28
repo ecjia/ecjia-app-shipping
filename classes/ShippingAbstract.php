@@ -102,9 +102,18 @@ abstract class ShippingAbstract extends AbstractPlugin
      */
     public function isSupportPrint()
     {
-        return $this->config['print_support'];
+        return $this->loadConfig('print_support');
     }
     
+    
+    /**
+     * 返回快递单默认打印背景图片
+     * @return NULL|string
+     */
+    public function defaultPrintBackgroundImage()
+    {
+        return RC_Plugin::plugins_url($this->loadConfig('print_bg'), __FILE__);
+    }
 
 }
 
