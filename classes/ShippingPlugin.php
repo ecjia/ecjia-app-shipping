@@ -51,6 +51,7 @@ use ecjia_error;
 use ecjia_region;
 use ecjia_config;
 use Ecjia\App\Shipping\Plugins\ShipNoExpress;
+use Ecjia\App\Shipping\Models\ShippingAreaModel;
 
 /**
  * 配送方法
@@ -156,7 +157,7 @@ class ShippingPlugin extends PluginModel
     /**
      * 获取某个插件的实例对象
      * @param string|integer $code 类型为string时是shipping_code，类型是integer时是shipping_id
-     * @return Ambigous <\ecjia_error, \Ecjia\System\Plugin\AbstractPlugin>|\ecjia_error|\Ecjia\System\Plugin\AbstractPlugin
+     * @return \ecjia_error|\Ecjia\System\Plugin\AbstractPlugin
      */
     public function channel($code = null)
     {
@@ -186,6 +187,47 @@ class ShippingPlugin extends PluginModel
             }
         }
 
+        return $handler;
+    }
+    
+    /**
+     * 获取指定配送区域插件的实例对象
+     * @param string|integer $code 类型为string时是shipping_code，类型是integer时是shipping_id
+     * @param integer $areaId 配送区域ID
+     * @return \ecjia_error|\Ecjia\System\Plugin\AbstractPlugin
+     */
+    public function areaChannel($areaId)
+    {
+        $areaData = ShippingAreaModel::find($areaId);
+        if (empty($areaData)) {
+            return new ecjia_error('shipping_area_not_found', 'Shipping area by ' . $areaId . ' not found!');
+        }
+        
+        $data = $this->getPluginDataById($areaData->shipping_id);
+        if (empty($data)) {
+            return new ecjia_error('shipping_not_found', 'Shipping id by ' . $areaData->shipping_id . ' not found!');
+        }
+        
+        if ($data->shipping_code == 'ship_no_express' || $areaData->shipping_id === 0) {
+        
+            $handler = new ShipNoExpress();
+        
+        } else {
+            
+            try {
+                $config = $this->unserializeConfig($areaData->configure);
+            
+                $handler = $this->pluginInstance($data->shipping_code, $config);
+                
+            } catch (\InvalidArgumentException $e) {
+                return new ecjia_error('plugin_not_found', $e->getMessage());
+            }
+            
+            if (!$handler) {
+                return new ecjia_error('plugin_not_found', $data->shipping_code . ' plugin not found!');
+            }
+        }
+        
         return $handler;
     }
 
