@@ -53,7 +53,7 @@ class ShippingAreaModel extends Model
 {
     protected $table = 'shipping_area';
     
-    protected $primaryKey = 'shipping_id';
+    protected $primaryKey = 'shipping_area_id';
     
     /**
      * 该模型是否被自动维护时间戳
