@@ -88,8 +88,7 @@ class shipping_plugin_install_api extends Component_Event_Api
                 $data = array(
                     'shipping_name' => addslashes($format_name),
                     'shipping_desc' => addslashes($format_description),
-                    'print_bg'      => $shipping_data['print_bg'], ///????是不是应该是删除之前的
-                    // 'print_bg'      => addslashes($options['config']['print_bg']),
+                    'print_bg'      => $shipping_data['print_bg'],
                     'config_lable'  => addslashes($options['config']['config_lable']),
                     'print_model'   => $options['config']['print_model'],
                     'insure'        => $insure,
@@ -107,8 +106,7 @@ class shipping_plugin_install_api extends Component_Event_Api
                     'insure'        => $insure,
                     'support_cod'   => intval($options['config']['cod']),
                     'enabled'       => 1,
-                    'print_bg'      => '',
-                    // 'print_bg'      => addslashes($options['config']['print_bg']),
+                    'print_bg'      => addslashes($options['config']['print_bg']),
                     'config_lable'  => addslashes($options['config']['config_lable']),
                     'print_model'   => $options['config']['print_model'],
                 );
