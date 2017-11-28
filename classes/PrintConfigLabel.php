@@ -59,6 +59,7 @@ class PrintConfigLabel
     
     /**
      * 转换打印配置
+     * 坐标定位：上左下右
      * @param string $config
      */
     public function translantConfigLabel($config)
