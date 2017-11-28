@@ -464,7 +464,6 @@
 		                <div class="span3 chat_sidebar">
 		                    <div class="chat_heading clearfix">
 		                        {t}设置打印内容{/t}
-		                        
 		                    </div>
 		                    <div class="ms-selectable">
 		                        <div class="template_list" id="ms-custom-navigation">
