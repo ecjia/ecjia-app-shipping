@@ -75,7 +75,7 @@ class ShippingPlugin extends PluginModel
      */
     public function getInstalledPlugins()
     {
-        return ecjia_config::getAddonConfig('shipping_plugins', true, true);
+        return ecjia_config::getAddonConfig('shipping_plugins', true);
     }
 
     /**
