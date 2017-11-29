@@ -233,7 +233,7 @@
 	.table_box {
 		border: #ccc 1px solid;
 		table-layout: fixed;
-		height:520px;
+		height:566px;
 	}	
 	input {
 		display: inline;
@@ -376,8 +376,6 @@
 	#desc_lable{
 		margin-top:10px;
 	}
-	
-
 </style>
 <!-- {/block} -->
 
@@ -390,7 +388,7 @@
 		{/if}
 	</h3>
 
-	<div style="text-align: center;margin:20px 0 20px 0;">
+	<div style="text-align: center;margin:10px 0 10px 0;">
 	    <button type="button" id="model_2" {if $shipping.print_model == 2}class="btn btn-gebo" {else} class="btn" {/if} onclick="javascript:ecjia.admin.shipTemplate.template_radio_click('2');" >所见即所得模式</button>&nbsp;&nbsp;&nbsp;
 	    <button type="button" id="model_1" {if $shipping.print_model == 1}class="btn btn-gebo" {else} class="btn" {/if} onclick="javascript:ecjia.admin.shipTemplate.template_radio_click('1');">代码模式</button>
 	</div>
@@ -465,7 +463,7 @@
 										<param name="allowScriptAccess" value="sameDomain" />
 										<embed src="{RC_App::apps_url('shipping/statics/print/pint.swf')}" wmode="transparent"
 										FlashVars="bcastr_config_bg={$shipping.print_bg}&swf_config_lable={$shipping.config_lable}"
-										menu="false" quality="high" width="1024" height="520"
+										menu="false" quality="high" width="1024" height="545"
 										type="application/x-shockwave-flash"
 										pluginspage="http://www.macromedia.com/go/getflashplayer"
 										allowScriptAccess="sameDomain" name="test" swLiveConnect="true" />
@@ -480,8 +478,8 @@
 		                        {t}设置打印内容{/t}
 		                    </div>
 		                    <div class="ms-selectable">
-		                        <div class="template_list" id="ms-custom-navigation" style="height: 620px;">
-		                            <ul class="unstyled" style="height: 620px;">
+		                        <div class="template_list" id="ms-custom-navigation" style="height: 645px;">
+		                            <ul class="unstyled" style="height: 645px;">
 		                                <!-- {foreach from=$lang_lable_box key=Key item=val} -->
 										<!-- {if in_array($val, $config_lable_list)} -->
 											<li style="padding: 3px 8px;">
