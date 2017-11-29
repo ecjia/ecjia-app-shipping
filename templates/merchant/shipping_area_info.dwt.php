@@ -46,25 +46,28 @@
 							<span class="input-must">{lang key='system::system.require_field'}</span>
 						</div>
 						
-						<!-- 费用计算方式 -->
-						<!-- {if $shipping_area.shipping_code eq 'ship_ems' || $shipping_area.shipping_code eq 'ship_yto' || $shipping_area.shipping_code eq 'ship_zto' || $shipping_area.shipping_code eq 'ship_sto_express' || $shipping_area.shipping_code eq 'ship_post_mail' || $shipping_area.shipping_code eq 'ship_sf_express' || $shipping_area.shipping_code eq 'ship_post_express' } -->
-						<div class="form-group">
-							<label class="control-label col-lg-2">{lang key='shipping::shipping_area.label_fee_compute_mode'}</label>
-							<div class="controls col-lg-3">
-								<input type="radio" id="fee_compute_mode_by_weight" class="uni_style" {if $fee_compute_mode neq 'by_number' }checked="checked" {/if}
-								onclick="javascript:ecjia.merchant.shippingObj.area_compute_mode('{$shipping_area.shipping_code}','weight')" name="fee_compute_mode" value="by_weight" />
-								<label for="fee_compute_mode_by_weight">{lang key='shipping::shipping_area.fee_by_weight'}</label>
-								<input type="radio" id="fee_compute_mode_by_number" class="uni_style" {if $fee_compute_mode eq 'by_number'}checked="checked" {/if}  
-								onclick="javascript:ecjia.merchant.shippingObj.area_compute_mode('{$shipping_area.shipping_code}','number')"
-								name="fee_compute_mode" value="by_number" />
-								<label for="fee_compute_mode_by_number">{lang key='shipping::shipping_area.fee_by_number'}</label>
-							</div>
-						</div>
-						<!-- {/if} -->
-						
 						<!-- 500克以内的费用 -->
 						<!--{if $shipping_area.shipping_code != 'ship_cac'}-->
 							<!-- {foreach from=$fields item=field} -->
+							
+								<!-- 费用计算方式 -->
+								<!-- {if $shipping_area.shipping_code eq 'ship_ems' || $shipping_area.shipping_code eq 'ship_yto' || $shipping_area.shipping_code eq 'ship_zto' || $shipping_area.shipping_code eq 'ship_sto_express' || $shipping_area.shipping_code eq 'ship_post_mail' || $shipping_area.shipping_code eq 'ship_sf_express' || $shipping_area.shipping_code eq 'ship_post_express' } -->
+								{if $field.name == 'fee_compute_mode'}
+								<div class="form-group">
+									<label class="control-label col-lg-2">{$field.label}</label>
+									<div class="controls col-lg-3">
+										<input type="radio" id="fee_compute_mode_by_weight" class="uni_style" {if $field.value neq 'by_number' }checked="checked" {/if}
+										onclick="javascript:ecjia.merchant.shippingObj.area_compute_mode('{$shipping_area.shipping_code}','weight')" name="fee_compute_mode" value="by_weight" />
+										<label for="fee_compute_mode_by_weight">按重量</label>
+										<input type="radio" id="fee_compute_mode_by_number" class="uni_style" {if $field.value eq 'by_number'}checked="checked" {/if}  
+										onclick="javascript:ecjia.merchant.shippingObj.area_compute_mode('{$shipping_area.shipping_code}','number')"
+										name="fee_compute_mode" value="by_number" />
+										<label for="fee_compute_mode_by_number">按件数</label>
+									</div>
+								</div>
+								{/if}
+								<!-- {/if} -->
+								
 								<!--{if $fee_compute_mode == 'by_number'}-->
 									<!--{if $field.name == 'item_fee' || $field.name == 'free_money' || $field.name == 'pay_fee'}-->
 										<div class="form-group"  id="{$field.name}">
@@ -74,7 +77,7 @@
 											</div>
 											<span class="input-must">{lang key='system::system.require_field'}</span>
 										</div>
-									<!--{else}-->
+									<!--{else if $field.name != 'fee_compute_mode'}-->
 										<div class="form-group"  id="{$field.name}" style="display: none;">
 											<label class="control-label col-lg-2">{$field.label}</label>
 											<div class="controls col-lg-3">
@@ -84,7 +87,7 @@
 										</div>
 									<!--{/if}-->
 								<!--{else}-->
-									<!--{if $field.name != 'item_fee'}-->
+									<!--{if $field.name != 'item_fee' && $field.name != 'fee_compute_mode'}-->
 										<div class="form-group"  id="{$field.name}">
 											<label class="control-label col-lg-2">{$field.label}</label>
 											<div class="controls col-lg-3">
@@ -92,7 +95,7 @@
 											</div>
 											<span class="input-must">{lang key='system::system.require_field'}</span>
 										</div>
-									<!--{else}-->
+									<!--{else if $field.name == 'item_fee'}-->
 										<div class="form-group"  id="{$field.name}"  style="display: none;">
 											<label class="control-label col-lg-2">{$field.label}</label>
 											<div class="controls col-lg-3">
@@ -147,7 +150,13 @@
 												<a class="no-underline" href="javascript:;" data-parent=".time-picker" data-toggle="remove-obj"><i class="fontello-icon-cancel ecjiafc-red fa fa-times "></i></a>
 											<!-- {/if} -->
 										</div> 
-									<!-- {/foreach} -->   
+									<!-- {foreachelse} --> 
+										<div class='time-picker'>
+											从&nbsp;&nbsp;<input class="w100 form-control tp_1" name="start_ship_time[]" type="text" value="{$time_field.start}"/>&nbsp;&nbsp;
+											至&nbsp;&nbsp;<input class="w100 form-control tp_1" name="end_ship_time[]" type="text" value="{$time_field.end}" />
+											<a class="no-underline" data-toggle="clone-obj" data-before="before" data-parent=".time-picker" href="javascript:;"><i class="fontello-icon-plus fa fa-plus"></i></a>
+										</div> 
+									<!-- {/foreach} --> 
 									</div>
 								</div>
 							<!-- {else} -->
