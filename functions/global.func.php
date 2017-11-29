@@ -117,6 +117,9 @@ function is_print_bg_default($print_bg)
 function assign_adminlog_content()
 {
     ecjia_admin_log::instance()->add_object('shipping_print_template', RC_Lang::get('shipping::shipping.shipping_print_template'));
+    
+    ecjia_admin_log::instance()->add_object('shipping_template', '运费模板');
+    ecjia_admin_log::instance()->add_object('shipping', '快递方式');
 }
 
 // end

@@ -56,6 +56,7 @@ class mh_shipping extends ecjia_merchant
         parent::__construct();
 
         RC_Loader::load_app_func('global');
+        assign_adminlog_content();
 
         /* 加载全局 js/css */
         RC_Script::enqueue_script('jquery-validate');
@@ -357,8 +358,10 @@ class mh_shipping extends ecjia_merchant
         }
         $url = RC_Uri::url('shipping/mh_shipping/edit_shipping_template', array('template_name' => $template_name));
         if (!empty($shipping_area_id)) {
+        	ecjia_merchant::admin_log($temp_name, 'edit', 'shipping_template');
             return $this->showmessage('编辑成功', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('pjaxurl' => $url));
         } else {
+        	ecjia_merchant::admin_log('运费模板名称为:'.$temp_name.'，快递方式名称为：'.$shipping_data['shipping_name'], 'add', 'shipping');
             return $this->showmessage('添加成功', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('pjaxurl' => $url));
         }
     }
@@ -371,13 +374,17 @@ class mh_shipping extends ecjia_merchant
 
         $info = RC_DB::table('shipping_area')->where('shipping_area_id', $shipping_area_id)->where('store_id', $_SESSION['store_id'])->first();
 
+        $shipping_name = RC_DB::table('shipping')->where('shipping_id', $info['shipping_id'])->pluck('shipping_name');
+        
         RC_DB::table('shipping_area')->where('shipping_area_id', $shipping_area_id)->where('store_id', $_SESSION['store_id'])->delete();
         RC_DB::table('area_region')->where('shipping_area_id', $shipping_area_id)->delete();
 
         $count = RC_DB::table('shipping_area')->where('shipping_area_name', $info['shipping_area_name'])->where('store_id', $_SESSION['store_id'])->count();
         if ($count == 0) {
+        	ecjia_merchant::admin_log($info['shipping_area_name'], 'remove', 'shipping_template');
             return $this->showmessage('删除成功', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('pjaxurl' => RC_Uri::url('shipping/mh_shipping/add_shipping_template')));
         } else {
+        	ecjia_merchant::admin_log('运费模板名称为：'.$info['shipping_area_name'].'，快递名称为：'.$shipping_name, 'remove', 'shipping');
             return $this->showmessage('删除成功', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS);
         }
     }
@@ -445,6 +452,7 @@ class mh_shipping extends ecjia_merchant
         }
         $url = RC_Uri::url('shipping/mh_shipping/edit_shipping_template', array('template_name' => $temp_name));
 
+        ecjia_merchant::admin_log($temp_name, 'edit', 'shipping_template');
         return $this->showmessage('编辑成功', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('pjaxurl' => $url));
     }
 
