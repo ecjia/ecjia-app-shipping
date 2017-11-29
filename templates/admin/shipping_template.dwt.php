@@ -3,12 +3,8 @@
 
 <!-- {block name="footer"} -->
 <script type="text/javascript">
-    ecjia.admin.admin_template.library();
-    ecjia.admin.admin_template.library_ace_setval({if $library_html}{$library_html}{else}'请先选择正确的库项目文件！'{/if});
-    ecjia.admin.admin_template.library_ace_readonly({if !$is_writable}1{else}0{/if});
-</script>
+	ecjia.admin.admin_template.library();
 
-<script type="text/javascript">
 	ecjia.admin.shipTemplate.init_template_1();
 	
 	// 这里把JS用到的所有语言都赋值到这里
@@ -29,7 +25,6 @@
 	//   callFromFlash();
 	}
 
-	
 	$(document).ready(function(){
 		$(document).on('click','.add-lable',function(){
 			pintObj.call_flash('lable_add', this);
@@ -128,7 +123,7 @@
 						the_form.bg.value = "";
 						the_form.upload.disabled = "";
 						the_form.upload_del.disabled = "disabled";
-	//		 						$("#print_bg_default_info")[0].html('要删除的图片是默认图片，恢复模板可再次使用');
+						//$("#print_bg_default_info")[0].html('要删除的图片是默认图片，恢复模板可再次使用');
 					}
 				break;
 
@@ -235,24 +230,11 @@
 </script>
 
 <style type="text/css">
-	#top-row td {
-		padding-top: 5px;
-	}
-	
 	.table_box {
 		border: #ccc 1px solid;
 		table-layout: fixed;
-	}
-	
-	table #header {
-		background: -moz-linear-gradient(center top, #ffffff 0%, #f5f5f5 100%)
-		repeat scroll 0 0 rgba(0, 0, 0, 0);
-		border-radius: 4px;
-	}
-	
-	.table_line {
-		border: #3993ba 1px solid;
-	}
+		height:520px;
+	}	
 	input {
 		display: inline;
 		width: auto;
@@ -377,14 +359,24 @@
 	    color: #64d1f1;
 	}
 	#pic_control_del{
+		float:left;
+		width:450px;
 		margin:20px 0 20px 20px;
 	}
 	#pic_control_upload{
+		float:left;
+		width:450px;
 		margin:20px 0 20px 20px;
 	}
 	#del_lable{
-		margin:20px 0 20px 20px;
+		width:160px;
+		float:right;
+		margin:20px 20px 20px 0;
 	}
+	#desc_lable{
+		margin-top:10px;
+	}
+	
 
 </style>
 <!-- {/block} -->
@@ -405,9 +397,9 @@
 
 	<div class="pull-right list_choose{if !$full} hide{/if} m_b10">
 		<div class="btn-group">
-			<button class="btn dropdown-toggle" data-toggle="dropdown">--- 选择插入标签 ---<span id="label_select" class="caret"></span></button>
+			<button class="btn dropdown-toggle" data-toggle="dropdown">--- 选择插入标签 --- <span id="label_select" class="caret"></span></button>
 			<ul class="dropdown-menu">
-				<li><a class="batch-del-btn add-lable" data-val="" data-text="" href="javascript:;"> 选择插入标签 </li>
+				<li><a class="batch-del-btn add-lable" data-val="" data-text="" href="javascript:;"> 选择插入标签 </a></li>
 				<!-- {foreach from=$lang_lable_box key=Key item=val} -->
 				<li><a class="batch-del-btn add-lable" data-text="{$val}" data-val="{$Key}" href="javascript:;">{$val}</a></li>
 				<!-- {/foreach} -->
@@ -450,10 +442,12 @@
 										onclick="javascript:pintObj.bg_del(this);" {if $shipping.print_bg== ''}disabled="disabled"{/if}>
 									</div>
 									
-									<div id="del_lable" style=>
-										<strong>选中标签：</strong>
+									<div id="del_lable"> 
 										<button class="btn" type="button" name="del" id="del" onclick="javascript:pintObj.call_flash('lable_del', this);">{lang key='shipping::shipping.del_lable'}</button>
+										<span id="desc_lable" class="help-block">注：需选中标签才可进行删除</span>
 									</div>
+									
+									
 								</div>
 	                        </div>
 	                        
@@ -471,7 +465,7 @@
 										<param name="allowScriptAccess" value="sameDomain" />
 										<embed src="{RC_App::apps_url('shipping/statics/print/pint.swf')}" wmode="transparent"
 										FlashVars="bcastr_config_bg={$shipping.print_bg}&swf_config_lable={$shipping.config_lable}"
-										menu="false" quality="high" width="1024" height="600"
+										menu="false" quality="high" width="1024" height="520"
 										type="application/x-shockwave-flash"
 										pluginspage="http://www.macromedia.com/go/getflashplayer"
 										allowScriptAccess="sameDomain" name="test" swLiveConnect="true" />
@@ -509,7 +503,7 @@
 			    </div>
 			</div>	
 					
-			<div class="m_t15 m_b15">
+			<div class="m_t30 m_b15">
 				<input type="hidden" name="shipping_id" value="{$shipping_id}">
 				<input type="hidden" name="config_lable" value=""> 
 				<input type="hidden" name="print_model" value="2">
@@ -520,9 +514,7 @@
 		</form>
 	</div>
 	
-		
-		
-		
+	
 	<!--代码模式-->
 	<div class="row-fluid edit-page">
 	    <div class="span12">
@@ -546,7 +538,6 @@
 			                                <!-- {/foreach} -->
 			                            </ul>
 			                        </div>
-			                       
 			                    </div>
 			                </div>
 				        </div>
