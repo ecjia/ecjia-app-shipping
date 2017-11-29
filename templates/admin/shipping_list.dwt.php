@@ -15,7 +15,7 @@
 		<table class="table table-striped table-hide-edit">
 			<thead>
 				<tr>
-					<th class="w110">{lang key='shipping::shipping.shipping_name'}</th>
+					<th class="w150">{lang key='shipping::shipping.shipping_name'}</th>
 					<th>{lang key='shipping::shipping.shipping_desc'}</th>
 					<th class="w80">{lang key='system::system.sort_order'}</th>
 					<th class="w80">{lang key='shipping::shipping.insure'}</th>
