@@ -80,10 +80,28 @@ class admin extends ecjia_admin
 
         RC_Script::enqueue_script('shopping_admin', RC_App::apps_url('statics/js/shipping_admin.js', __FILE__));
         RC_Script::enqueue_script('shipping', RC_App::apps_url('statics/js/shipping.js', __FILE__));
-
         RC_Script::localize_script('shipping', 'js_lang', RC_Lang::get('shipping::shipping.js_lang'));
         RC_Script::localize_script('shopping_admin', 'js_lang', RC_Lang::get('shipping::shipping.js_lang'));
-
+        
+        RC_Script::enqueue_script('acejs', RC_Uri::admin_url('statics/lib/acejs/ace.js'), array(), false, true);
+        RC_Script::enqueue_script('acejs-emmet', RC_Uri::admin_url('statics/lib/acejs/ext-emmet.js'), array(), false, true);
+        RC_Script::enqueue_script('template', RC_App::apps_url('statics/js/template.js', __FILE__));
+        $admin_template_lang = array(
+        		'editlibrary'       	=> __('您确定要保存编辑内容吗？'),
+        		'choosetemplate'    	=> __('使用这个模板'),
+        		'choosetemplateFG'  	=> __('使用这个模板风格'),
+        		'abandon'           	=> __('您确定要放弃本次修改吗？'),
+        		'write'             	=> __('请先输入内容！'),
+        		'ok'                	=> __('确定'),
+        		'cancel'            	=> __('取消'),
+        		'confirm_leave'			=> __('您的修改内容还没有保存，您确定离开吗？'),
+        		'confirm_leave'			=> __('连接错误，请重新选择!'),
+        		'confirm_edit_project'	=> __('修改库项目是危险的高级操作，修改错误可能会导致前台无法正常显示。您依然确定要修改库项目吗？')
+        );
+        
+        RC_Script::localize_script('template', 'admin_template_lang', $admin_template_lang);
+        
+        
         ecjia_screen::get_current_screen()->add_nav_here(new admin_nav_here(RC_Lang::get('shipping::shipping.shipping'), RC_Uri::url('shipping/admin/init')));
     }
 
@@ -412,7 +430,9 @@ class admin extends ecjia_admin
      */
     public function edit_print_template($shipid = 0) {
         $this->admin_priv('ship_update');
-
+        
+        $full = isset($_GET['full']) && !empty($_GET['full']) ? 1 : 0;
+        $this->assign('full', $full);
         ecjia_screen::get_current_screen()->add_help_tab(array(
             'id'      => 'overview',
             'title'   => RC_Lang::get('shipping::shipping.overview'),

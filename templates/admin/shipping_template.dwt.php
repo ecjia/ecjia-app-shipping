@@ -3,6 +3,12 @@
 
 <!-- {block name="footer"} -->
 <script type="text/javascript">
+    ecjia.admin.admin_template.library();
+    ecjia.admin.admin_template.library_ace_setval({if $library_html}{$library_html}{else}'请先选择正确的库项目文件！'{/if});
+    ecjia.admin.admin_template.library_ace_readonly({if !$is_writable}1{else}0{/if});
+</script>
+
+<script type="text/javascript">
 	ecjia.admin.shipTemplate.init_template_1();
 	
 	// 这里把JS用到的所有语言都赋值到这里
@@ -25,9 +31,9 @@
 
 	
 	$(document).ready(function(){
-// 		$(document).on('click','.add-lable',function(){
-// 			pintObj.call_flash('lable_add', this);
-// 		});
+		$(document).on('click','.add-lable',function(){
+			pintObj.call_flash('lable_add', this);
+		});
 
 		$('input:checkbox').click(function () {
 			if(this.checked === true){
@@ -385,6 +391,9 @@
 	#pic_control_upload{
 		margin:20px 0 20px 20px;
 	}
+	#del_lable{
+		margin:20px 0 20px 20px;
+	}
 
 </style>
 <!-- {/block} -->
@@ -402,17 +411,33 @@
 	    <button type="button" id="model_2" {if $shipping.print_model == 2}class="btn btn-gebo" {else} class="btn" {/if} onclick="javascript:ecjia.admin.shipTemplate.template_radio_click('2');" >所见即所得模式</button>&nbsp;&nbsp;&nbsp;
 	    <button type="button" id="model_1" {if $shipping.print_model == 1}class="btn btn-gebo" {else} class="btn" {/if} onclick="javascript:ecjia.admin.shipTemplate.template_radio_click('1');">代码模式</button>
 	</div>
-		
+
+	<div class="pull-right list_choose{if !$full} hide{/if} m_b10">
+		<div class="btn-group">
+			<button class="btn dropdown-toggle" data-toggle="dropdown">--- 选择插入标签 ---<span id="label_select" class="caret"></span></button>
+			<ul class="dropdown-menu">
+				<li><a class="batch-del-btn add-lable" data-val="" data-text="" href="javascript:;"> 选择插入标签 </li>
+				<!-- {foreach from=$lang_lable_box key=Key item=val} -->
+				<li><a class="batch-del-btn add-lable" data-text="{$val}" data-val="{$Key}" href="javascript:;">{$val}</a></li>
+				<!-- {/foreach} -->
+			</ul>
+		</div> 
+	</div>
+			
 	<!--模版模式-->
 	<div id="visual" {if $shipping.print_model == 1}style="display:none"{else} style="display:block"{/if}>
 		<form action="{$post_links.print_img_upload}" enctype="multipart/form-data" method="post" name="theForm"  id="theForm">
 			<div class="row-fluid">
 			    <div class="span12">
 			        <div class="chat_box library-content">
-		                <div class="span9 chat_content template_info">
+		                 <div class="{if $full}span12{else}span9{/if} chat_content template_info">
 	                        <div class="chat_heading clearfix">
+	                         	<div class="pull-right"><i class="ecjiaf-csp{if $full} fontello-icon-resize-small{else} fontello-icon-resize-full{/if} enlarge"></i></div>
 	                            <span class="title">快递单模板</span>
 	                        </div>
+	                        
+	                        <pre class="span12" id="editor" style="display: none;"></pre>
+	                        
 	                        <div class="row-fluid">
 								<div id="top-row">
 									<!-- 删除图片 -->
@@ -428,11 +453,15 @@
 										<iframe id="bg_upload_hidden" name="bg_upload_hidden" frameborder="0" scrolling="no" class="display_no"></iframe>
 									</div>
 									
-									
 									<div id="pic_control_del" {if $shipping.print_bg== ''}class="display_no"{/if}>
 										<strong>模板底图：</strong>
 										<input type="button" name="upload_del" class="btn btn-warning" id="upload_del" value="删除打印单图片" data-url="{$post_links.print_img_del}"
 										onclick="javascript:pintObj.bg_del(this);" {if $shipping.print_bg== ''}disabled="disabled"{/if}>
+									</div>
+									
+									<div id="del_lable" style=>
+										<strong>选中标签：</strong>
+										<button class="btn" type="button" name="del" id="del" onclick="javascript:pintObj.call_flash('lable_del', this);">{lang key='shipping::shipping.del_lable'}</button>
 									</div>
 								</div>
 	                        </div>
@@ -461,7 +490,7 @@
 							</div>
 		                </div>
 			                
-		                <div class="span3 chat_sidebar">
+		                <div class="span3 chat_sidebar {if $full} hide{/if}">
 		                    <div class="chat_heading clearfix">
 		                        {t}设置打印内容{/t}
 		                    </div>
@@ -469,7 +498,17 @@
 		                        <div class="template_list" id="ms-custom-navigation">
 		                            <ul class="unstyled">
 		                                <!-- {foreach from=$lang_lable_box key=Key item=val} -->
-											<li><input type="checkbox" data-text="{$val}" data-val="{$Key}" {if in_array($val, $config_lable_list)}checked="true"{/if}>{$val}</li>	
+												{if in_array($val, $config_lable_list)}
+													<li style="padding: 3px 8px;">
+															<i class="fontello-icon-pin"></i> {$val} 
+													</li>
+												{else}
+													<li>
+														<a class="batch-del-btn add-lable" style="text-decoration:none;" data-text="{$val}" data-val="{$Key}" href="javascript:;"> 
+															<i class="fontello-icon-plus-circled"></i> {$val} 
+														</a>
+													</li>
+												{/if}
 		                                <!-- {/foreach} -->
 		                            </ul>
 		                        </div>
