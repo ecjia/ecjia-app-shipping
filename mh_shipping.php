@@ -73,7 +73,7 @@ class mh_shipping extends ecjia_merchant
     //运费模板
     public function shipping_template()
     {
-        $this->admin_priv('express_manage');
+        $this->admin_priv('ship_merchant_manage');
 
         $this->assign('ur_here', '运费模版');
         ecjia_screen::get_current_screen()->add_nav_here(new admin_nav_here('运费模版'));
@@ -86,7 +86,7 @@ class mh_shipping extends ecjia_merchant
 
     public function add_shipping_template()
     {
-        $this->admin_priv('express_manage');
+        $this->admin_priv('ship_merchant_update');
         $this->assign('ur_here', '添加运费模版');
 
         ecjia_screen::get_current_screen()->add_nav_here(new admin_nav_here('运费模版', RC_Uri::url('shipping/mh_shipping/shipping_template')));
@@ -107,11 +107,11 @@ class mh_shipping extends ecjia_merchant
 
     public function edit_shipping_template()
     {
+    	$this->admin_priv('ship_merchant_update');
+    	
         $template_name = !empty($_GET['template_name']) ? trim($_GET['template_name']) : '';
 
-        $this->admin_priv('express_manage');
         $this->assign('ur_here', '编辑运费模版');
-
         ecjia_screen::get_current_screen()->add_nav_here(new admin_nav_here('运费模版', RC_Uri::url('shipping/mh_shipping/shipping_template')));
         ecjia_screen::get_current_screen()->add_nav_here(new admin_nav_here('编辑运费模版'));
         $this->assign('action_link', array('href' => RC_Uri::url('shipping/mh_shipping/shipping_template'), 'text' => '运费模版'));
@@ -247,6 +247,8 @@ class mh_shipping extends ecjia_merchant
 
     public function add_shipping()
     {
+    	$this->admin_priv('ship_merchant_update', ecjia::MSGTYPE_JSON);
+    	
         $shipping_id = !empty($_POST['shipping_id']) ? intval($_POST['shipping_id']) : 0;
         $temp_name   = !empty($_POST['temp_name']) ? trim($_POST['temp_name']) : '';
 
@@ -363,6 +365,8 @@ class mh_shipping extends ecjia_merchant
 
     public function remove_shipping()
     {
+    	$this->admin_priv('ship_merchant_delete', ecjia::MSGTYPE_JSON);
+    	
         $shipping_area_id = !empty($_GET['id']) ? intval($_GET['id']) : 0;
 
         $info = RC_DB::table('shipping_area')->where('shipping_area_id', $shipping_area_id)->where('store_id', $_SESSION['store_id'])->first();
@@ -392,6 +396,8 @@ class mh_shipping extends ecjia_merchant
 
     public function save_shipping_template()
     {
+    	$this->admin_priv('ship_merchant_update');
+    	
         $temp_name     = !empty($_POST['temp_name']) ? trim($_POST['temp_name']) : '';
         $template_name = !empty($_POST['template_name']) ? trim($_POST['template_name']) : '';
 
@@ -447,9 +453,9 @@ class mh_shipping extends ecjia_merchant
      */
     public function shipping_record()
     {
-        $this->admin_priv('express_manage');
+        $this->admin_priv('ship_merchant_manage');
+        
         $this->assign('ur_here', '配送记录');
-
         ecjia_screen::get_current_screen()->add_nav_here(new admin_nav_here('配送记录'));
 
         $count = RC_Api::api('express', 'express_order_count');
@@ -507,7 +513,7 @@ class mh_shipping extends ecjia_merchant
 
     public function record_info()
     {
-        $this->admin_priv('express_manage');
+        $this->admin_priv('ship_merchant_manage');
 
         ecjia_screen::get_current_screen()->add_nav_here(new admin_nav_here(RC_Lang::get('express::express.express_info')));
 
@@ -593,7 +599,7 @@ class mh_shipping extends ecjia_merchant
 
     public function assign_express()
     {
-        $this->admin_priv('express_manage', ecjia::MSGTYPE_JSON);
+        $this->admin_priv('ship_merchant_manage', ecjia::MSGTYPE_JSON);
 
         $staff_id   = isset($_POST['staff_id']) ? intval($_POST['staff_id']) : 0;
         $express_id = isset($_POST['express_id']) ? intval($_POST['express_id']) : 0;
@@ -619,9 +625,9 @@ class mh_shipping extends ecjia_merchant
     //快递单模板
     public function express_template()
     {
-        $this->admin_priv('express_manage');
+        $this->admin_priv('ship_merchant_manage');
+        
         $this->assign('ur_here', '快递单模版');
-
         ecjia_screen::get_current_screen()->add_nav_here(new admin_nav_here('快递单模版'));
 
         $this->display('shipping_template_list.dwt');
