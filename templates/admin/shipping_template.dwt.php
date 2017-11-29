@@ -34,15 +34,6 @@
 		$(document).on('click','.add-lable',function(){
 			pintObj.call_flash('lable_add', this);
 		});
-
-		$('input:checkbox').click(function () {
-			if(this.checked === true){
-				pintObj.call_flash('lable_add', this);
-			} else {
-				pintObj.call_flash('lable_del', this);
-			}
-			
-		}); 
 	});
 	
 	/***文件上传验证***/
@@ -498,17 +489,17 @@
 		                        <div class="template_list" id="ms-custom-navigation">
 		                            <ul class="unstyled">
 		                                <!-- {foreach from=$lang_lable_box key=Key item=val} -->
-												{if in_array($val, $config_lable_list)}
-													<li style="padding: 3px 8px;">
-															<i class="fontello-icon-pin"></i> {$val} 
-													</li>
-												{else}
-													<li>
-														<a class="batch-del-btn add-lable" style="text-decoration:none;" data-text="{$val}" data-val="{$Key}" href="javascript:;"> 
-															<i class="fontello-icon-plus-circled"></i> {$val} 
-														</a>
-													</li>
-												{/if}
+										<!-- {if in_array($val, $config_lable_list)} -->
+											<li style="padding: 3px 8px;">
+												<i class="fontello-icon-pin"></i> {$val} 
+											</li>
+										<!-- {else} -->
+											<li>
+												<a class="batch-del-btn add-lable" style="text-decoration:none;" data-text="{$val}" data-val="{$Key}" href="javascript:;"> 
+													<i class="fontello-icon-plus-circled"></i> {$val} 
+												</a>
+											</li>
+										<!-- {/if} -->
 		                                <!-- {/foreach} -->
 		                            </ul>
 		                        </div>
