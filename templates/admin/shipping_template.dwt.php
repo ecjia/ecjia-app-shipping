@@ -480,8 +480,8 @@
 		                        {t}设置打印内容{/t}
 		                    </div>
 		                    <div class="ms-selectable">
-		                        <div class="template_list" id="ms-custom-navigation">
-		                            <ul class="unstyled">
+		                        <div class="template_list" id="ms-custom-navigation" style="height: 620px;">
+		                            <ul class="unstyled" style="height: 620px;">
 		                                <!-- {foreach from=$lang_lable_box key=Key item=val} -->
 										<!-- {if in_array($val, $config_lable_list)} -->
 											<li style="padding: 3px 8px;">
@@ -503,7 +503,7 @@
 			    </div>
 			</div>	
 					
-			<div class="m_t30 m_b15">
+			<div class="m_t15 m_b15">
 				<input type="hidden" name="shipping_id" value="{$shipping_id}">
 				<input type="hidden" name="config_lable" value=""> 
 				<input type="hidden" name="print_model" value="2">
