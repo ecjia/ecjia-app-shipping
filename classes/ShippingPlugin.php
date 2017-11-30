@@ -303,7 +303,7 @@ class ShippingPlugin extends PluginModel
         
         $data = $this->leftJoin('shipping_area', 'shipping_area.shipping_id', '=', 'shipping.shipping_id')
                     ->leftJoin('area_region', 'area_region.shipping_area_id', '=', 'shipping_area.shipping_area_id')
-                    ->select('shipping.shipping_id', 'shipping.shipping_code', 'shipping.shipping_name', 'shipping.shipping_desc', 'shipping.insure', 'shipping.support_cod', 'shipping_area.configure')
+                    ->select('shipping.shipping_id', 'shipping.shipping_code', 'shipping.shipping_name', 'shipping.shipping_desc', 'shipping.insure', 'shipping.support_cod', 'shipping_area.configure', 'shipping_area.shipping_area_id')
                     ->where('shipping.enabled', 1)
                     ->where('shipping_area.store_id', $store_id)
                     ->whereIn('area_region.region_id', $region_ids)
