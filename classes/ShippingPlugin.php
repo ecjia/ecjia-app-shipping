@@ -248,15 +248,15 @@ class ShippingPlugin extends PluginModel
     
     /**
      * 计算运费
-     * @param   string  $shippingCode      配送方式代码
+     * @param   string  $areaId            配送区域的ID
      * @param   float   $goodsWeight       商品重量
      * @param   float   $goodsAmount       商品金额
      * @param   float   $goodsNumber       商品数量
      * @return  float   运费
      */
-    public function fee($shippingCode, $goodsWeight, $goodsAmount, $goodsNumber)
+    public function fee($areaId, $goodsWeight, $goodsAmount, $goodsNumber)
     {
-        $handler = $this->channel($shippingCode);
+        $handler = $this->areaChannel($areaId);
         if (is_ecjia_error($handler)) return $handler;
         
         $shipping_fee = $handler->calculate($goodsWeight, $goodsAmount, $goodsNumber);
