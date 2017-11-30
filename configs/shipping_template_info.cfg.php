@@ -57,15 +57,6 @@ return array(
 		'variable' => '{$province}',
 		'name'  => '表示网店所属省份',
 	),
-	
-	array(
-		'variable' => '{$province}',
-		'name'  => '表示网店所属省份',
-	),
-	array(
-		'variable' => '{$province}',
-		'name'  => '表示网店所属省份',
-	),
 	array(
 		'variable' => '{$city}',
 		'name'  => '表示网店所属城市',
