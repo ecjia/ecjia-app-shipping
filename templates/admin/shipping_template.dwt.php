@@ -379,13 +379,18 @@
 	.text-box{
 		height:518px;
 		text-align:center;
-		margin-top:30px;
+		margin-top:20px;
 	}
 	.text-con{
 		width: 90%; 
-		height:93%;
+		height:88%;
    	 	overflow: auto;  
     	word-break: break-all;
+		margin-top:10px;
+	}
+	.text-box span{
+		text-align:left;
+		margin-left:30px;
 	}
 </style>
 <!-- {/block} -->
@@ -455,8 +460,6 @@
 										<button class="btn" type="button" name="del" id="del" onclick="javascript:pintObj.call_flash('lable_del', this);">{lang key='shipping::shipping.del_lable'}</button>
 										<span id="desc_lable" class="help-block">注：需选中标签才可进行删除</span>
 									</div>
-									
-									
 								</div>
 	                        </div>
 	                        
@@ -537,6 +540,7 @@
 			                        </div>
 			                        
 				  					<div class="text-box">
+				  						<span class="help-block">温馨提示：请复制右侧区域变量放入以下输入框中</span>
 					       				<textarea class="text-con" id="shipping_print" name="shipping_print" rows="40" cols="3" >{$shipping.shipping_print|escape:html}</textarea>
 					                </div>
 				                </div>
