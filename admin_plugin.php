@@ -139,9 +139,6 @@ class admin_plugin extends ecjia_admin
         /* 插件已经安装了，获得名称以及描述 */
         $modules = array();
         foreach ($data as $_key => $_value) {
-        	
-
-        	
             if (isset($plugins[$_value['shipping_code']])) {
                 $modules[$_key]['id']             = $_value['shipping_id'];
                 $modules[$_key]['code']           = $_value['shipping_code'];
@@ -155,8 +152,9 @@ class admin_plugin extends ecjia_admin
                 	  $plugin_handle = ecjia_shipping::channel($_value['shipping_code']);
                 	  $print_support = $plugin_handle->isSupportPrint();
                 	  $config = $plugin_handle->loadConfig();
+                	  $modules[$_key]['print_support'] = $print_support;
                 }
-                $modules[$_key]['print_support'] = $print_support;
+                
                 /* 只能根据配置判断是否支持保价  只有配置项明确说明不支持保价，才是不支持*/
                 if (isset($config['insure']) && ($config['insure'] === false)) {
                     $modules[$_key]['is_insure'] = false;
