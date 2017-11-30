@@ -297,6 +297,7 @@
 		border-width: 1px;
 		box-shadow: 0 1px 0 rgba(255, 255, 255, 0.2) inset, 0 1px 2px
 		rgba(0, 0, 0, 0.05);
+		border-radius: 4px 0 0 4px;
 	}
 	div.file-group span.uni-action:hover{
 		background-color:#31b0d5;
@@ -306,13 +307,13 @@
 		float: left;
 		overflow: hidden;
 		width: 60px;
-		color: #fff;
+		color: #000;
 		-moz-border-bottom-colors: none;
 		-moz-border-left-colors: none;
 		-moz-border-right-colors: none;
 		-moz-border-top-colors: none;
-		background-color: #5bc0de;
-		background-image: linear-gradient(to bottom, #5bc0de, #46b8da);
+		background-color: #f5f5f5;
+		background-image: linear-gradient(to bottom, #fff, #e6e6e6);
 		background-repeat: repeat-x;
 		border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) #b3b3b3;
 		border-image: none;
@@ -435,10 +436,10 @@
 									<div id="pic_control_upload" {if $shipping.print_bg !=''} class="display_no"{/if}>
 										<strong>模板底图：</strong>
 										<div class="btn-group file-group" style="margin-top: 5px;">
-											<input type="file" onchange='checkFileType(this.value);' class="btn_file" name="bg" id="bg" {if $shipping.print_bg !=''} disabled="disabled"{/if}>
-											<span id="uni-filename" class="uni-filename" style="-moz-user-select: none;">{lang key='shipping::shipping.upload_shipping_bg'},{lang key='shipping::shipping.file_empty'}</span>
-											<span class="uni-action" style="-moz-user-select: none;">{lang key='shipping::shipping.select_image'}</span>
-											<input type="button" class="btn btn-primary" name="upload" id="upload" value="{lang key='shipping::shipping.upload'}" data-url="{$post_links.print_img_upload}"
+											<input type="file" onchange='checkFileType(this.value);' name="bg" id="bg" {if $shipping.print_bg !=''} disabled="disabled"{/if}>
+											<span id="uni-filename" class="uni-filename" style="-moz-user-select: none;">上传打印单图片,未选中文件</span>
+											<span class="uni-action" style="-moz-user-select: none;">选择图片</span>
+											<input type="button" class="btn" name="upload" id="upload" value="{lang key='shipping::shipping.upload'}" data-url="{$post_links.print_img_upload}"
 											onclick="javascript:pintObj.bg_upload(this);" {if $shipping.print_bg !=''} disabled="disabled"{/if}> 
 										</div> 
 										<iframe id="bg_upload_hidden" name="bg_upload_hidden" frameborder="0" scrolling="no" class="display_no"></iframe>
