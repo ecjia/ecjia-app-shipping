@@ -376,7 +376,15 @@
 		margin-top:10px;
 	}
 	.text-box{
-		height:568px;
+		height:518px;
+		text-align:center;
+		margin-top:30px;
+	}
+	.text-con{
+		width: 90%; 
+		height:93%;
+   	 	overflow: auto;  
+    	word-break: break-all;
 	}
 </style>
 <!-- {/block} -->
@@ -526,8 +534,9 @@
 			                        <div class="chat_heading clearfix">
 			                            <span class="title">代码模式</span>
 			                        </div>
+			                        
 				  					<div class="text-box">
-					       				<textarea id="shipping_print" name="shipping_print" rows="40" cols="3" >{$shipping.shipping_print|escape:html}</textarea>
+					       				<textarea class="text-con" id="shipping_print" name="shipping_print" rows="40" cols="3" >{$shipping.shipping_print|escape:html}</textarea>
 					                </div>
 				                </div>
 				                
@@ -536,8 +545,8 @@
 				                        {t}订单模版变量说明{/t}
 				                    </div>
 				                    <div class="ms-selectable" >
-				                        <div class="template_list" id="ms-custom-navigation" style="height: 548px;">
-				                            <ul class="unstyled" style="height: 548px;">
+				                        <div class="template_list" id="ms-custom-navigation" style="height: 528px;">
+				                            <ul class="unstyled" style="height: 528px;">
 				                                <!-- {foreach from=$shipping_template_info item=val} -->
 				                                <li class="ms-elem-selectable">{$val.variable}&nbsp;{$val.name}</li>
 				                                <!-- {/foreach} -->
