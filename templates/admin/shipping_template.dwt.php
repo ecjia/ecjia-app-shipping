@@ -550,8 +550,8 @@
 				                        {t}订单模版变量说明{/t}
 				                    </div>
 				                    <div class="ms-selectable" >
-				                        <div class="template_list" id="ms-custom-navigation" style="height: 528px;">
-				                            <ul class="unstyled" style="height: 528px;">
+				                        <div class="template_list" id="ms-custom-navigation" style="height: 518px;">
+				                            <ul class="unstyled" style="height: 527px;">
 				                                <!-- {foreach from=$shipping_template_info item=val} -->
 				                                <li class="ms-elem-selectable">{$val.variable}&nbsp;{$val.name}</li>
 				                                <!-- {/foreach} -->
