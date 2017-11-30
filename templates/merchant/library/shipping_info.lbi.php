@@ -66,7 +66,7 @@
 	<div class="form-group" id="last_order_time">
 		<label class="control-label col-lg-4">提前下单时间：</label>
 		<div class="controls col-lg-6">
-			<input class="date form-control" name="last_order_time" placeholder="最小单位为分钟；如30" type="text" value="{$last_order_time}" />
+			<input class="form-control" name="last_order_time" placeholder="最小单位为分钟；如30" type="text" value="{$last_order_time}" />
 		 
 		</div>
 		<div class="clear">
