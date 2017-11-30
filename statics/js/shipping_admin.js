@@ -136,7 +136,16 @@
                     ecjia.admin.showmessage(data);
                 }
             });
-        }
+        },
+        list: function () {
+            /* 配送方式关闭与启用 */
+            $('.switch').on('click', function (e) {
+                var url = $(this).attr('data-url');
+            	$.get(url, function(data) {
+            		ecjia.admin.showmessage(data);
+            	});
+            });
+        },
     };
 })(ecjia.admin, jQuery);
 // end

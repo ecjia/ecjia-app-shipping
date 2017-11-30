@@ -139,6 +139,9 @@ class admin_plugin extends ecjia_admin
         /* 插件已经安装了，获得名称以及描述 */
         $modules = array();
         foreach ($data as $_key => $_value) {
+        	
+
+        	
             if (isset($plugins[$_value['shipping_code']])) {
                 $modules[$_key]['id']             = $_value['shipping_id'];
                 $modules[$_key]['code']           = $_value['shipping_code'];
@@ -148,9 +151,12 @@ class admin_plugin extends ecjia_admin
                 $modules[$_key]['shipping_order'] = $_value['shipping_order'];
                 $modules[$_key]['insure_fee']     = $_value['insure'];
                 $modules[$_key]['enabled']        = $_value['enabled'];
-                $plugin_handle = ecjia_shipping::channel($_value['shipping_code']);
-                $modules[$_key]['print_support'] = $plugin_handle->isSupportPrint();
-                $config = $plugin_handle->loadConfig();
+                if($_value['enabled'] == 1){
+                	  $plugin_handle = ecjia_shipping::channel($_value['shipping_code']);
+                	  $print_support = $plugin_handle->isSupportPrint();
+                	  $config = $plugin_handle->loadConfig();
+                }
+                $modules[$_key]['print_support'] = $print_support;
                 /* 只能根据配置判断是否支持保价  只有配置项明确说明不支持保价，才是不支持*/
                 if (isset($config['insure']) && ($config['insure'] === false)) {
                     $modules[$_key]['is_insure'] = false;
@@ -230,11 +236,10 @@ class admin_plugin extends ecjia_admin
         $data = array('enabled' => 0);
         RC_DB::table('shipping')->where('shipping_code', $code)->update($data);
 
-        $refresh_url   = RC_Uri::url('shipping/admin_plugin/init');
         $shipping_name = RC_DB::table('shipping')->where('shipping_code', $code)->pluck('shipping_name');
 
         ecjia_admin::admin_log($shipping_name, 'stop', 'shipping');
-        return $this->showmessage(RC_Lang::get('shipping::shipping.plugin') . ' <strong>' . RC_Lang::get('shipping::shipping.disabled') . '</strong>', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('refresh_url' => $refresh_url));
+        return $this->showmessage(RC_Lang::get('shipping::shipping.plugin') . ' <strong>' . RC_Lang::get('shipping::shipping.disabled') . '</strong>', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('pjaxurl' => RC_uri::url('shipping/admin_plugin/init')));
     }
 
     /**
@@ -247,11 +252,10 @@ class admin_plugin extends ecjia_admin
         $data = array('enabled' => 1);
         RC_DB::table('shipping')->where('shipping_code', $code)->update($data);
 
-        $refresh_url   = RC_Uri::url('shipping/admin_plugin/init');
         $shipping_name = RC_DB::table('shipping')->where('shipping_code', $code)->pluck('shipping_name');
 
         ecjia_admin::admin_log($shipping_name, 'use', 'shipping');
-        return $this->showmessage(RC_Lang::get('shipping::shipping.plugin') . ' <strong>' . RC_Lang::get('shipping::shipping.enabled') . '</strong>', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('refresh_url' => $refresh_url));
+        return $this->showmessage(RC_Lang::get('shipping::shipping.plugin') . ' <strong>' . RC_Lang::get('shipping::shipping.enabled') . '</strong>', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('pjaxurl' => RC_uri::url('shipping/admin_plugin/init')));
     }
 
     /**
