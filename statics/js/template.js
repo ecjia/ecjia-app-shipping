@@ -38,26 +38,26 @@
                 });
                 return is_changed;
             }
-            window.onbeforeunload = function() {
-                if (is_form_changed()) {
-                    return admin_template_lang.confirm_leave;
-                }
-            }
-            //PJAX开始
-            $(document).off('pjax:beforeSend.library');
-            $(document).on('pjax:beforeSend.library', function(){
-                if (is_form_changed()) {
-                    if (confirm(admin_template_lang.confirm_leave)) {
-                        return true;
-                    } else {
-                        return false;
-                    }
-                }
-            });
-            $(document).off('pjax:end.library');
-            $(document).on('pjax:end.library', function() {
-                admin.admin_template.set_check_form();
-            });
+//            window.onbeforeunload = function() {
+//                if (is_form_changed()) {
+//                    return admin_template_lang.confirm_leave;
+//                }
+//            }
+//            //PJAX开始
+//            $(document).off('pjax:beforeSend.library');
+//            $(document).on('pjax:beforeSend.library', function(){
+//                if (is_form_changed()) {
+//                    if (confirm(admin_template_lang.confirm_leave)) {
+//                        return true;
+//                    } else {
+//                        return false;
+//                    }
+//                }
+//            });
+//            $(document).off('pjax:end.library');
+//            $(document).on('pjax:end.library', function() {
+//                admin.admin_template.set_check_form();
+//            });
         },
         library_search : function() {
             //li搜索筛选功能
