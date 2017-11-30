@@ -210,10 +210,10 @@ class mh_area extends ecjia_merchant {
 				}
 				$express = array();
 				foreach ($_POST['express_distance'] as $k => $v) {
-					if (empty($v)) {
+					if ($v == null) {
 						return $this->showmessage('配送距离不能为空', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
 					}
-					if (empty($_POST['express_money'][$k])) {
+					if ($_POST['express_money'][$k] == null) {
 						return $this->showmessage('配送费不能为空', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
 					}
 					$express[$k]['express_distance'] = $v;
@@ -419,10 +419,10 @@ class mh_area extends ecjia_merchant {
 				}
 				$express = array();
 				foreach ($_POST['express_distance'] as $k => $v) {
-					if (empty($v)) {
+					if ($v == null) {
 						return $this->showmessage('配送距离不能为空', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
 					}
-					if (empty($_POST['express_money'][$k])) {
+					if ($_POST['express_money'][$k] == null) {
 						return $this->showmessage('配送费不能为空', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
 					}
 					$express[$k]['express_distance'] = $v;

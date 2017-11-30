@@ -63,3 +63,5 @@
 #addShipping .time-picker{margin-bottom:5px;}
 #addShipping .col-lg-6.help-block{padding-left:0;margin-bottom:0;}
 #addShipping .staticalert {width:98%;margin:10px auto;}
+#addShipping .modal-dialog{width:1000px;min-height:551px;}
+#addShipping .modal-body {width:998px;min-height:482px;}

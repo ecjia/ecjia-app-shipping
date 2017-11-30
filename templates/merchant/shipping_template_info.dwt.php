@@ -196,8 +196,8 @@
 								<option value="{$val.id}">{$val.name}</option>
 								<!-- {/foreach} -->
 					        </select>
+					        <span class="input-must m_l15">{lang key='system::system.require_field'}</span>
 						</div>
-						<span class="input-must">{lang key='system::system.require_field'}</span>
 					</div>
 					<div id="shipping_info"></div>
 					<div class="form-group">
