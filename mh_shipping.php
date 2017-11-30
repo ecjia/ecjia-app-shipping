@@ -196,6 +196,7 @@ class mh_shipping extends ecjia_merchant
         $shipping_area_id = !empty($_POST['shipping_area_id']) ? intval($_POST['shipping_area_id']) : 0;
         $shipping = !empty($_POST['shipping']) ? intval($_POST['shipping']) : 0;
         
+        $config = array();
         if (!empty($shipping_area_id) && $shipping_id == $shipping) {
         	$shipping_data = RC_DB::table('shipping as s')
 	        	->leftJoin('shipping_area as a', RC_DB::raw('a.shipping_id'), '=', RC_DB::raw('s.shipping_id'))
@@ -203,7 +204,7 @@ class mh_shipping extends ecjia_merchant
 	        	->where(RC_DB::raw('a.shipping_area_id'), $shipping_area_id)
 	        	->where(RC_DB::raw('a.store_id'), $_SESSION['store_id'])
 	        	->first();
-        	$fields = ecjia_shipping::unserializeConfig($shipping_data['configure']);
+        	$config = $fields = ecjia_shipping::unserializeConfig($shipping_data['configure']);
         	
         	$shipping_handle	= ecjia_shipping::areaChannel($shipping_data['shipping_area_id']);
         	$fields				= $shipping_handle->makeFormData($fields);
@@ -241,9 +242,21 @@ class mh_shipping extends ecjia_merchant
         	$shipping_handle = ecjia_shipping::channel($shipping_data['shipping_code']);
         	$fields          = $shipping_handle->makeFormData($fields);
         }
-        
         $shipping_area['shipping_code'] = $shipping_data['shipping_code'];
-        return $this->showmessage('', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('content' => $fields, 'shipping_area' => $shipping_area));
+        
+        $this->assign('config', $config);
+        $this->assign('fields', $fields);
+        $this->assign('shipping_area', $shipping_area);
+        $shipping_array = array('ship_ems', 'ship_yto', 'ship_zto', 'ship_sto_express', 'ship_post_mail', 'ship_sf_express', 'ship_post_express');
+        
+        $in = false;
+		if (in_array($shipping_area['shipping_code'], $shipping_array)) {
+			$in = true;
+			$this->assign('in', $in);
+		}
+        $content = $this->fetch('library/shipping_info.lbi');
+        
+        return $this->showmessage('', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('content' => $content));
     }
 
     public function add_shipping()
