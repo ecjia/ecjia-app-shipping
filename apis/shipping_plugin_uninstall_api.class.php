@@ -81,17 +81,17 @@ class shipping_plugin_uninstall_api extends Component_Event_Api
             RC_Loader::load_app_func('global', 'shipping');
 
             /* 获得该配送方式的ID */
-            $row           = RC_DB::table('shipping')->selectRaw('shipping_id, shipping_name, print_bg')->where('shipping_code', $options['config']['shipping_code'])->first();
+            $row           = RC_DB::table('shipping')->select('shipping_id', 'shipping_name', 'print_bg')->where('shipping_code', $options['config']['shipping_code'])->first();
             $shipping_id   = $row['shipping_id'];
             $shipping_name = $row['shipping_name'];
 
             /* 删除 shipping_fee 以及 shipping 表中的数据 */
             if ($row) {
                 $all_area_ids = RC_DB::table('shipping_area')->where('shipping_id', $shipping_id)->lists('shipping_area_id');
-
+                
                 if (!empty($all_area_ids)) {
-                    RC_DB::table('area_region')->whereIn('shipping_id', $shipping_id)->delete();
-                    RC_DB::table('shipping_area')->where('shipping_id', $all_area_ids)->delete();
+                    RC_DB::table('area_region')->whereIn('shipping_area_id', $all_area_ids)->delete();
+                    RC_DB::table('shipping_area')->where('shipping_id', $shipping_id)->delete();
                 }
                 RC_DB::table('shipping')->where('shipping_id', $shipping_id)->delete();
 
