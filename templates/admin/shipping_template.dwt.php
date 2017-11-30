@@ -83,7 +83,6 @@
 			pintObj.call_flash('bg_delete', '');
 		}
 
-		
 		/*** 打印单背景图片上传 */
 		, bg_upload : function (btn_f){
 			//获取表单对象
@@ -181,7 +180,6 @@
 				return true;
 			}
 
-			
 			/*** 获取页面Flash编辑器对象*/
 			, this_obj : function(flash_name){
 				var _obj; 
@@ -196,7 +194,6 @@
 				return _obj;
 			},
 
-			
 			/* 提交数据到后台 */
 			submit : function(btn_f,callback){
 				//获取表单对象
@@ -372,6 +369,7 @@
 		width:160px;
 		float:right;
 		margin:20px 20px 20px 0;
+		text-align:right;
 	}
 	#desc_lable{
 		margin-top:10px;
@@ -512,7 +510,6 @@
 		</form>
 	</div>
 	
-	
 	<!--代码模式-->
 	<div class="row-fluid edit-page">
 	    <div class="span12">
@@ -520,26 +517,32 @@
 			    <form class="form-horizontal" name="templateForm_1" action='{url path="shipping/admin/do_edit_print_template"}' method="post">
 			    	<fieldset>
 				        <div class="chat_box library-content">
-			                <div id="code_shipping_print" {if $shipping.print_model == 2}style="display:none"{/if} class="span9">
-			       				<textarea style="width:750px;height:525px;" id="shipping_print" name="shipping_print" rows="40" cols="3" >{$shipping.shipping_print|escape:html}</textarea>
-			                </div>
-			                
-			                <div class="span3 chat_sidebar" id="code_shipping_help" {if $shipping.print_model == 2}style="display:none"{/if}>
-			                    <div class="chat_heading clearfix">
-			                        {t}订单模版变量说明{/t}
-			                    </div>
-			                    <div class="ms-selectable" >
-			                        <div class="template_list" id="ms-custom-navigation" >
-			                            <ul class="unstyled">
-			                                <!-- {foreach from=$shipping_template_info item=val} -->
-			                                <li class="ms-elem-selectable">{$val.variable}&nbsp;{$val.name}</li>
-			                                <!-- {/foreach} -->
-			                            </ul>
+				        	<div class="row-fluid">
+				                <div class="span9 chat_content template_info">
+			                        <div class="chat_heading clearfix">
+			                            <span class="title">代码模式</span>
 			                        </div>
-			                    </div>
+				  					<div class="table_box" id="code_shipping_print" {if $shipping.print_model == 2}style="display:none"{/if} class="span9">
+					       				<textarea style="width:819px;height:556px;" id="shipping_print" name="shipping_print" rows="40" cols="3" >{$shipping.shipping_print|escape:html}</textarea>
+					                </div>
+				                </div>
+				                
+				                <div class="span3 chat_sidebar" id="code_shipping_help" {if $shipping.print_model == 2}style="display:none"{/if}>
+				                    <div class="chat_heading clearfix">
+				                        {t}订单模版变量说明{/t}
+				                    </div>
+				                    <div class="ms-selectable" >
+				                        <div class="template_list" id="ms-custom-navigation" style="height: 548px;">
+				                            <ul class="unstyled" style="height: 548px;">
+				                                <!-- {foreach from=$shipping_template_info item=val} -->
+				                                <li class="ms-elem-selectable">{$val.variable}&nbsp;{$val.name}</li>
+				                                <!-- {/foreach} -->
+				                            </ul>
+				                        </div>
+				                    </div>
+				                </div>
 			                </div>
 				        </div>
-				        
 		        		<div id="code_submit" {if $shipping.print_model == 2}style="display:none"{/if}>
 							<button class="btn btn-gebo m_t15 m_b15" type="button" id="save_template_1">{lang key='system::system.button_submit'}</button>
 							<input type="hidden" name="shipping_id" value="{$shipping.shipping_id}">
