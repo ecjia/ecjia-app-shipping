@@ -230,7 +230,8 @@
 	.table_box {
 		border: #ccc 1px solid;
 		table-layout: fixed;
-		height:566px;
+		height:541px;
+		margin:20px 20px;
 	}	
 	input {
 		display: inline;
@@ -368,7 +369,7 @@
 	#del_lable{
 		width:160px;
 		float:right;
-		margin:20px 20px 20px 0;
+		margin:20px 20px 0px 0;
 		text-align:right;
 	}
 	#desc_lable{
@@ -452,7 +453,7 @@
 									<div class="div_play_aray">
 										<object classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000"
 										codebase="http://fpdownload.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,0,0"
-										width="1024" height="600" id="test">
+										width="1024" height="519" id="test">
 										<param name="movie" value="{RC_App::apps_url('shipping/statics/print/pint.swf')}">
 										<param name="quality" value="high">
 										<param name="menu" value="false">
@@ -461,7 +462,7 @@
 										<param name="allowScriptAccess" value="sameDomain" />
 										<embed src="{RC_App::apps_url('shipping/statics/print/pint.swf')}" wmode="transparent"
 										FlashVars="bcastr_config_bg={$shipping.print_bg}&swf_config_lable={$shipping.config_lable}"
-										menu="false" quality="high" width="1024" height="545"
+										menu="false" quality="high" width="1024" height="519"
 										type="application/x-shockwave-flash"
 										pluginspage="http://www.macromedia.com/go/getflashplayer"
 										allowScriptAccess="sameDomain" name="test" swLiveConnect="true" />
@@ -476,7 +477,7 @@
 		                        {t}设置打印内容{/t}
 		                    </div>
 		                    <div class="ms-selectable">
-		                        <div class="template_list" id="ms-custom-navigation" style="height: 645px;">
+		                        <div class="template_list" id="ms-custom-navigation" style="height: 642px;">
 		                            <ul class="unstyled" style="height: 645px;">
 		                                <!-- {foreach from=$lang_lable_box key=Key item=val} -->
 										<!-- {if in_array($val, $config_lable_list)} -->
@@ -522,7 +523,7 @@
 			                        <div class="chat_heading clearfix">
 			                            <span class="title">代码模式</span>
 			                        </div>
-				  					<div class="table_box" class="span9">
+				  					<div class="span9">
 					       				<textarea style="width:820px;height:556px;" id="shipping_print" name="shipping_print" rows="40" cols="3" >{$shipping.shipping_print|escape:html}</textarea>
 					                </div>
 				                </div>
