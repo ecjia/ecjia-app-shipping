@@ -90,15 +90,23 @@
                             data.regions[i].region_name + '</span>';
 	                		var region_id = data.regions[i].region_id;
 	                		var index = $.inArray(region_id, region);
-	                		if ($next_attr == 'selCities' && index == -1) {
-	                			html += '<span class="edit-list"><a href="javascript:;">添加</a></span>';
+	                		var hide_add = '<a class="ecjiaf-dn" href="javascript:;">添加</a></span>';
+	                		var show_add = '<a href="javascript:;">添加</a></span>';
+	                		
+	                		if ($next_attr == 'selCities') {
+	                			html += '<span class="edit-list">';
                           	}
-                        	if ($next_attr == 'selDistricts' && index == -1) {
-                             	html += '<span class="edit-list"><a href="javascript:;">添加</a></span>';
+                        	if ($next_attr == 'selDistricts') {
+                             	html += '<span class="edit-list">';
                             }
-                            if ($next_attr == 'selStreets' && index == -1) {
-                                html += '<span class="edit-list"><a href="javascript:;">添加</a></span>';
+                            if ($next_attr == 'selStreets') {
+                                html += '<span class="edit-list">';
                             }
+                            if (index == -1) {
+                				html += show_add;
+                			} else {
+                				html += hide_add;
+                			}
                             html += '</li>';
                           };
                         $next.html(html);
