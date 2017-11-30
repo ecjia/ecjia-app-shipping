@@ -230,6 +230,7 @@
         
         add_shipping: function() {
         	$('select[name="shipping_id"]').off('change').on('change', function() {
+        		$('.modal-content').find('.staticalert').remove();
         		$('#shipping_info').html('');
         		var $this = $(this),
         			val = $this.val(),
@@ -400,22 +401,26 @@
                 	var val = $('select[name="shipping_id"]').val();
                 	var type = $('.add-shipping-btn').attr('data-type');
                 	var shipping_item = $('.template-info-item').find('.shipping-item-' + val);
+        			
                 	if (type == 'add') {
              			if (shipping_item.length > 0) {
-             				$('#addShipping').modal('hide');
              				var data = {
-         						message : "该快递方式已存在",
-         						state : "error",
-         					};
-             				ecjia.merchant.showmessage(data);
+                                message : "该快递方式已存在",
+                                state : "error",
+                            };
+             				app.express.showmessage(data);
              				return false;
              			}
              		}
                     $form.ajaxSubmit({
                         dataType: "json",
                         success: function (data) {
-                        	$('#addShipping').modal('hide');
-                        	ecjia.merchant.showmessage(data);
+                        	if (data.state == 'error') {
+                        		app.express.showmessage(data);
+                        	} else {
+                        		$('#addShipping').modal('hide');
+                                ecjia.merchant.showmessage(data);
+                        	}
                         	return false;
                         }
                     });
@@ -463,6 +468,15 @@
 			    }, 1000);
 			});
 		},
+		
+		showmessage: function(options) {
+			options.state = (options.state == 'error')? 'alert-danger': 'alert-success';
+			$('.modal-content').find('.staticalert').remove();
+			var _close = '<a class="close" data-dismiss="alert">×</a>';
+			var alert_obj = $('<div class="staticalert alert alert-dismissable ' + options.state + ' ui_showmessage">' + _close + options.message + '</div>');
+			$('.modal-header').after(alert_obj);
+			window.setTimeout(function() {alert_obj.remove()}, 5000);
+		}
 	}
 	
 	function clearForm() {
