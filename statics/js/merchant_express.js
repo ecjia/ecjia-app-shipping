@@ -13,6 +13,8 @@
 			app.express.shippingForm();
 			app.express.tpicker();
 			app.express.datepicker();
+			$('.modal').modal('hide');
+			
 		},
 		expressForm : function() {
 			$("form[name='expressForm']").on('submit', function(e){
