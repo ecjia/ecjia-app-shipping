@@ -152,6 +152,10 @@
 									</div> 
 								<!-- {/foreach} --> 
 								</div>
+								<div class="clear">
+									<label class="control-label col-lg-2"></label>
+									<span class="col-lg-6 help-block">可设置多个配送时间段</span>
+								</div>
 							</div>
 							
 							<div class="form-group" id="ship_time">
@@ -174,6 +178,10 @@
 										<a class="no-underline" data-toggle="clone-obj" data-before="before" data-parent=".time-picker" href="javascript:;"><i class="fontello-icon-plus fa fa-plus"></i></a>
 									</div> 
 								<!-- {/foreach} --> 
+								</div>
+								<div class="clear">
+									<label class="control-label col-lg-2"></label>
+									<span class="col-lg-6 help-block">如首个距离设10公里，配送费设5元，表示在10公里内，用户需支付配送费5元，后面新增距离阶梯时必须大于上一个距离，比如上一个距离是10，再次增加时，填写的公里数必须大于10</span>
 								</div>
 							</div>
 						<!-- {/if} -->
