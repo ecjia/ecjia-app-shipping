@@ -51,3 +51,73 @@
 	{/if}
 <!-- {/foreach} -->
 {/if}
+
+{if $shipping_area.shipping_code eq 'ship_o2o_express'}
+	<div class="form-group" id="ship_days">
+		<label class="control-label col-lg-4">下单后几天内配送：</label>
+		<div class="controls col-lg-6">
+			<input class="form-control col-lg-3" name="ship_days" placeholder="请填写有效天数，最小单位为1" type="text" value="{$ship_days}" />
+		</div>
+		<div class="clear">
+			<label class="control-label col-lg-4"></label>
+			<span class="col-lg-6 help-block">默认7天以内配送（用户可选择的时间）</span>
+		</div> 
+	</div>
+	<div class="form-group" id="last_order_time">
+		<label class="control-label col-lg-4">提前下单时间：</label>
+		<div class="controls col-lg-6">
+			<input class="date form-control" name="last_order_time" placeholder="最小单位为分钟；如30" type="text" value="{$last_order_time}" />
+		 
+		</div>
+		<div class="clear">
+			<label class="control-label col-lg-4"></label>
+			<span class="col-lg-6 help-block">需比配送时间提前多久下单才能配送，否则匹配至下个配送时间</span>
+		</div>
+	</div>
+	
+	<div class="form-group" id="ship_time">
+		<label class="control-label col-lg-4">配送时间：</label>
+		<div class="controls col-lg-6">
+		<!-- {foreach from=$o2o_shipping_time item=shipping_time name=shipping} -->
+			<div class='time-picker'>
+				从&nbsp;&nbsp;<input class="w100 form-control tp_1" name="start_ship_time[]" type="text" value="{$shipping_time.start}" autocomplete="off" />&nbsp;&nbsp;
+				至&nbsp;&nbsp; <input class="w100 form-control tp_1" name="end_ship_time[]" type="text" value="{$shipping_time.end}" autocomplete="off" />&nbsp;&nbsp;
+				<!-- {if $smarty.foreach.shipping.last} -->
+					<a class="no-underline" data-toggle="clone-obj" data-before="before" data-parent=".time-picker" href="javascript:;"><i class="fontello-icon-plus fa fa-plus"></i></a>
+				<!-- {else} -->
+					<a class="no-underline" href="javascript:;" data-parent=".time-picker" data-toggle="remove-obj"><i class="fontello-icon-cancel ecjiafc-red fa fa-times "></i></a>
+				<!-- {/if} -->
+			</div> 
+		<!-- {foreachelse} --> 
+			<div class='time-picker'>
+				<input class="w100 form-control tp_1" name="start_ship_time[]" type="text" value="{$time_field.start}"/>&nbsp;&nbsp;
+				至&nbsp;&nbsp; <input class="w100 form-control tp_1" name="end_ship_time[]" type="text" value="{$time_field.end}" />&nbsp;&nbsp;
+				<a class="no-underline" data-toggle="clone-obj" data-before="before" data-parent=".time-picker" href="javascript:;"><i class="fontello-icon-plus fa fa-plus"></i></a>
+			</div> 
+		<!-- {/foreach} --> 
+		</div>
+	</div>
+	
+	<div class="form-group" id="ship_time">
+		<label class="control-label col-lg-4">配送费：</label>
+		<div class="controls col-lg-8">
+		<!-- {foreach from=$o2o_express item=express name=e} -->
+			<div class='time-picker'>
+				距离&nbsp;&nbsp;<input class="w100 form-control" name="express_distance[]" type="text" value="{$express.express_distance}" autocomplete="off" />&nbsp;&nbsp;公里&nbsp;&nbsp;
+				配送费&nbsp;&nbsp;<input class="w100 form-control" name="express_money[]" type="text" value="{$express.express_money}" autocomplete="off" />&nbsp;&nbsp;元&nbsp;&nbsp;
+				<!-- {if $smarty.foreach.e.last} -->
+				<a class="no-underline" data-toggle="clone-obj" data-before="before" data-parent=".time-picker" href="javascript:;"><i class="fontello-icon-plus fa fa-plus"></i></a>
+				<!-- {else} -->
+				<a class="no-underline" href="javascript:;" data-parent=".time-picker" data-toggle="remove-obj"><i class="fontello-icon-cancel ecjiafc-red fa fa-times "></i></a>
+				<!-- {/if} -->
+			</div> 
+		<!-- {foreachelse} --> 
+			<div class='time-picker'>
+				距离&nbsp;&nbsp;<input class="w100 form-control" name="express_distance[]" type="text" />&nbsp;&nbsp;公里&nbsp;&nbsp;
+				配送费&nbsp;&nbsp;<input class="w100 form-control" name="express_money[]" type="text" />&nbsp;&nbsp;元&nbsp;&nbsp;
+				<a class="no-underline" data-toggle="clone-obj" data-before="before" data-parent=".time-picker" href="javascript:;"><i class="fontello-icon-plus fa fa-plus"></i></a>
+			</div> 
+		<!-- {/foreach} --> 
+		</div>
+	</div>
+{/if}

@@ -201,7 +201,8 @@
 					</div>
 					<div id="shipping_info"></div>
 					<div class="form-group">
-						<div class="col-lg-offset-4 col-lg-6">
+						<label class="control-label col-lg-4"></label>
+						<div class="controls col-lg-6">
 							<input type="hidden" name="shipping_area_id" />
 							<input type="hidden" name="shipping" />
 							<input type="hidden" name="temp_name" />

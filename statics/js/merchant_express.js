@@ -11,6 +11,8 @@
 			app.express.close_model();
 			app.express.add_shipping();
 			app.express.shippingForm();
+			app.express.tpicker();
+			app.express.datepicker();
 		},
 		expressForm : function() {
 			$("form[name='expressForm']").on('submit', function(e){
@@ -231,26 +233,17 @@
         		$('#shipping_info').html('');
         		var $this = $(this),
         			val = $this.val(),
-        			url = $this.attr('data-url'),
-        			fee_compute_mode = 'by_weight',
-        			type = $('.add-shipping-btn').attr('data-type');
+        			url = $this.attr('data-url');
         		var shipping_item = $('.template-info-item').find('.shipping-item-' + val);
-        		if (type == 'edit') {
-	        		if (shipping_item.length > 0) {
-	        			var fee_compute_mode = shipping_item.find("input[name='fee_compute_mode']").val(),
-	        				item_fee = shipping_item.find('input[name="item_fee"]').val(),
-	        				pay_fee = shipping_item.find('input[name="pay_fee"]').val(),
-	        				base_fee = shipping_item.find('input[name="base_fee"]').val(),
-	        				free_money = shipping_item.find('input[name="free_money"]').val(),
-	        				step_fee = shipping_item.find('input[name="step_fee"]').val();
-	        		}
-        		}
         		if (val > 0) {
         			var shipping_area_id = $('input[name="shipping_area_id"]').val();
         			var shipping = $('input[name="shipping"]').val();
         			$.post(url, {'shipping_id': val, 'shipping_area_id': shipping_area_id, 'shipping': shipping}, function(data) {
         				$('#shipping_info').append(data.content);
         				app.express.area_compute_mode();
+        				app.express.datepicker();
+        				app.express.tpicker();
+        				app.express.shippingForm();
         			});
         		}
         	});
@@ -430,7 +423,46 @@
             }
             var options = $.extend(ecjia.merchant.defaultOptions.validate, option);
             $form.validate(options);
-        }
+        },
+        
+        datepicker: function(){
+			$.fn.datetimepicker.dates['zh'] = {  
+                days:       ["星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六","星期日"],  
+                daysShort:  ["日", "一", "二", "三", "四", "五", "六","日"],  
+                daysMin:    ["日", "一", "二", "三", "四", "五", "六","日"],  
+                months:     ["一月", "二月", "三月", "四月", "五月", "六月", "七月", "八月", "九月", "十月", "十一月","十二月"],  
+                monthsShort:  ["一月", "二月", "三月", "四月", "五月", "六月", "七月", "八月", "九月", "十月", "十一月","十二月"], 
+                meridiem:    ["上午", "下午"],  
+                today:       "今天"  
+	        };
+            $(".tp_1").datetimepicker({
+				format: "hh:ii",
+                weekStart: 1,
+                todayBtn: 1,
+                autoclose: 1,
+                todayHighlight: 1,
+                startView: 1,
+                forceParse: 0,
+                minuteStep: 5
+			});
+        },
+        
+        tpicker: function () {
+			$('.fontello-icon-plus').click(function(e) {
+				setTimeout(function () { 
+					$(".tp_1").datetimepicker({
+						format: "hh:ii",
+		                weekStart: 1,
+		                todayBtn: 1,
+		                autoclose: 1,
+		                todayHighlight: 1,
+		                startView: 1,
+		                forceParse: 0,
+		                minuteStep: 5
+					});
+			    }, 1000);
+			});
+		},
 	}
 	
 	function clearForm() {
