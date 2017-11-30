@@ -109,12 +109,6 @@
 						<!--{/if}-->
 						
 						<!-- {if $shipping_area.shipping_code eq 'ship_o2o_express'} -->
-							<div class="form-group" id="express_money">
-								<label class="control-label col-lg-2">配送员费用：</label>
-								<div class="controls col-lg-3">
-									<input class="form-control col-lg-3" name="express_money" type="text" value="{$express_money|default:0}" size="40" />
-								</div>
-							</div>
 							<div class="form-group" id="ship_days">
 								<label class="control-label col-lg-2">下单后几天内配送：</label>
 								<div class="controls col-lg-3">
@@ -136,42 +130,52 @@
 									<span class="col-lg-5 help-block">需比配送时间提前多久下单才能配送，否则匹配至下个配送时间</span>
 								</div>
 							</div>
-							<!-- {if $area_id} -->
-								<div class="form-group" id="ship_time">
-									<label class="control-label col-lg-2">配送时间：</label>
-									<div class="controls col-lg-4">
-									<!-- {foreach from=$o2o_shipping_time item=shipping_time name=shipping} -->
-										<div class='time-picker'>
-											从&nbsp;&nbsp;<input class="w100 form-control tp_1" name="start_ship_time[]" type="text" value="{$shipping_time.start}" autocomplete="off" />&nbsp;&nbsp;
-											至&nbsp;&nbsp;<input class="w100 form-control tp_1" name="end_ship_time[]" type="text" value="{$shipping_time.end}" autocomplete="off" />
-											<!-- {if $smarty.foreach.shipping.last} -->
-												<a class="no-underline" data-toggle="clone-obj" data-before="before" data-parent=".time-picker" href="javascript:;"><i class="fontello-icon-plus fa fa-plus"></i></a>
-											<!-- {else} -->
-												<a class="no-underline" href="javascript:;" data-parent=".time-picker" data-toggle="remove-obj"><i class="fontello-icon-cancel ecjiafc-red fa fa-times "></i></a>
-											<!-- {/if} -->
-										</div> 
-									<!-- {foreachelse} --> 
-										<div class='time-picker'>
-											从&nbsp;&nbsp;<input class="w100 form-control tp_1" name="start_ship_time[]" type="text" value="{$time_field.start}"/>&nbsp;&nbsp;
-											至&nbsp;&nbsp;<input class="w100 form-control tp_1" name="end_ship_time[]" type="text" value="{$time_field.end}" />
+							
+							<div class="form-group" id="ship_time">
+								<label class="control-label col-lg-2">配送时间：</label>
+								<div class="controls col-lg-4">
+								<!-- {foreach from=$o2o_shipping_time item=shipping_time name=shipping} -->
+									<div class='time-picker'>
+										从&nbsp;&nbsp;<input class="w100 form-control tp_1" name="start_ship_time[]" type="text" value="{$shipping_time.start}" autocomplete="off" />&nbsp;&nbsp;
+										至&nbsp;&nbsp; <input class="w100 form-control tp_1" name="end_ship_time[]" type="text" value="{$shipping_time.end}" autocomplete="off" />&nbsp;&nbsp;
+										<!-- {if $smarty.foreach.shipping.last} -->
 											<a class="no-underline" data-toggle="clone-obj" data-before="before" data-parent=".time-picker" href="javascript:;"><i class="fontello-icon-plus fa fa-plus"></i></a>
-										</div> 
-									<!-- {/foreach} --> 
-									</div>
+										<!-- {else} -->
+											<a class="no-underline" href="javascript:;" data-parent=".time-picker" data-toggle="remove-obj"><i class="fontello-icon-cancel ecjiafc-red fa fa-times "></i></a>
+										<!-- {/if} -->
+									</div> 
+								<!-- {foreachelse} --> 
+									<div class='time-picker'>
+										<input class="w100 form-control tp_1" name="start_ship_time[]" type="text" value="{$time_field.start}"/>&nbsp;&nbsp;
+										至&nbsp;&nbsp; <input class="w100 form-control tp_1" name="end_ship_time[]" type="text" value="{$time_field.end}" />&nbsp;&nbsp;
+										<a class="no-underline" data-toggle="clone-obj" data-before="before" data-parent=".time-picker" href="javascript:;"><i class="fontello-icon-plus fa fa-plus"></i></a>
+									</div> 
+								<!-- {/foreach} --> 
 								</div>
-							<!-- {else} -->
-									<div class="form-group" id="ship_time">
-										<label class="control-label col-lg-2">配送时间：</label>
-										<div class="controls col-lg-4">
-											<div class='time-picker'>
-												从&nbsp;&nbsp;<input class="w100 form-control tp_1" name="start_ship_time[]" type="text" value="{$time_field.start}"/>&nbsp;&nbsp;
-												至&nbsp;&nbsp;<input class="w100 form-control tp_1" name="end_ship_time[]" type="text" value="{$time_field.end}" />
-												<a class="no-underline" data-toggle="clone-obj" data-before="before" data-parent=".time-picker" href="javascript:;"><i class="fontello-icon-plus fa fa-plus"></i></a>
-											</div>    
-										</div>
-									</div>
-									
-							<!-- {/if} -->
+							</div>
+							
+							<div class="form-group" id="ship_time">
+								<label class="control-label col-lg-2">配送费：</label>
+								<div class="controls col-lg-6">
+								<!-- {foreach from=$o2o_express item=express name=e} -->
+									<div class='time-picker'>
+										距离&nbsp;&nbsp;<input class="w100 form-control" name="express_distance[]" type="text" value="{$express.express_distance}" autocomplete="off" />&nbsp;&nbsp;公里&nbsp;&nbsp;
+										配送费&nbsp;&nbsp;<input class="w100 form-control" name="express_money[]" type="text" value="{$express.express_money}" autocomplete="off" />&nbsp;&nbsp;元&nbsp;&nbsp;
+										<!-- {if $smarty.foreach.e.last} -->
+										<a class="no-underline" data-toggle="clone-obj" data-before="before" data-parent=".time-picker" href="javascript:;"><i class="fontello-icon-plus fa fa-plus"></i></a>
+										<!-- {else} -->
+										<a class="no-underline" href="javascript:;" data-parent=".time-picker" data-toggle="remove-obj"><i class="fontello-icon-cancel ecjiafc-red fa fa-times "></i></a>
+										<!-- {/if} -->
+									</div> 
+								<!-- {foreachelse} --> 
+									<div class='time-picker'>
+										距离&nbsp;&nbsp;<input class="w100 form-control" name="express_distance[]" type="text" />&nbsp;&nbsp;公里&nbsp;&nbsp;
+										配送费&nbsp;&nbsp;<input class="w100 form-control" name="express_money[]" type="text" />&nbsp;&nbsp;元&nbsp;&nbsp;
+										<a class="no-underline" data-toggle="clone-obj" data-before="before" data-parent=".time-picker" href="javascript:;"><i class="fontello-icon-plus fa fa-plus"></i></a>
+									</div> 
+								<!-- {/foreach} --> 
+								</div>
+							</div>
 						<!-- {/if} -->
 						
 						<!--  国家选择 -->

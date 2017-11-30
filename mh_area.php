@@ -196,17 +196,29 @@ class mh_area extends ecjia_merchant {
 			}
 			
 			$count = count($config);
-
 			if ($shipping_data['shipping_code'] == 'ship_o2o_express') {
 				$time = array();
 				foreach ($_POST['start_ship_time'] as $k => $v) {
+					if (empty($v)) {
+						return $this->showmessage('配送开始时间不能为空', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
+					}
+					if (empty($_POST['end_ship_time'][$k])) {
+						return $this->showmessage('配送结束时间不能为空', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
+					}
 					$time[$k]['start']	= $v;
 					$time[$k]['end']	= $_POST['end_ship_time'][$k];
 				}
-				
-				$config[$count]['name']     = 'express_money';
-				$config[$count]['value']    = empty($_POST['express_money']) ? 0 : floatval($_POST['express_money']);
-				$count++;
+				$express = array();
+				foreach ($_POST['express_distance'] as $k => $v) {
+					if (empty($v)) {
+						return $this->showmessage('配送距离不能为空', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
+					}
+					if (empty($_POST['express_money'][$k])) {
+						return $this->showmessage('配送费不能为空', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
+					}
+					$express[$k]['express_distance'] = $v;
+					$express[$k]['express_money']	= $_POST['express_money'][$k];
+				}
 				$config[$count]['name']     = 'ship_days';
 				$config[$count]['value']    = empty($_POST['ship_days']) ? '' : intval($_POST['ship_days']);
 				$count++;
@@ -215,6 +227,9 @@ class mh_area extends ecjia_merchant {
 				$count++;
 				$config[$count]['name']     = 'ship_time';
 				$config[$count]['value']    = empty($time) ? '' : $time;
+				$count++;
+				$config[$count]['name']     = 'express';
+				$config[$count]['value']    = empty($express) ? '' : $express;
 			}
 			$data = array(
 				'shipping_area_name'    => $shipping_area_name,
@@ -276,7 +291,13 @@ class mh_area extends ecjia_merchant {
 
 		if (!empty($config)) {
 			foreach ($config as $key => $val) {
-				if ($shipping_data['shipping_code'] == 'ship_o2o_express' && (in_array($key, array('ship_days', 'last_order_time', 'ship_time', 'express_money')))) {
+				if ($shipping_data['shipping_code'] == 'ship_o2o_express' && (in_array($key, array('ship_days', 'last_order_time', 'ship_time', 'express')))) {
+					if ($key == 'ship_days') {
+						$this->assign('ship_days', $val);
+					}
+					if ($key == 'last_order_time') {
+						$this->assign('last_order_time', $val);
+					}
 					if ($key == 'ship_time') {
 						$o2o_shipping_time = array();
 						foreach ($val as $v) {
@@ -284,14 +305,12 @@ class mh_area extends ecjia_merchant {
 						}
 						$this->assign('o2o_shipping_time', $o2o_shipping_time);
 					}
-					if ($key == 'ship_days') {
-						$this->assign('ship_days', $val);
-					}
-					if ($key == 'last_order_time') {
-						$this->assign('last_order_time', $val);
-					}
-					if ($key == 'express_money') {
-						$this->assign('express_money', $val);
+					if ($key == 'express') {
+						$express = array();
+						foreach ($val as $v) {
+							$express[] = $v;
+						}
+						$this->assign('o2o_express', $express);
 					}
 				}
 			}
@@ -386,17 +405,29 @@ class mh_area extends ecjia_merchant {
 			}
 			
 			$count = count($config);
-			
 			if ($shipping_data['shipping_code'] == 'ship_o2o_express') {
 				$time = array();
 				foreach ($_POST['start_ship_time'] as $k => $v) {
+					if (empty($v)) {
+						return $this->showmessage('配送开始时间不能为空', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
+					}
+					if (empty($_POST['end_ship_time'][$k])) {
+						return $this->showmessage('配送结束时间不能为空', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
+					}
 					$time[$k]['start']	= $v;
 					$time[$k]['end']	= $_POST['end_ship_time'][$k];
 				}
-				
-				$config[$count]['name']     = 'express_money';
-				$config[$count]['value']    = empty($_POST['express_money']) ? 0 : floatval($_POST['express_money']);
-				$count++;
+				$express = array();
+				foreach ($_POST['express_distance'] as $k => $v) {
+					if (empty($v)) {
+						return $this->showmessage('配送距离不能为空', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
+					}
+					if (empty($_POST['express_money'][$k])) {
+						return $this->showmessage('配送费不能为空', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
+					}
+					$express[$k]['express_distance'] = $v;
+					$express[$k]['express_money']	= $_POST['express_money'][$k];
+				}
 				$config[$count]['name']     = 'ship_days';
 				$config[$count]['value']    = empty($_POST['ship_days']) ? '' : intval($_POST['ship_days']);
 				$count++;
@@ -405,6 +436,9 @@ class mh_area extends ecjia_merchant {
 				$count++;
 				$config[$count]['name']     = 'ship_time';
 				$config[$count]['value']    = empty($time) ? '' : $time;
+				$count++;
+				$config[$count]['name']     = 'express';
+				$config[$count]['value']    = empty($express) ? '' : $express;
 			}
 			$data = array(
 				'shipping_area_name' 	=> $shipping_area_name,
