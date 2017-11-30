@@ -375,6 +375,9 @@
 	#desc_lable{
 		margin-top:10px;
 	}
+	.text-box{
+		height:568px;
+	}
 </style>
 <!-- {/block} -->
 
@@ -519,12 +522,12 @@
 			    	<fieldset>
 				        <div class="chat_box library-content">
 				        	<div class="row-fluid">
-				                <div class="span9" id="code_shipping_print" {if $shipping.print_model == 2}style="display:none"{/if}>
+				                <div class="span9 chat_content" id="code_shipping_print" {if $shipping.print_model == 2}style="display:none"{/if}>
 			                        <div class="chat_heading clearfix">
 			                            <span class="title">代码模式</span>
 			                        </div>
-				  					<div class="span9">
-					       				<textarea style="width:820px;height:556px;" id="shipping_print" name="shipping_print" rows="40" cols="3" >{$shipping.shipping_print|escape:html}</textarea>
+				  					<div class="text-box">
+					       				<textarea id="shipping_print" name="shipping_print" rows="40" cols="3" >{$shipping.shipping_print|escape:html}</textarea>
 					                </div>
 				                </div>
 				                
