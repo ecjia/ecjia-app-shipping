@@ -13,7 +13,7 @@
 			app.express.shippingForm();
 			app.express.tpicker();
 			app.express.datepicker();
-			$('.modal').modal('hide');
+			$('.modal-backdrop').remove();
 			
 		},
 		expressForm : function() {
