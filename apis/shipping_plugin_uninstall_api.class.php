@@ -93,19 +93,16 @@ class shipping_plugin_uninstall_api extends Component_Event_Api
                     RC_DB::table('area_region')->whereIn('shipping_area_id', $all_area_ids)->delete();
                     RC_DB::table('shipping_area')->where('shipping_id', $shipping_id)->delete();
                 }
-                RC_DB::table('shipping')->where('shipping_id', $shipping_id)->delete();
-
-                //删除上传的非默认快递单
-                // if (($row['print_bg'] != '') && (!is_print_bg_default($row['print_bg']))) {
-                if ($row['print_bg'] != '') {
-                    $uploads_dir_info    = RC_Upload::upload_dir();
-                    $data_file_to_delete = $uploads_dir_info[basedir] . $row['print_bg'];
-                    if (is_file($data_file_to_delete) == true) {
-                        chmod($data_file_to_delete, 0666);
-                        unlink($data_file_to_delete);
-                    }
-                    // unlink(ROOT_PATH . $row['print_bg']);
+                
+                $plugin_handle = ecjia_shipping::channel($options['config']['shipping_code']);
+                $config_print_bg = $plugin_handle->defaultPrintBackgroundImage();
+                
+                if (!empty($row['print_bg']) && $row['print_bg'] != $config_print_bg) {
+                	$disk = RC_Filesystem::disk();
+                	$disk->delete(RC_Upload::upload_path() . $row['print_bg']);
                 }
+                
+                RC_DB::table('shipping')->where('shipping_id', $shipping_id)->delete();
 
                 //记录管理员操作
                 ecjia_admin::admin_log(addslashes($shipping_name), 'uninstall', 'shipping');
