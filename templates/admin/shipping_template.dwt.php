@@ -107,7 +107,7 @@
 				return false;
 			}
 			the_form.target = '_parent';
-			the_form.submit();
+// 			the_form.submit();
 			  // this.submit(btn_f, false);
 			}
 
@@ -275,7 +275,7 @@
 		height: 32px;
 		overflow: hidden;
 		position: relative;
-		width: 290px;
+		width: 300px;
 	}
 	div.file-group input[type="button"] {
 		bottom: 0;
@@ -467,8 +467,7 @@
 											<input type="file" onchange='checkFileType(this.value);' name="bg" id="bg" {if $shipping.print_bg !=''} disabled="disabled"{/if}>
 											<span id="uni-filename" class="uni-filename" style="-moz-user-select: none;">上传打印单图片,未选中文件</span>
 											<span class="uni-action" style="-moz-user-select: none;">选择图片</span>
-											<input type="button" class="btn" name="upload" id="upload" value="{lang key='shipping::shipping.upload'}" data-url="{$post_links.print_img_upload}"
-											onclick="javascript:pintObj.bg_upload(this);" {if $shipping.print_bg !=''} disabled="disabled"{/if}> 
+											<input type="submit" class="btn" name="upload" id="upload" value="{lang key='shipping::shipping.upload'}" {if $shipping.print_bg !=''} disabled="disabled"{/if} style="height:32px;"> 
 										</div> 
 										<iframe id="bg_upload_hidden" name="bg_upload_hidden" frameborder="0" scrolling="no" class="display_no"></iframe>
 									</div>
