@@ -562,7 +562,7 @@
 			                </div>
 				        </div>
 		        		<div id="code_submit" {if $shipping.print_model == 2}style="display:none"{/if}>
-							<button class="btn btn-gebo m_t15 m_b15" type="button" id="save_template_1">{lang key='system::system.button_submit'}</button>
+							<button class="btn btn-gebo m_t15 m_b15" type="button" id="save_template_1">保存设置</button>
 							<input type="hidden" name="shipping_id" value="{$shipping.shipping_id}">
 							<input type="hidden" name="print_model" value="1">
 							<input type="hidden" name="shipping_name" value="{$shipping.shipping_name}">
