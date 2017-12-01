@@ -489,8 +489,8 @@
 		                        {t}设置打印内容{/t}
 		                    </div>
 		                    <div class="ms-selectable">
-		                        <div class="template_list" id="ms-custom-navigation" style="height: 642px;">
-		                            <ul class="unstyled" style="height: 645px;">
+		                        <div class="template_list" id="ms-custom-navigation" style="height: 723px;">
+		                            <ul class="unstyled" style="height: 730px;">
 		                                <!-- {foreach from=$lang_lable_box key=Key item=val} -->
 										<!-- {if in_array($val, $config_lable_list)} -->
 											<li style="padding: 3px 8px;">
