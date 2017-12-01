@@ -125,8 +125,7 @@ class admin extends ecjia_admin
                 $disk = RC_Filesystem::disk();
 				$disk->delete(RC_Upload::upload_path() . $shipping_data['print_bg']);
             }
-            $refresh_url = RC_Uri::url('shipping/admin/edit_print_template', array('shipping_id' => $shipping_id));
-            return $this->showmessage('恢复默认设置成功', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('refresh_url' => $refresh_url));
+            return $this->showmessage('恢复默认设置成功', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('pjaxurl' => RC_Uri::url('shipping/admin/edit_print_template', array('shipping_id' => $shipping_id))));
         } else {
             return $this->showmessage('恢复默认设置失败', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
         }
@@ -179,12 +178,12 @@ class admin extends ecjia_admin
         	$config_print_bg = $plugin_handle->defaultPrintBackgroundImage();
         	if($shipping_data['print_bg'] == $config_print_bg) {
         		RC_DB::table('shipping')->where('shipping_id', $shipping_id)->update(array('print_bg' => ''));
-        		return $this->showmessage('要删除的图片是默认图片，恢复模板可再次使用', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS,array('refresh_url' =>RC_Uri::url('shipping/admin/edit_print_template', array('shipping_id' => $shipping_id))));
+        		return $this->showmessage('要删除的图片是默认图片，恢复模板可再次使用', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS,array('pjaxurl' =>RC_Uri::url('shipping/admin/edit_print_template', array('shipping_id' => $shipping_id))));
         	} else {
         		$disk = RC_Filesystem::disk();
 				$disk->delete(RC_Upload::upload_path() . $shipping_data['print_bg']);
 				RC_DB::table('shipping')->where('shipping_id', $shipping_id)->update(array('print_bg' => ''));
-        		return $this->showmessage('打印单图片删除成功', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS,array('refresh_url' =>RC_Uri::url('shipping/admin/edit_print_template', array('shipping_id' => $shipping_id))));
+        		return $this->showmessage('打印单图片删除成功', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS,array('pjaxurl' =>RC_Uri::url('shipping/admin/edit_print_template', array('shipping_id' => $shipping_id))));
         	}
         } else {
             return $this->showmessage('暂无打印单图片可删除', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
@@ -290,7 +289,7 @@ class admin extends ecjia_admin
 
         ecjia_admin::admin_log(addslashes($_POST['shipping_name']), 'edit', 'shipping_print_template');
         
-        return $this->showmessage('快递单模板编辑成功', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS,array('refresh_url' =>RC_Uri::url('shipping/admin/edit_print_template', array('shipping_id' => $shipping_id))));
+        return $this->showmessage('快递单模板编辑成功', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS,array('pjaxurl' =>RC_Uri::url('shipping/admin/edit_print_template', array('shipping_id' => $shipping_id))));
     }
 }
 
