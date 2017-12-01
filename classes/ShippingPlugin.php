@@ -240,10 +240,12 @@ class ShippingPlugin extends PluginModel
     public function pluginData($shippingCode) 
     {
         if (is_int($shippingCode)) {
-            return $this->getPluginDataById($shippingCode);
+            $model = $this->getPluginDataById($shippingCode);
         } else {
-            return $this->getPluginDataByCode($shippingCode);
+            $model = $this->getPluginDataByCode($shippingCode);
         }
+
+        return $model->toArray();
     }
     
     /**
