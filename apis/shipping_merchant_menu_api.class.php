@@ -59,7 +59,6 @@ class shipping_merchant_menu_api extends Component_Event_Api
 
         $submenus = array(
         	ecjia_merchant::make_admin_menu('express_list', __('配送管理'), RC_Uri::url('shipping/mh_shipping/shipping_template'), 1)->add_purview('ship_merchant_manage')->add_icon('fa-inbox'),
-            ecjia_merchant::make_admin_menu('shipping_list', __('我的配送'), RC_Uri::url('shipping/merchant/init'), 2)->add_purview('ship_merchant_manage')->add_icon('fa-truck'),
         );
 
         $menus->add_submenu($submenus);
