@@ -212,7 +212,7 @@
 						if(callback) {
 							callback();
 						}
-						alert(data.message);
+						ecjia.admin.showmessage(data);
 						if(data.refresh_url!=undefined) {
 							pintObj.pjax(data.refresh_url);
 						}

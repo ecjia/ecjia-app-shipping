@@ -290,7 +290,7 @@ class admin extends ecjia_admin
 
         ecjia_admin::admin_log(addslashes($_POST['shipping_name']), 'edit', 'shipping_print_template');
         
-        return $this->showmessage(RC_Lang::get('shipping::shipping.edit_template_success'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS,array('refresh_url' =>RC_Uri::url('shipping/admin/edit_print_template', array('shipping_id' => $shipping_id))));
+        return $this->showmessage('快递单模板编辑成功', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS,array('refresh_url' =>RC_Uri::url('shipping/admin/edit_print_template', array('shipping_id' => $shipping_id))));
     }
 }
 
