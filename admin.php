@@ -156,7 +156,7 @@ class admin extends ecjia_admin
                 if ($res) {
                     return $this->showmessage('上传打印单图片成功', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('pjaxurl' =>RC_Uri::url('shipping/admin/edit_print_template', array('shipping_id' => $shipping_id))));
                 } else {
-                    return $this->showmessage('上传打印单图片操作失败1', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
+                    return $this->showmessage('上传打印单图片操作失败', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
                 }
             }
         } else {
