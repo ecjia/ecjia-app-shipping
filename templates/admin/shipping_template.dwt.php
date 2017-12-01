@@ -235,15 +235,9 @@
 							callback();
 						}
 						ecjia.admin.showmessage(data);
-						if(data.refresh_url!=undefined) {
-							pintObj.pjax(data.refresh_url);
-						}
 					}
 				});
 				return true;
-			},
-			pjax :function(url){
-				top.document.location.href = url;
 			}
 	};
 </script>
