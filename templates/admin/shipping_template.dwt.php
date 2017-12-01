@@ -42,7 +42,10 @@
 		var resultName=lastname.toLowerCase(); 
 		var allow_suffix = ['jpg', 'png', 'jpeg']; 
 		if($.inArray(resultName.toString(), allow_suffix) < 0){
-			alert('只能上传jpg,png,jpeg文件，您上传的文件类型为'+lastname+'，请重新上传'); 
+			var msg='只能上传jpg,png,jpeg文件，您上传的文件类型为'+lastname+'，请重新上传。';
+			var state = 'alert-error';
+			var $info = $('<div class="staticalert alert ' + state + ' ui_showmessage"><a data-dismiss="alert" class="close">×</a>' + msg + '</div>');
+			$info.appendTo('.error-msg').delay(5000).hide(0);
 			resetFile(); 
 		}else{
 			document.getElementById('uni-filename').innerHTML=str;
@@ -50,13 +53,14 @@
 	}
 
 	var pintObj ={
-	/** * 恢复默认 */
-	recovery_default : function (btn_f){
-		if (!confirm(recovery_default_suer)) {
+		/** * 恢复默认 */
+		recovery_default : function (btn_f){
+			if (!confirm(recovery_default_suer)) {
 				return false; //中止执行
 			}
 			this.submit(btn_f, false);
 		}
+	
 		/*** 保存 */
 		, save : function(btn_f){
 			//获取表单对象
@@ -92,7 +96,10 @@
 			}
 			//判断是否选取了上传文件
 			if (the_form.bg.value == '') {
-				alert(no_select_upload);
+				var msg='您还没有选择打印单图片。请使用“选择图片”按钮进行选择！';
+				var state = 'alert-error';
+				var $info = $('<div class="staticalert alert ' + state + ' ui_showmessage"><a data-dismiss="alert" class="close">×</a>' + msg + '</div>');
+				$info.appendTo('.error-msg').delay(5000).hide(0);
 				return false;
 			}
 			the_form.target = '_parent';
@@ -150,12 +157,20 @@
 						return false;
 					}
 					if ($(currt_obj).attr('data-val') == '') {
-						alert(no_select_lable);
+						var msg='请选中要添加的标签。';
+						var state = 'alert-error';
+						var $info = $('<div class="staticalert alert ' + state + ' ui_showmessage"><a data-dismiss="alert" class="close">×</a>' + msg + 
+						'</div>');
+						$info.appendTo('.error-msg').delay(5000).hide(0);
 						return false;
 					}
 					var result = obj.lable_add('t_' + $(currt_obj).attr('data-val'), $(currt_obj).attr('data-text'), 150, 50, 20, 100, 'b_' + $(currt_obj).attr('data-val'));
 					if (!result) {
-						alert(no_add_repeat_lable);
+						var msg='抱歉，不允许添加重复标签。';
+						var state = 'alert-error';
+						var $info = $('<div class="staticalert alert ' + state + ' ui_showmessage"><a data-dismiss="alert" class="close">×</a>' + msg + 
+						'</div>');
+						$info.appendTo('.error-msg').delay(5000).hide(0);
 						return false;
 					}
 				break;
@@ -166,7 +181,11 @@
 					var result_del = obj.lable_del();
 					if (result_del) {
 					} else {
-						alert(no_select_lable_del);
+						var msg='请选中要删除的标签。';
+						var state = 'alert-error';
+						var $info = $('<div class="staticalert alert ' + state + ' ui_showmessage"><a data-dismiss="alert" class="close">×</a>' + msg + 
+						'</div>');
+						$info.appendTo('.error-msg').delay(5000).hide(0);
 					}
 				break;
 
@@ -397,6 +416,7 @@
 
 <!-- {block name="main_content"} -->
 <div class="admin_shipping">
+	<div class="error-msg"></div>
 	<h3 class="heading">
 		<!-- {if $ur_here}{$ur_here}{/if} -->
 		{if $action_link}
