@@ -135,7 +135,7 @@
 							</div>
 							<ul class="ms-list nav-list-ready selProvinces" data-url="{url path='merchant/region/init' args='target=selCities&type=1'}" data-next="selCities">
 								<!-- {foreach from=$provinces item=province key=key} -->
-								<li class="ms-elem-selectable" data-val="{$province.region_id}"><span>{$province.region_name|escape:html}</span></li>
+								<li class="ms-elem-selectable" data-val="{$province.region_id}"><span>{$province.region_name|escape:html}</span><span class="edit-list"><a href="javascript:;">添加</a></span></li>
 								<!-- {foreachelse} -->
 								<li class="ms-elem-selectable" data-val="0"><span>没有可选的省份地区……</span></li>
 								<!-- {/foreach} -->
