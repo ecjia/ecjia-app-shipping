@@ -83,9 +83,6 @@
 					$this.submit(btn_f, $this.bg_del_call_back);
 				}
 			},{literal}{ok:'确定', cancel:'取消'}{/literal});
-
-// 		    var params = 'shipping=' + the_form.shipping.value;
-// 		    Ajax.call('index.php?m=shipping&c=admin&a=init&is_ajax=1&act=print_del', params, this.bg_del_call_back, 'GET', 'JSON');		
 		}
 		, bg_del_call_back : function(){
 			pintObj.call_flash('bg_delete', '');
@@ -93,22 +90,12 @@
 
 		/*** 打印单背景图片上传 */
 		, bg_upload : function (btn_f){
-			//获取表单对象
-			var the_form = this.this_obj("theForm");
-			if (typeof(the_form) == "undefined") {
-				return false; //程序错误
-			}
-			//判断是否选取了上传文件
-			if (the_form.bg.value == '') {
-				var msg='您还没有选择打印单图片。请使用“选择图片”按钮进行选择！';
-				var state = 'alert-error';
-				var $info = $('<div class="staticalert alert ' + state + ' ui_showmessage"><a data-dismiss="alert" class="close">×</a>' + msg + '</div>');
-				$info.appendTo('.error-msg').delay(5000).hide(0);
-				return false;
-			}
-			the_form.target = '_parent';
-// 			the_form.submit();
-			  // this.submit(btn_f, false);
+				//获取表单对象
+				var the_form = this.this_obj("theForm");
+				if (typeof(the_form) == "undefined") {
+					return false; //程序错误
+				}
+				the_form.target = '_parent';
 			}
 
 			/** * 与模板Flash编辑器通信 */
@@ -118,7 +105,6 @@
 			var obj = this.this_obj("test");
 			//执行操作
 			switch (type) {
-			
 				//删除打印单背景图片
 				case 'bg_delete': 
 					var result_del = obj.bg_delete();
@@ -126,13 +112,11 @@
 					if (result_del) {
 						document.getElementById('pic_control_upload').style.display = display_yes;
 						document.getElementById('pic_control_del').style.display = 'none';
-	
 						var the_form = this.this_obj("theForm");
 						the_form.bg.disabled = "";
 						the_form.bg.value = "";
 						the_form.upload.disabled = "";
 						the_form.upload_del.disabled = "disabled";
-						//$("#print_bg_default_info")[0].html('要删除的图片是默认图片，恢复模板可再次使用');
 					}
 				break;
 
@@ -144,12 +128,10 @@
 					if (result_add) {
 						document.getElementById('pic_control_upload').style.display = 'none';
 						document.getElementById('pic_control_del').style.display = display_yes;
-
 						var the_form = this.this_obj("theForm");
 						the_form.bg.disabled = "disabled";
 						the_form.upload.disabled = "disabled";
 						the_form.upload_del.disabled = "";
-	//		 						$("#print_bg_default_info")[0].disabled = "disabled";
 					}
 				break;
 
