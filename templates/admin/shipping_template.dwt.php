@@ -55,10 +55,12 @@
 	var pintObj ={
 		/** * 恢复默认 */
 		recovery_default : function (btn_f){
-			if (!confirm(recovery_default_suer)) {
-				return false; //中止执行
-			}
-			this.submit(btn_f, false);
+			var $this = this;
+			smoke.confirm(recovery_default_suer, function(e){
+				if (e) {
+					$this.submit(btn_f, false);
+				}
+			},{literal}{ok:'确定', cancel:'取消'}{/literal});
 		}
 	
 		/*** 保存 */
@@ -73,13 +75,15 @@
 			return true;
 		}	
 
-
 		/*** 打印单背景图片删除 */
 		, bg_del : function(btn_f){
-			if (!confirm(upload_del_confirm)) {
-				return false; //中止执行
-			}
-			this.submit(btn_f, this.bg_del_call_back);
+			var $this = this;
+			smoke.confirm(upload_del_confirm, function(e){
+				if (e) {
+					$this.submit(btn_f, $this.bg_del_call_back);
+				}
+			},{literal}{ok:'确定', cancel:'取消'}{/literal});
+
 // 		    var params = 'shipping=' + the_form.shipping.value;
 // 		    Ajax.call('index.php?m=shipping&c=admin&a=init&is_ajax=1&act=print_del', params, this.bg_del_call_back, 'GET', 'JSON');		
 		}
@@ -107,7 +111,6 @@
 			  // this.submit(btn_f, false);
 			}
 
-		
 			/** * 与模板Flash编辑器通信 */
 			,call_flash : function(type, currt_obj){
 				
