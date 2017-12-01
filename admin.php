@@ -143,7 +143,7 @@ class admin extends ecjia_admin
         if (!empty($_FILES['bg']['name'])) {
             /*在前端已做对文件上传类型的限制*/
             if (!RC_File::file_suffix($_FILES['bg']['name'], $allow_suffix)) {
-                return $this->showmessage(RC_Lang::get('shipping::shipping.js_languages.upload_falid') . implode(',', $allow_suffix), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR, array('pjaxurl' =>RC_Uri::url('shipping/admin/edit_print_template', array('shipping_id' => $shipping_id))));
+                return $this->showmessage(RC_Lang::get('shipping::shipping.js_languages.upload_falid') . implode(',', $allow_suffix), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
             } else {
             	$upload = RC_Upload::uploader('image', array('save_path' => 'data/receipt', 'auto_sub_dirs' => false));
             	$info 	= $upload->upload($_FILES['bg']);
