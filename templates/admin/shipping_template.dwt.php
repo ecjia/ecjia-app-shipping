@@ -228,7 +228,7 @@
 	.table_box {
 		border: #ccc 1px solid;
 		table-layout: fixed;
-		height:541px;
+		height:622px;
 		margin:20px 20px;
 	}	
 	input {
@@ -461,12 +461,11 @@
 								</div>
 	                        </div>
 	                        
-	                        <div width="100%" cellpadding="0" cellspacing="0" border="0" class="table_box">
+	                        <div cellpadding="0" cellspacing="0" border="0" class="table_box">
 								<div id="xEditingArea" valign="top" height="100%" width="100%">
 									<div class="div_play_aray">
 										<object classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000"
-										codebase="http://fpdownload.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,0,0"
-										width="1024" height="519" id="test">
+										codebase="http://fpdownload.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,0,0" id="test">
 										<param name="movie" value="{RC_App::apps_url('shipping/statics/print/pint.swf')}">
 										<param name="quality" value="high">
 										<param name="menu" value="false">
@@ -475,7 +474,7 @@
 										<param name="allowScriptAccess" value="sameDomain" />
 										<embed src="{RC_App::apps_url('shipping/statics/print/pint.swf')}" wmode="transparent"
 										FlashVars="bcastr_config_bg={$shipping.print_bg}&swf_config_lable={$shipping.config_lable}"
-										menu="false" quality="high" width="1024" height="519"
+										menu="false" quality="high" width="1024" height="600"
 										type="application/x-shockwave-flash"
 										pluginspage="http://www.macromedia.com/go/getflashplayer"
 										allowScriptAccess="sameDomain" name="test" swLiveConnect="true" />
