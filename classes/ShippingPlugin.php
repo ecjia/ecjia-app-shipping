@@ -230,11 +230,32 @@ class ShippingPlugin extends PluginModel
         
         return $handler;
     }
+    
+    /**
+     * 取得配送方式信息
+     * 同原shipping_info
+     * @param   int/string     $shippingCode    配送方式id/code
+     * @return  boolean   
+     */
+    public function isEnabled($shippingCode)
+    {
+        if (is_int($shippingCode)) {
+            $model = $this->getPluginDataById($shippingCode);
+        } else {
+            $model = $this->getPluginDataByCode($shippingCode);
+        }
+        
+        if ($model) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 
     /**
      * 取得配送方式信息
      * 同原shipping_info
-     * @param   int/string     $shipping_id    配送方式id/code
+     * @param   int/string     $shippingCode    配送方式id/code
      * @return  array   配送方式信息
      */
     public function pluginData($shippingCode) 
@@ -245,7 +266,11 @@ class ShippingPlugin extends PluginModel
             $model = $this->getPluginDataByCode($shippingCode);
         }
 
-        return $model->toArray();
+        if ($model) {
+            return $model->toArray();
+        } else {
+            return [];
+        }
     }
     
     /**
