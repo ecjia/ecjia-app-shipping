@@ -399,7 +399,12 @@ class ShippingPlugin extends PluginModel
         }
         
         if (is_int($shippingCode)) {
-            $shippingCode = $this->getPluginDataById($shippingCode)->get('shipping_code');
+            $model = $this->getPluginDataById($shippingCode);
+            if ($model) {
+                $shippingCode = $model->getOriginal('shipping_code');
+            } else {
+                return null;
+            }
         }
         
         if ($shippingCode == 'ship_no_express') {
