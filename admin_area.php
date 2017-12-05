@@ -77,7 +77,7 @@ class admin_area extends ecjia_admin
         RC_Script::localize_script('shipping', 'js_lang', RC_Lang::get('shipping::shipping.js_lang'));
         RC_Script::localize_script('shopping_admin', 'js_lang', RC_Lang::get('shipping::shipping.js_lang'));
 
-        ecjia_screen::get_current_screen()->add_nav_here(new admin_nav_here(RC_Lang::get('shipping::shipping_area.area_shipping'), RC_Uri::url('shipping/admin_plugin/init')));
+        ecjia_screen::get_current_screen()->add_nav_here(new admin_nav_here('配送区域', RC_Uri::url('shipping/admin_store_shipping/init',array('store_id' => $_GET['store_id']))));
     }
 
     /**
@@ -114,7 +114,7 @@ class admin_area extends ecjia_admin
         $this->assign('ur_here', $shipping_name);
 
         $this->assign('action_link', array('href' => RC_Uri::url('shipping/admin_area/add', array('shipping_id' => $shipping_id, 'code' => $code)), 'text' => RC_Lang::get('shipping::shipping_area.new_area')));
-        $this->assign('shipping_method', array('href' => RC_Uri::url('shipping/admin_plugin/init'), 'text' => RC_Lang::get('shipping::shipping_area.shipping_method')));
+        $this->assign('shipping_method', array('href' => RC_Uri::url('shipping/admin_store_shipping/init',array('store_id' => $_GET['store_id'])), 'text' => RC_Lang::get('shipping::shipping_area.shipping_method')));
 
         $this->assign('shipping_id', $shipping_id);
         $this->assign('form_action', RC_Uri::url('shipping/admin_area/multi_remove', array('shipping_id' => $shipping_id, 'code' => $code)));
@@ -152,7 +152,7 @@ class admin_area extends ecjia_admin
         $shipping_area['shipping_id'] = 0;
         $shipping_area['free_money']  = 0;
 
-        ecjia_screen::get_current_screen()->add_nav_here(new admin_nav_here($shipping_data['shipping_name'], RC_Uri::url('shipping/admin_area/init', array('shipping_id' => $shipping_id, 'code' => $code))));
+        ecjia_screen::get_current_screen()->add_nav_here(new admin_nav_here($shipping_data['shipping_name'], RC_Uri::url('shipping/admin_area/init', array('shipping_id' => $shipping_id, 'code' => $code, 'store_id' => $store_id))));
         ecjia_screen::get_current_screen()->add_nav_here(new admin_nav_here(RC_Lang::get('shipping::shipping_area.new_area')));
         ecjia_screen::get_current_screen()->add_help_tab(array(
             'id'      => 'overview',
@@ -174,7 +174,7 @@ class admin_area extends ecjia_admin
         $provinces = ecjia_region::getSubarea(ecjia::config('shop_country'));//获取当前国家的所有省份
         $this->assign('provinces', $provinces);
         
-        $this->assign('action_link', array('text' => $shipping_data['shipping_name'] . RC_Lang::get('shipping::shipping_area.list'), 'href' => RC_Uri::url('shipping/admin_area/init', array('shipping_id' => $shipping_id, 'code' => $code))));
+        $this->assign('action_link', array('text' => $shipping_data['shipping_name'] . '配送区域', 'href' => RC_Uri::url('shipping/admin_area/init', array('shipping_id' => $shipping_id, 'code' => $code, 'store_id' => $store_id))));
 
         $this->assign('form_action', RC_Uri::url('shipping/admin_area/insert', array('shipping_id' => $shipping_id, 'code' => $code)));
 
@@ -349,7 +349,7 @@ class admin_area extends ecjia_admin
         $this->assign('fields', $fields);
         $this->assign('shipping_area', $shipping_data);
         $this->assign('regions', $regions);
-        $this->assign('action_link', array('text' => $shipping_data['shipping_name'] . RC_Lang::get('shipping::shipping_area.list'), 'href' => RC_Uri::url('shipping/admin_area/init', array('shipping_id' => $shipping_data['shipping_id'], 'code' => $code))));
+        $this->assign('action_link', array('text' => $shipping_data['shipping_name'] . '配送区域', 'href' => RC_Uri::url('shipping/admin_area/init', array('shipping_id' => $shipping_data['shipping_id'], 'code' => $code, 'store_id' => $store_id))));
 
         $provinces = ecjia_region::getSubarea(ecjia::config('shop_country'));//获取当前国家的所有省份
         $this->assign('provinces', $provinces);
