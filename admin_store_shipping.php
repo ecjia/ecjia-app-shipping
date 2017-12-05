@@ -158,13 +158,13 @@ class admin_store_shipping extends ecjia_admin
         	$this->assign('action_link', array('href' => RC_Uri::url('store/admin/join'), 'text' => RC_Lang::get('store::store.store_list')));
         }
         ecjia_screen::get_current_screen()->add_nav_here(new admin_nav_here($store['merchants_name'], RC_Uri::url('store/admin/preview', array('store_id' => $store_id))));
-        ecjia_screen::get_current_screen()->add_nav_here(new admin_nav_here('配送方式'));
+        ecjia_screen::get_current_screen()->add_nav_here(new admin_nav_here('配送区域'));
         
         ecjia_screen::get_current_screen()->set_sidebar_display(false);
         ecjia_screen::get_current_screen()->add_option('store_name', $store['merchants_name']);
         ecjia_screen::get_current_screen()->add_option('current_code', 'store_shipping');
 
-        $this->assign('ur_here', $store['merchants_name'] . ' - 配送方式');
+        $this->assign('ur_here', $store['merchants_name'] . ' - 配送区域');
         $this->assign('form_action', RC_Uri::url('store/admin/auth_update'));
         $this->assign('store', $store);
         $this->assign('store_id', $store_id);
