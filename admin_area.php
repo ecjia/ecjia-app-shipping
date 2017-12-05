@@ -77,7 +77,7 @@ class admin_area extends ecjia_admin
         RC_Script::localize_script('shipping', 'js_lang', RC_Lang::get('shipping::shipping.js_lang'));
         RC_Script::localize_script('shopping_admin', 'js_lang', RC_Lang::get('shipping::shipping.js_lang'));
 
-        ecjia_screen::get_current_screen()->add_nav_here(new admin_nav_here(RC_Lang::get('shipping::shipping_area.area_shipping'), RC_Uri::url('shipping/admin/init')));
+        ecjia_screen::get_current_screen()->add_nav_here(new admin_nav_here(RC_Lang::get('shipping::shipping_area.area_shipping'), RC_Uri::url('shipping/admin_plugin/init')));
     }
 
     /**
@@ -114,7 +114,7 @@ class admin_area extends ecjia_admin
         $this->assign('ur_here', $shipping_name);
 
         $this->assign('action_link', array('href' => RC_Uri::url('shipping/admin_area/add', array('shipping_id' => $shipping_id, 'code' => $code)), 'text' => RC_Lang::get('shipping::shipping_area.new_area')));
-        $this->assign('shipping_method', array('href' => RC_Uri::url('shipping/admin/init'), 'text' => RC_Lang::get('shipping::shipping_area.shipping_method')));
+        $this->assign('shipping_method', array('href' => RC_Uri::url('shipping/admin_plugin/init'), 'text' => RC_Lang::get('shipping::shipping_area.shipping_method')));
 
         $this->assign('shipping_id', $shipping_id);
         $this->assign('form_action', RC_Uri::url('shipping/admin_area/multi_remove', array('shipping_id' => $shipping_id, 'code' => $code)));
