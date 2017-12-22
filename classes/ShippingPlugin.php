@@ -334,7 +334,8 @@ class ShippingPlugin extends PluginModel
                     ->where('shipping.enabled', 1)
                     ->where('shipping_area.store_id', $store_id)
                     ->whereIn('area_region.region_id', $region_ids)
-                    ->orderby('shipping.shipping_order', 'asc')
+                    ->groupBy('shipping_area.shipping_area_id')
+                    ->orderBy('shipping.shipping_order', 'asc')
                     ->get();
         $plugins = $this->getInstalledPlugins();
 
