@@ -93,6 +93,7 @@ class ShippingPlugin extends PluginModel
      */
     public function getPluginDataById($id)
     {
+        $id = intval($id);
         if ($id === 0) {
             return with(new ShipNoExpress)->express();
         }
