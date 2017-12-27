@@ -55,8 +55,7 @@ class mh_shipping extends ecjia_merchant
     {
         parent::__construct();
 
-        RC_Loader::load_app_func('global');
-        assign_adminlog_content();
+        Ecjia\App\Shipping\Helper::assign_adminlog_content();
 
         /* 加载全局 js/css */
         RC_Script::enqueue_script('jquery-validate');
