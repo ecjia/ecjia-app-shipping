@@ -145,7 +145,7 @@ class mh_shipping extends ecjia_merchant
 
                 if (!empty($fields)) {
                     foreach ($fields as $key => $val) {
-                        if ($shipping_data['shipping_code'] == 'ship_o2o_express' && (in_array($val['name'], array('ship_days', 'last_order_time', 'ship_time', 'express_money')))) {
+                        if (($shipping_data['shipping_code'] == 'ship_o2o_express' || $shipping_data['shipping_code'] == 'ship_ecjia_express') && (in_array($val['name'], array('ship_days', 'last_order_time', 'ship_time', 'express_money')))) {
                             if ($val['name'] == 'ship_time') {
                                 $o2o_shipping_time = array();
                                 foreach ($val['value'] as $v) {
@@ -211,10 +211,10 @@ class mh_shipping extends ecjia_merchant
         	
         	$shipping_handle	= ecjia_shipping::areaChannel($shipping_data['shipping_area_id']);
         	$fields				= $shipping_handle->makeFormData($fields);
-
+		
         	if (!empty($config)) {
         		foreach ($config as $key => $val) {
-        			if ($shipping_data['shipping_code'] == 'ship_o2o_express' && (in_array($key, array('ship_days', 'last_order_time', 'ship_time', 'express')))) {
+        			if (($shipping_data['shipping_code'] == 'ship_o2o_express' || $shipping_data['shipping_code'] == 'ship_ecjia_express') && (in_array($key, array('ship_days', 'last_order_time', 'ship_time', 'express')))) {
 	        			if ($key == 'ship_days') {
 							$this->assign('ship_days', $val);
 						}
@@ -325,7 +325,7 @@ class mh_shipping extends ecjia_merchant
         }
 
         $count = count($config);
-        if ($shipping_data['shipping_code'] == 'ship_o2o_express') {
+        if ($shipping_data['shipping_code'] == 'ship_o2o_express' || $shipping_data['shipping_code'] == 'ship_ecjia_express') {
 			$time = array();
 			foreach ($_POST['start_ship_time'] as $k => $v) {
 				if (empty($v)) {

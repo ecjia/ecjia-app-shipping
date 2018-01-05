@@ -52,7 +52,7 @@
 <!-- {/foreach} -->
 {/if}
 
-{if $shipping_area.shipping_code eq 'ship_o2o_express'}
+{if $shipping_area.shipping_code eq 'ship_o2o_express' || $shipping_area.shipping_code eq 'ship_ecjia_express'}
 	<div class="form-group" id="ship_days">
 		<label class="control-label col-lg-4">下单后几天内配送：</label>
 		<div class="controls col-lg-6">
