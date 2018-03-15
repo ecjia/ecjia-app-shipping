@@ -70,7 +70,8 @@ class mh_shipping extends ecjia_merchant
         RC_Script::enqueue_script('ecjia.utils');
 
         RC_Style::enqueue_style('mh_shipping', RC_App::apps_url('statics/css/merchant_express.css', __FILE__), array());
-
+        
+        ecjia_merchant_screen::get_current_screen()->set_parentage('shipping', 'shipping/mh_shipping.php');
         ecjia_screen::get_current_screen()->add_nav_here(new admin_nav_here('配送管理', RC_Uri::url('shipping/mh_shipping/shipping_template')));
     }
 
