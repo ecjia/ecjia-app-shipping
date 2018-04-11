@@ -5,41 +5,41 @@ defined('IN_ECJIA') or exit('No permission resources.');
  */
 
 return array(
-	'ship_yto' 	=> 'yuantong',
-    'yto' 	=> 'yuantong',
-    'ship_zto' => 'zhongtong',
-    'zto' => 'zhongtong',
-    'ship_ems' => 'ems',
-    'ems' => 'ems',
-    'ship_sf_express' => 'shunfeng',
-    'sf_express' => 'shunfeng',
-    'ship_sto_express' => 'shentong',
-    'sto_express' => 'shentong',
-    'ship_yunda' => 'yunda',
-    'yunda' => 'yunda',
+	'ship_yto' 	        => 'yuantong',
+    'yto' 	            => 'yuantong',
+    'ship_zto'          => 'zhongtong',
+    'zto'               => 'zhongtong',
+    'ship_ems'          => 'ems',
+    'ems'               => 'ems',
+    'ship_sf_express'   => 'shunfeng',
+    'sf_express'        => 'shunfeng',
+    'ship_sto_express'  => 'shentong',
+    'sto_express'       => 'shentong',
+    'ship_yunda'        => 'yunda',
+    'yunda'             => 'yunda',
 );
 
 // end
 /*
  * 快递100快递方式
 分类 	快递公司代码 	公司名称
-    A
+A
     auspost	澳大利亚邮政(英文结果）
     aae	AAE
     anxindakuaixi	安信达
-    B
+B
     huitongkuaidi	百世汇通
     baifudongfang	百福东方
     bht	BHT
     youzhengguonei	包裹/平邮/挂号信（暂只支持HtmlAPI,要JSON、XML格式结果和签收状态state请转用【企业版】，详情请到http://www.kuaidi100.com/openapi/applypoll.shtml 提交，提交后5分钟给您邮件回复，邮件里有详细的说明与指引。也可以联系企业QQ 800036857转“小佰”咨询）
     bangsongwuliu	邦送物流
-    C
+C
     cces	希伊艾斯（CCES）
     coe	中国东方（COE）
     chuanxiwuliu	传喜物流
     canpost	加拿大邮政Canada Post（英文结果）
     canpostfr	加拿大邮政Canada Post(德文结果）
-    D
+D
     datianwuliu	大田物流
     debangwuliu	德邦物流
     dpex	DPEX
@@ -48,13 +48,13 @@ return array(
     dhlde	DHL-德国件-德文结果（德国国内派、收的件）
     dsukuaidi	D速快递
     disifang	递四方
-    E
+E
     ems	EMS(中文结果)
     ems	E邮宝
     emsen	EMS（英文结果）
     emsguoji	EMS-（中国-国际）件-中文结果/EMS-(China-International）-Chinese data
     emsinten	EMS-（中国-国际）件-英文结果/EMS-(China-International）-Englilsh data
-    F
+F
     fedex	Fedex-国际件-英文结果（说明：Fedex是国际件的英文结果，Fedex中国的请用“lianbangkuaidi”，Fedex-美国请用fedexus）
     fedexcn	Fedex-国际件-中文结果
     fedexus	Fedex-美国件-英文结果(说明：如果无效，请偿试使用fedex）
@@ -63,19 +63,16 @@ return array(
     rufengda	凡客如风达
     fengxingtianxia	风行天下
     feibaokuaidi	飞豹快递
-    G
+G
     ganzhongnengda	港中能达
     guotongkuaidi	国通快递
     guangdongyouzhengwuliu	广东邮政
-    youzhengguonei	挂号信
-    （暂只支持HtmlAPI,要JSON、XML格式结果和签收状态state请转用【企业版】，详情请到http://www.kuaidi100.com/openapi/applypoll.shtml 提交，提交后5分钟给您邮件回复，邮件里有详细的说明与指引。也可以联系企业QQ 800036857转“小佰”咨询）
-    youzhengguonei	国内邮件
-    （暂只支持HtmlAPI,要JSON、XML格式结果和签收状态state请转用【企业版】，详情请到http://www.kuaidi100.com/openapi/applypoll.shtml 提交，提交后5分钟给您邮件回复，邮件里有详细的说明与指引。也可以联系企业QQ 800036857转“小佰”咨询）
-    youzhengguoji	国际邮件
-    （暂只支持HtmlAPI,要JSON、XML格式结果和签收状态state请转用【企业版】，详情请到http://www.kuaidi100.com/openapi/applypoll.shtml 提交，提交后5分钟给您邮件回复，邮件里有详细的说明与指引。也可以联系企业QQ 800036857转“小佰”咨询）
+    youzhengguonei	挂号信 （暂只支持HtmlAPI,要JSON、XML格式结果和签收状态state请转用【企业版】，详情请到http://www.kuaidi100.com/openapi/applypoll.shtml 提交，提交后5分钟给您邮件回复，邮件里有详细的说明与指引。也可以联系企业QQ 800036857转“小佰”咨询）
+    youzhengguonei	国内邮件 （暂只支持HtmlAPI,要JSON、XML格式结果和签收状态state请转用【企业版】，详情请到http://www.kuaidi100.com/openapi/applypoll.shtml 提交，提交后5分钟给您邮件回复，邮件里有详细的说明与指引。也可以联系企业QQ 800036857转“小佰”咨询）
+    youzhengguoji	国际邮件（暂只支持HtmlAPI,要JSON、XML格式结果和签收状态state请转用【企业版】，详情请到http://www.kuaidi100.com/openapi/applypoll.shtml 提交，提交后5分钟给您邮件回复，邮件里有详细的说明与指引。也可以联系企业QQ 800036857转“小佰”咨询）
     gls	GLS
     gongsuda	共速达
-    H
+H
     huitongkuaidi	汇通快运
     huiqiangkuaidi	汇强快递
     tiandihuayu	华宇物流
@@ -87,7 +84,7 @@ return array(
     haimengsudi	海盟速递
     huaqikuaiyun	华企快运
     haihongwangsong	山东海红
-    J
+J
     jiajiwuliu	佳吉物流
     jiayiwuliu	佳怡物流
     jiayunmeiwuliu	加运美
@@ -97,36 +94,36 @@ return array(
     jietekuaidi	捷特快递
     jindawuliu	金大物流
     jialidatong	嘉里大通
-    K
+K
     kuaijiesudi	快捷速递
     kangliwuliu	康力物流
     kuayue	跨越物流
-    L
+L
     lianhaowuliu	联昊通
     longbanwuliu	龙邦物流
     lanbiaokuaidi	蓝镖快递
     lejiedi	乐捷递（暂只能查好乐买的单，其他商家要查，请发邮件至 wensheng_chen#kingdee.com(将#替换成@)开通权限
     lianbangkuaidi	联邦快递（Fedex-中国-中文结果）（说明：国外的请用 fedex）
     lianbangkuaidien	联邦快递(Fedex-中国-英文结果）
-        lijisong	立即送（暂只能查好乐买的单，其他商家要查，请发邮件至 wensheng_chen#kingdee.com(将#替换成@)开通权限)
+    lijisong	立即送（暂只能查好乐买的单，其他商家要查，请发邮件至 wensheng_chen#kingdee.com(将#替换成@)开通权限)
     longlangkuaidi	隆浪快递
-    M
+M
     menduimen	门对门
     meiguokuaidi	美国快递
     mingliangwuliu	明亮物流
-    O
+O
     ocs	OCS
     ontrac	onTrac
-    Q
+Q
     quanchenkuaidi	全晨快递
     quanjitong	全际通
     quanritongkuaidi	全日通
     quanyikuaidi	全一快递
     quanfengkuaidi	全峰快递
     sevendays	七天连锁
-    R
+R
     rufengda	如风达快递
-    S
+S
     shentong	申通（暂只支持HtmlAPI,要JSON、XML格式结果和签收状态state请转用【企业版】，详情请到http://www.kuaidi100.com/openapi/applypoll.shtml 提交，提交后5分钟给您邮件回复，邮件里有详细的说明与指引。也可以联系企业QQ 800036857转“小佰”咨询）
     shunfeng	顺丰（暂只支持HtmlAPI,要JSON、XML格式结果和签收状态state请转用【企业版】，详情请到http://www.kuaidi100.com/openapi/applypoll.shtml 提交，提交后5分钟给您邮件回复，邮件里有详细的说明与指引。也可以联系企业QQ 800036857转“小佰”咨询）
     shunfengen	顺丰（英文结果）（暂只支持HtmlAPI,要JSON、XML格式结果和签收状态state请转用【企业版】，详情请到http://www.kuaidi100.com/openapi/applypoll.shtml 提交，提交后5分钟给您邮件回复，邮件里有详细的说明与指引。也可以联系企业QQ 800036857转“小佰”咨询）
@@ -142,7 +139,7 @@ return array(
     sxhongmajia	山西红马甲（暂只能查天天网的单，其他商家要查，请发邮件至 wensheng_chen#kingdee.com(将#替换成@)开通权限)
     shenganwuliu	圣安物流
     suijiawuliu	穗佳物流
-    T
+T
     tiandihuayu	天地华宇
     tiantian	天天快递
     tnt	TNT（中文结果）
@@ -194,4 +191,4 @@ Z
 	zhimakaimen	芝麻开门
 	zhengzhoujianhua	郑州建华（暂只能查好乐买的单，其他商家要查，请发邮件至 wensheng_chen#kingdee.com(将#替换成@)开通权限）
 	zhongtianwanyun	中天万运
-	*/
+*/
