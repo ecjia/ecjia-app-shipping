@@ -215,7 +215,7 @@ class mh_shipping extends ecjia_merchant
 
         	if (!empty($config)) {
         		foreach ($config as $key => $val) {
-        			if ($shipping_data['shipping_code'] == 'ship_o2o_express' && (in_array($key, array('ship_days', 'last_order_time', 'ship_time', 'express')))) {
+        			if (($shipping_data['shipping_code'] == 'ship_o2o_express' || $shipping_data['shipping_code'] == 'ship_ecjia_express') && (in_array($key, array('ship_days', 'last_order_time', 'ship_time', 'express')))) {
 	        			if ($key == 'ship_days') {
 							$this->assign('ship_days', $val);
 						}
@@ -326,7 +326,7 @@ class mh_shipping extends ecjia_merchant
         }
 
         $count = count($config);
-        if ($shipping_data['shipping_code'] == 'ship_o2o_express') {
+        if ($shipping_data['shipping_code'] == 'ship_o2o_express' || $shipping_data['shipping_code'] == 'ship_ecjia_express') {
 			$time = array();
 			foreach ($_POST['start_ship_time'] as $k => $v) {
 				if (empty($v)) {
