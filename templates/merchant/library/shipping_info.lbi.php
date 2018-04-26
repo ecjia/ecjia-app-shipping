@@ -141,7 +141,7 @@
 			<div class='time-picker'>
 				从&nbsp;&nbsp;<input class="w100 form-control tp_1" name="start_pickup_time[]" type="text" value="{$pickup_time.start}" autocomplete="off" />&nbsp;&nbsp;
 				至&nbsp;&nbsp; <input class="w100 form-control tp_1" name="end_pickup_time[]" type="text" value="{$pickup_time.end}" autocomplete="off" />&nbsp;&nbsp;
-				<!-- {if $smarty.foreach.shipping.last} -->
+				<!-- {if $smarty.foreach.pickup.last} -->
 					<a class="no-underline" data-toggle="clone-obj" data-before="before" data-parent=".time-picker" href="javascript:;"><i class="fontello-icon-plus fa fa-plus"></i></a>
 				<!-- {else} -->
 					<a class="no-underline" href="javascript:;" data-parent=".time-picker" data-toggle="remove-obj"><i class="fontello-icon-cancel ecjiafc-red fa fa-times "></i></a>

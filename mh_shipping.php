@@ -210,7 +210,7 @@ class mh_shipping extends ecjia_merchant
 	        	->first();
         	$config = $fields = ecjia_shipping::unserializeConfig($shipping_data['configure']);
         	
-        	$shipping_handle	= ecjia_shipping::areaChannel($shipping_data['shipping_area_id']);
+        	$shipping_handle 	= ecjia_shipping::areaChannel($shipping_data['shipping_area_id']);
         	$fields				= $shipping_handle->makeFormData($fields);
 		
         	if (!empty($config)) {
@@ -343,10 +343,12 @@ class mh_shipping extends ecjia_merchant
         if ($shipping_data['shipping_code'] == 'ship_o2o_express' || $shipping_data['shipping_code'] == 'ship_ecjia_express') {
 			$time = array();
 			foreach ($_POST['start_ship_time'] as $k => $v) {
-				if (empty($v)) {
+				$start_time = trim($v);
+				if (empty($start_time)) {
 					return $this->showmessage('配送开始时间不能为空', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
 				}
-				if (empty($_POST['end_ship_time'][$k])) {
+				$end_time = trim($_POST['end_ship_time'][$k]);
+				if (empty($end_time)) {
 					return $this->showmessage('配送结束时间不能为空', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
 				}
 				$time[$k]['start']	= $v;
@@ -354,11 +356,13 @@ class mh_shipping extends ecjia_merchant
 			}
 			$express = array();
 			foreach ($_POST['express_distance'] as $k => $v) {
-				if ($v == null) {
-					return $this->showmessage('配送距离不能为空', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
+				$express_distance = floatval($v);
+				if (empty($express_distance)) {
+					return $this->showmessage('配送距离只能为数值且不能为空', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
 				}
-				if ($_POST['express_money'][$k] == null) {
-					return $this->showmessage('配送费不能为空', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
+				$express_money = floatval($_POST['express_money'][$k]);
+				if (empty($express_money)) {
+					return $this->showmessage('配送费只能为数值且不能为空', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
 				}
 				$express[$k]['express_distance'] = $v;
 				$express[$k]['express_money']	= $_POST['express_money'][$k];
@@ -379,10 +383,12 @@ class mh_shipping extends ecjia_merchant
         if ($shipping_data['shipping_code'] == 'ship_cac') {
         	$time = array();
         	foreach ($_POST['start_pickup_time'] as $k => $v) {
-        		if (empty($v)) {
+        		$start_pickup_time = trim($v);
+        		if (empty($start_pickup_time)) {
         			return $this->showmessage('取货开始时间不能为空', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
         		}
-        		if (empty($_POST['end_pickup_time'][$k])) {
+        		$end_pickup_time = trim($_POST['end_pickup_time'][$k]);
+        		if (empty($end_pickup_time)) {
         			return $this->showmessage('取货结束时间不能为空', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
         		}
         		$time[$k]['start']	= $v;
