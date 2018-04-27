@@ -141,8 +141,8 @@ class mh_shipping extends ecjia_merchant
                 $fields = ecjia_shipping::unserializeConfig($shipping_data['configure']);
 
                 $data[$k]['fee_compute_mode'] = $fields['fee_compute_mode'];
-                $shipping_handle              = ecjia_shipping::areaChannel($shipping_data['shipping_area_id']);
-                $fields                       = $shipping_handle->makeFormData($fields);
+                $shipping_handle = ecjia_shipping::areaChannel($shipping_data['shipping_area_id']);
+                $fields = !is_ecjia_error($shipping_handle) ? $shipping_handle->makeFormData($fields) : array();
 
                 if (!empty($fields)) {
                     foreach ($fields as $key => $val) {
@@ -210,9 +210,9 @@ class mh_shipping extends ecjia_merchant
 	        	->first();
         	$config = $fields = ecjia_shipping::unserializeConfig($shipping_data['configure']);
         	
-        	$shipping_handle 	= ecjia_shipping::areaChannel($shipping_data['shipping_area_id']);
-        	$fields				= $shipping_handle->makeFormData($fields);
-		
+            $shipping_handle = ecjia_shipping::areaChannel($shipping_data['shipping_area_id']);
+            $fields = !is_ecjia_error($shipping_handle) ? $shipping_handle->makeFormData($fields) : array();
+
         	if (!empty($config)) {
         		foreach ($config as $key => $val) {
         			if (($shipping_data['shipping_code'] == 'ship_o2o_express' || $shipping_data['shipping_code'] == 'ship_ecjia_express') && (in_array($key, array('ship_days', 'last_order_time', 'ship_time', 'express')))) {
@@ -258,9 +258,9 @@ class mh_shipping extends ecjia_merchant
 	        	->where('shipping_id', $shipping_id)
 	        	->first();
         	
-        	$fields          = array();
-        	$shipping_handle = ecjia_shipping::channel($shipping_data['shipping_code']);
-        	$fields          = $shipping_handle->makeFormData($fields);
+        	$fields = array();
+            $shipping_handle = ecjia_shipping::channel($shipping_data['shipping_code']);
+            $fields = !is_ecjia_error($shipping_handle) ? $shipping_handle->makeFormData($fields) : array();
         }
         $shipping_area['shipping_code'] = $shipping_data['shipping_code'];
         
@@ -327,9 +327,9 @@ class mh_shipping extends ecjia_merchant
         }
         $shipping_data = RC_DB::table('shipping')->where('shipping_id', $shipping_id)->select('shipping_name', 'shipping_code', 'support_cod')->first();
 
-        $config          = array();
+        $config = array();
         $shipping_handle = ecjia_shipping::channel($shipping_data['shipping_code']);
-        $config          = $shipping_handle->makeFormData($config);
+        $config = !is_ecjia_error($shipping_handle) ? $shipping_handle->makeFormData($config) : array();
 
         if (!empty($config)) {
             foreach ($config as $key => $val) {
