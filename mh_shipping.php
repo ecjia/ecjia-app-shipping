@@ -267,6 +267,8 @@ class mh_shipping extends ecjia_merchant
         $this->assign('config', $config);
         $this->assign('fields', $fields);
         $this->assign('shipping_area', $shipping_area);
+        $this->assign('shipping_data', $shipping_data);
+        
         $shipping_array = array('ship_ems', 'ship_yto', 'ship_zto', 'ship_sto_express', 'ship_post_mail', 'ship_sf_express', 'ship_post_express');
         
         $in = false;

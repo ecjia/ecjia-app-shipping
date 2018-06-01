@@ -22,7 +22,7 @@
 				<span class="input-must">*</span>
 			</div>
 		{else if $field.name != 'fee_compute_mode'}
-			<div class="form-group" id="{$field.name}" style="display:none;">
+			<div class="form-group" id="{$field.name}">
 				<label class="control-label col-lg-4">{$field.label}</label>
 				<div class="controls col-lg-6">
 					<input class="form-control" name="{$field.name}" type="text" value="{if $config.value}{$config.value}{else}{if $field.value}{$field.value}{else}0{/if}{/if}"/>
@@ -31,7 +31,7 @@
 			</div>
 		{/if}
 	{else}
-		{if $field.name != 'item_fee' && $field.name != 'fee_compute_mode'}
+		{if $field.name != 'item_fee' && $field.name != 'fee_compute_mode' && $field.name != 'pay_fee'}
 			<div class="form-group" id="{$field.name}">
 				<label class="control-label col-lg-4">{$field.label}</label>
 				<div class="controls col-lg-6">
@@ -40,13 +40,20 @@
 				<span class="input-must">*</span>
 			</div>
 		{else if $field.name == 'item_fee'}
-			<div class="form-group" id="{$field.name}" style="display:none;">
+			<div class="form-group" id="{$field.name}">
 				<label class="control-label col-lg-4">{$field.label}</label>
 				<div class="controls col-lg-6">
 					<input class="form-control" name="{$field.name}" type="text" value="{if $config.value}{$config.value}{else}{if $field.value}{$field.value}{else}0{/if}{/if}"/>
 				</div>
 				<span class="input-must">*</span>
 			</div>
+		{else if $field.name == 'pay_fee' && $shipping_data.support_cod eq 1}
+			<div class="form-group" id="{$field.name}">
+				<label class="control-label col-lg-4">{$field.label}</label>
+				<div class="controls col-lg-6">
+					<input class="form-control" name="{$field.name}" type="text" value="{if $config.value}{$config.value}{else}{if $field.value}{$field.value}{else}0{/if}{/if}"/>
+				</div>
+			</div>	
 		{/if}
 	{/if}
 <!-- {/foreach} -->
