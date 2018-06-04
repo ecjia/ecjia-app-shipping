@@ -53,8 +53,8 @@ class shipping_admin_hooks
     {
         $setting = ecjia_admin_setting::singleton();
 
-        $menus[] = ecjia_admin::make_admin_menu('nav-header', '配送方式', '', 10)->add_purview(array('shop_config'));
-        $menus[] = ecjia_admin::make_admin_menu('shipping', '物流跟踪设置', RC_Uri::url('shipping/admin_config/init'), 6)->add_purview('shop_config')->add_icon('fontello-icon-chat-empty');
+        $menus[] = ecjia_admin::make_admin_menu('nav-header', '配送方式', '', 70)->add_purview(array('shop_config'));
+        $menus[] = ecjia_admin::make_admin_menu('shipping', '物流跟踪设置', RC_Uri::url('shipping/admin_config/init'), 71)->add_purview('shop_config')->add_icon('fontello-icon-chat-empty');
 
         return $menus;
     }
