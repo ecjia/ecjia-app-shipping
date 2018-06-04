@@ -87,13 +87,13 @@
 		<div class="controls col-lg-6">
 		<!-- {foreach from=$o2o_shipping_time item=shipping_time name=shipping} -->
 			<div class='time-picker'>
-				从&nbsp;&nbsp;<input class="w100 form-control tp_1" name="start_ship_time[]" type="text" value="{$shipping_time.start}" autocomplete="off" readonly/>&nbsp;&nbsp;
-				至&nbsp;&nbsp; <input class="w100 form-control tp_1" name="end_ship_time[]" type="text" value="{$shipping_time.end}" autocomplete="off" readonly/>&nbsp;&nbsp;
+				从&nbsp;&nbsp;<input class="w100 form-control" name="start_ship_time[]" type="text" value="{$shipping_time.start}" autocomplete="off" readonly/>&nbsp;&nbsp;
+				至&nbsp;&nbsp; <input class="w100 form-control" name="end_ship_time[]" type="text" value="{$shipping_time.end}" autocomplete="off" readonly/>&nbsp;&nbsp;
 			</div> 
 		<!-- {foreachelse} --> 
 			<div class='time-picker'>
-				<input class="w100 form-control tp_1" name="start_ship_time[]" type="text" value="{$time_field.start}" readonly/>&nbsp;&nbsp;
-				至&nbsp;&nbsp; <input class="w100 form-control tp_1" name="end_ship_time[]" type="text" value="{$time_field.end}" readonly/>&nbsp;&nbsp;
+				<input class="w100 form-control" name="start_ship_time[]" type="text" value="{$time_field.start}" readonly/>&nbsp;&nbsp;
+				至&nbsp;&nbsp; <input class="w100 form-control" name="end_ship_time[]" type="text" value="{$time_field.end}" readonly/>&nbsp;&nbsp;
 			</div> 
 		<!-- {/foreach} --> 
 			<span class="col-lg-6 help-block">可设置多个配送时间段</span>
@@ -134,13 +134,13 @@
 		<div class="controls col-lg-6">
 		<!-- {foreach from=$cac_pickup_time item=pickup_time name=pickup} -->
 			<div class='time-picker'>
-				从&nbsp;&nbsp;<input class="w100 form-control tp_1" name="start_pickup_time[]" type="text" value="{$pickup_time.start}" autocomplete="off" readonly/>&nbsp;&nbsp;
-				至&nbsp;&nbsp; <input class="w100 form-control tp_1" name="end_pickup_time[]" type="text" value="{$pickup_time.end}" autocomplete="off" readonly/>&nbsp;&nbsp;
+				从&nbsp;&nbsp;<input class="w100 form-control" name="start_pickup_time[]" type="text" value="{$pickup_time.start}" autocomplete="off" readonly/>&nbsp;&nbsp;
+				至&nbsp;&nbsp; <input class="w100 form-control" name="end_pickup_time[]" type="text" value="{$pickup_time.end}" autocomplete="off" readonly/>&nbsp;&nbsp;
 			</div> 
 		<!-- {foreachelse} --> 
 			<div class='time-picker'>
-				<input class="w100 form-control tp_1" name="start_pickup_time[]" type="text" value="{$time_field.start}" readonly/>&nbsp;&nbsp;
-				至&nbsp;&nbsp; <input class="w100 form-control tp_1" name="end_pickup_time[]" type="text" value="{$time_field.end}" readonly/>&nbsp;&nbsp;
+				<input class="w100 form-control" name="start_pickup_time[]" type="text" value="{$time_field.start}" readonly/>&nbsp;&nbsp;
+				至&nbsp;&nbsp; <input class="w100 form-control" name="end_pickup_time[]" type="text" value="{$time_field.end}" readonly/>&nbsp;&nbsp;
 			</div> 
 		<!-- {/foreach} --> 
 			<span class="col-lg-6 help-block">可设置多个取货时间段</span>
