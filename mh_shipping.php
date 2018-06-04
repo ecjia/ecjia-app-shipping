@@ -395,7 +395,6 @@ class mh_shipping extends ecjia_merchant
 
         if ($shipping_data['shipping_code'] == 'ship_ecjia_express') {
         	$config = ecjia::config('plugin_ship_ecjia_express');
-        	$config = ecjia_shipping::unserializeConfig($config);
         } else {
         	$config = array();
         	$shipping_handle = ecjia_shipping::channel($shipping_data['shipping_code']);
@@ -469,14 +468,14 @@ class mh_shipping extends ecjia_merchant
         		$count++;
         		$config[$count]['name']     = 'pickup_time';
         		$config[$count]['value']    = empty($time) ? '' : $time;
-        		 
         	}
+        	$config = serialize($config);
         }
 
         $data = array(
             'shipping_area_name' => $temp_name,
             'shipping_id'        => $shipping_id,
-            'configure'          => serialize($config),
+            'configure'          => $config,
         );
         if (!empty($shipping_area_id)) {
             RC_DB::table('shipping_area')->where('store_id', $_SESSION['store_id'])->where('shipping_area_id', $shipping_area_id)->update($data);
