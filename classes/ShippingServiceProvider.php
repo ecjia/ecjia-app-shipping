@@ -57,7 +57,7 @@ class ShippingServiceProvider extends AppParentServiceProvider
      */
     public function boot() 
     {
-        $this->package('ecjia/app-shipping');
+        $this->package('ecjia/app-shipping', null, dirname(__DIR__));
     }
 
 	/**
