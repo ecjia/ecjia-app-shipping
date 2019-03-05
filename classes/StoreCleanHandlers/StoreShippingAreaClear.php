@@ -33,7 +33,7 @@ class StoreShippingAreaClear extends StoreCleanAbstract
      * 排序
      * @var int
      */
-    protected $sort = 111;
+    protected $sort = 32;
 
     /**
      * 数据描述及输出显示内容
