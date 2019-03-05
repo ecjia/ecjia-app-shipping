@@ -40,11 +40,9 @@ class StoreShippingAreaClear extends StoreCleanAbstract
      */
     public function handlePrintData()
     {
-        $text = __('将店铺设置的配送区域、运费模版数据全部删除', 'printer');
+        $text = __('将店铺设置的配送区域、运费模版数据全部删除', 'shipping');
         return <<<HTML
-
-<span class="controls-info w400">$text</span>
-
+<span class="controls-info w400">{$text}</span>
 HTML;
 
     }
