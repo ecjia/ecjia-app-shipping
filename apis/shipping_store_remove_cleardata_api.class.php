@@ -65,7 +65,6 @@ class shipping_store_remove_cleardata_api extends Component_Event_Api
 
         return [
             new \Ecjia\App\Shipping\StoreCleanHandlers\StoreShippingAreaClear($store_id),
-            new \Ecjia\App\Shipping\StoreCleanHandlers\StoreShippingTemplatesClear($store_id),
         ];
     }
 
