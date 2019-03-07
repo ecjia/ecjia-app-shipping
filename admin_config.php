@@ -67,7 +67,7 @@ class admin_config extends ecjia_admin
         RC_Style::enqueue_style('uniform-aristo');
         RC_Script::enqueue_script('jquery-uniform');
         RC_Script::enqueue_script('jquery-chosen');
-        RC_Script::enqueue_script('shipping_config', RC_App::apps_url('statics/js/shipping_config.js', __FILE__), array(), false, true);
+        RC_Script::enqueue_script('shipping_config', RC_App::apps_url('statics/js/shipping_config.js', __FILE__), array(), false, 1);
         //js语言包
         RC_Script::localize_script('shipping_config', 'js_lang', config('app-shipping::jslang.shipping_config_page'));
     }

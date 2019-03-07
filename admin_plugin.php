@@ -77,11 +77,11 @@ class admin_plugin extends ecjia_admin
         RC_Style::enqueue_style('datepicker', RC_Uri::admin_url('statics/lib/datepicker/bootstrap-datetimepicker.min.css'));
         RC_Script::enqueue_script('bootstrap-timepicker', RC_Uri::admin_url('statics/lib/datepicker/bootstrap-datetimepicker.js'));
 
-        RC_Script::enqueue_script('shipping_admin', RC_App::apps_url('statics/js/shipping_admin.js', __FILE__));
+        RC_Script::enqueue_script('shipping_admin', RC_App::apps_url('statics/js/shipping_admin.js', __FILE__), array(), false, 1);
 		
         RC_Script::enqueue_script('acejs', RC_Uri::admin_url('statics/lib/acejs/ace.js'), array(), false, true);
         RC_Script::enqueue_script('acejs-emmet', RC_Uri::admin_url('statics/lib/acejs/ext-emmet.js'), array(), false, true);
-        RC_Script::enqueue_script('template', RC_App::apps_url('statics/js/template.js', __FILE__));
+        RC_Script::enqueue_script('template', RC_App::apps_url('statics/js/template.js', __FILE__), array(), false, 1);
         
         //js语言包
         RC_Script::localize_script('shipping_admin', 'js_lang', config('app-shipping::jslang.shipping_list_page'));

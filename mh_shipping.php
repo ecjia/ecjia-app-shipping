@@ -66,7 +66,7 @@ class mh_shipping extends ecjia_merchant
         RC_Script::enqueue_script('bootstrap-datetimepicker', RC_Uri::admin_url('statics/lib/datepicker/bootstrap-datetimepicker.js'));
         RC_Style::enqueue_style('datetimepicker', RC_Uri::admin_url('statics/lib/datepicker/bootstrap-datetimepicker.min.css'));
         
-        RC_Script::enqueue_script('merchant_express', RC_App::apps_url('statics/js/merchant_express.js', __FILE__));
+        RC_Script::enqueue_script('merchant_express', RC_App::apps_url('statics/js/merchant_express.js', __FILE__), array(), false, 1);
         RC_Script::enqueue_script('ecjia.utils');
 
         RC_Style::enqueue_style('mh_shipping', RC_App::apps_url('statics/css/merchant_express.css', __FILE__), array());
