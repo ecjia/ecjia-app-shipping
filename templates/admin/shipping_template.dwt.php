@@ -538,7 +538,7 @@
 			                        </div>
 			                        
 				  					<div class="text-box">
-				  						<span class="help-block">{t domain="shipping"}温馨提示：请复制右侧区域变量放入以下输入框中{/t}</span>
+				  						<span class="help-block">{t domain="shipping" escape=no url="{url path='shipping/admin/print_template_preview' args="shipping_id={$shipping.shipping_id}"}" name="点击预览"}温馨提示：请复制右侧区域变量放入以下输入框中进行模板设置 ；否则系统将会默认当前插件的快递单模板<a href="%1">%2</a>；{/t}</span>
 					       				<textarea class="text-con" id="shipping_print" name="shipping_print" rows="40" cols="3" >{$shipping.shipping_print|escape:html}</textarea>
 					                </div>
 				                </div>
@@ -551,7 +551,7 @@
 				                        <div class="template_list" id="ms-custom-navigation" style="height: 518px;">
 				                            <ul class="unstyled" style="height: 527px;">
 				                                <!-- {foreach from=$shipping_template_info item=val} -->
-				                                <li class="ms-elem-selectable">{$val.variable}&nbsp;{$val.name}</li>
+				                                <li class="ms-elem-selectable">{$val}</li>
 				                                <!-- {/foreach} -->
 				                            </ul>
 				                        </div>

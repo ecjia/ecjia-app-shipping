@@ -217,8 +217,8 @@ class admin extends ecjia_admin
             $this->assign('ur_here', __('快递单模板编辑', 'shipping'));
             $this->assign('action_link', array('text' => __('配送方式', 'shipping'), 'href' => RC_Uri::url('shipping/admin_plugin/init')));
 
-            $data = RC_Loader::load_app_config('shipping_template_info');
-            $this->assign('shipping_template_info', $data);
+            $shipping_template_info = (new Ecjia\App\Shipping\ShippingTemplate())->getDefaultsWithFormatted();
+            $this->assign('shipping_template_info', $shipping_template_info);
 
             if (!empty($shipping_data['print_bg'])) {
                 $plugin_handle   = ecjia_shipping::channel($shipping_data['shipping_code']);
@@ -292,6 +292,18 @@ class admin extends ecjia_admin
         ecjia_admin::admin_log(addslashes($_POST['shipping_name']), 'edit', 'shipping_print_template');
 
         return $this->showmessage(__('快递单模板编辑成功', 'shipping'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('pjaxurl' => RC_Uri::url('shipping/admin/edit_print_template', array('shipping_id' => $shipping_id))));
+    }
+    
+    /**
+     * 获取默认模板
+     */
+    public function print_template_preview()
+    {
+    	$shipping_id = intval($_GET['shipping_id']);
+    	$shipping_code = RC_DB::TABLE('shipping')->where('shipping_id', $shipping_id)->pluck('shipping_code');
+    	$plugin_handle   = ecjia_shipping::channel($shipping_code);
+    	$shipping_print  = $plugin_handle->loadPrintOption('shipping_print');
+    	echo $this->fetch($shipping_print);
     }
 }
 
