@@ -235,8 +235,6 @@ class admin extends ecjia_admin
                 'do_edit'          => RC_Uri::url('shipping/admin/do_edit_print_template'),
             );
 
-            $lang_lable_box = with(new Ecjia\App\Shipping\PrintConfigLabel)->getLabels()->all();
-
             $config_lable      = explode("||,||", $shipping_data['config_lable']);
             $config_lable_list = array();
             foreach ($config_lable as $key => $val) {
@@ -251,10 +249,15 @@ class admin extends ecjia_admin
             $this->assign('post_links', $links);
             $this->assign('shipping', $shipping_data);
             $this->assign('shipping_id', $shipping_id);
-            $this->assign('lang_lable_box', $lang_lable_box);
+           
             $this->assign('config_lable_list', $config_lable_list);
             $this->assign('lang_js_languages', RC_Lang::get('shipping::shipping.js_languages')); //TODO 语言包处理方法待确认
 
+            //获取插件打印选项数据
+            $plugin_handle   = ecjia_shipping::channel($shipping_data['shipping_code']);
+            $lable_list_box = $plugin_handle->loadPrintOption('lable_box');
+            $this->assign('lang_lable_box', $lable_list_box);
+            
             $this->display('shipping_template.dwt');
         } else {
             return $this->showmessage(__('您的配送方式尚未安装，暂不能编辑模板', 'shipping'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);

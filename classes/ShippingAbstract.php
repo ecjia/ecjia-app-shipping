@@ -134,7 +134,7 @@ abstract class ShippingAbstract extends AbstractPlugin
      * @param null $default
      * @return array|mixed
      */
-    protected function loadPrintOption($key = null, $default = null)
+    public function loadPrintOption($key = null, $default = null)
     {
         $option = $this->loadConfig('print_option', []);
 
