@@ -9,7 +9,26 @@
 namespace Ecjia\App\Shipping;
 
 
-class ShippingTemplateTest
+class ShippingTemplateTest extends ShippingTemplate
 {
+
+
+    public function __construct()
+    {
+        parent::__construct();
+
+
+        $this->setTemplateData('shop_name', '');
+        $this->setTemplateData('shop_name', '');
+        $this->setTemplateData('shop_name', '');
+        $this->setTemplateData('shop_name', '');
+        $this->setTemplateData('shop_name', '');
+        $this->setTemplateData('shop_name', '');
+        $this->setTemplateData('shop_name', '');
+        $this->setTemplateData('shop_name', '');
+        $this->setTemplateData('shop_name', '');
+
+    }
+
 
 }
