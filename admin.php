@@ -303,7 +303,14 @@ class admin extends ecjia_admin
     	$shipping_code = RC_DB::TABLE('shipping')->where('shipping_id', $shipping_id)->pluck('shipping_code');
     	$plugin_handle   = ecjia_shipping::channel($shipping_code);
     	$shipping_print  = $plugin_handle->loadPrintOption('shipping_print');
-    	echo $this->fetch($shipping_print);
+    
+    	$test_info = new Ecjia\App\Shipping\ShippingTemplateTest();
+    	$template_data = $test_info->getTemplateData();
+    	foreach ($template_data as $key => $val) {
+    		$this->assign($key, $val);
+    	}
+    	
+    	return $this->display($shipping_print);
     }
 }
 
