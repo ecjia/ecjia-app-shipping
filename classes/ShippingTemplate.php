@@ -88,7 +88,7 @@ class ShippingTemplate
     public function getDefaultsWithFormatted()
     {
     	return collect($this->default)->map(function($item, $key) {
-    		return '{$'. $key .'} ' . $item;
+    		return '<font class="ecjiafc-blue">{$'. $key .'}</font> ' . $item;
     	})->all();
     }
 }
