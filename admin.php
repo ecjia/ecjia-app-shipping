@@ -316,7 +316,7 @@ class admin extends ecjia_admin
     	if(empty($shipping_data['shipping_print'])) {
     		return $this->display($shipping_print);
     	} else {
-    		echo $this->fetch_string($shipping_data['shipping_print']);
+    		echo $this->fetch_string(stripslashes($shipping_data['shipping_print']));
     	}
     }
 }
