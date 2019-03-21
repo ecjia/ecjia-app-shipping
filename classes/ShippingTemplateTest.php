@@ -17,30 +17,32 @@ class ShippingTemplateTest extends ShippingTemplate
     {
         parent::__construct();
 
-
-        $this->setTemplateData('shop_country', 'ECJIA');
+        $this->setTemplateData('shop_country', '中国');
         $this->setTemplateData('shop_province', '上海市');
         $this->setTemplateData('shop_city', '上海市');
-        $this->setTemplateData('shop_district', '普陀区');
-        $this->setTemplateData('shop_address', '中山北路3553');
-        $this->setTemplateData('shop_name', '');
-        $this->setTemplateData('shop_tel', '');
+        $this->setTemplateData('shop_district', '普陀区曹杨新村街道');
+        $this->setTemplateData('shop_address', '普陀区中山北路3551号');
+        $this->setTemplateData('shop_name', '天天果园');
+        $this->setTemplateData('shop_tel', '15012345678');
         
-        $this->setTemplateData('customer_country', '');
-        $this->setTemplateData('customer_province', '');
-        $this->setTemplateData('customer_city', '');
-        $this->setTemplateData('customer_district', '');
-        $this->setTemplateData('customer_tel', '');
-        $this->setTemplateData('customer_mobel', '');
-        $this->setTemplateData('customer_post', '');
-        $this->setTemplateData('customer_address', '');
-        $this->setTemplateData('customer_address', '');
+        $this->setTemplateData('customer_country', '中国');
+        $this->setTemplateData('customer_province', '上海市');
+        $this->setTemplateData('customer_city', '上海市');
+        $this->setTemplateData('customer_district', '普陀区曹杨新村街道');
+        $this->setTemplateData('customer_tel', '021-12345678');
+        $this->setTemplateData('customer_mobel', '15012345678');
+        $this->setTemplateData('customer_post', '200000');
+        $this->setTemplateData('customer_address', '普陀区中山北路3559号');
+        $this->setTemplateData('customer_name', '张三');
         
-        $this->setTemplateData('order_no', '');
-        $this->setTemplateData('order_amount', '');
-        $this->setTemplateData('order_postscript', '');
-        $this->setTemplateData('order_best_time', '');
+        $this->setTemplateData('year', '2018');
+        $this->setTemplateData('months', '12');
+        $this->setTemplateData('day', '15');
+        $this->setTemplateData('order_no', '2018121556988');
+        $this->setTemplateData('order_amount', '66');
+        $this->setTemplateData('order_postscript', '速度发货');
+        $this->setTemplateData('order_best_time', '2018-12-18 08:00-09:00');
     }
-
-
 }
+
+// end

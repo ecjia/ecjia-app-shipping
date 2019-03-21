@@ -44,7 +44,7 @@ class ShippingTemplate
 	        'order_no'              => __('表示订单号', 'shipping'),
 	        'order_amount'          => __('表示订单金额', 'shipping'),
 	        'order_postscript'      => __('表示订单备注', 'shipping'),
-	        'order_best_time'       => __('表示送货时间', 'shipping'),
+	        'order_best_time'       => __('表示最佳送货时间', 'shipping'),
         ];
     }
 

@@ -209,7 +209,7 @@ class admin extends ecjia_admin
 
         if ($shipping_data) {
             /*代码模式逻辑开始*/
-            $shipping_data['shipping_print'] = !empty($shipping_data['shipping_print']) ? $shipping_data['shipping_print'] : '';
+            $shipping_data['shipping_print'] = !empty($shipping_data['shipping_print']) ? stripslashes($shipping_data['shipping_print']) : '';
             $shipping_data['print_model']    = !empty($shipping_data['print_model']) ? $shipping_data['print_model'] : 1; //兼容以前版本
 
             ecjia_screen::get_current_screen()->add_nav_here(new admin_nav_here(__('快递单模板编辑', 'shipping')));
@@ -295,23 +295,27 @@ class admin extends ecjia_admin
     }
     
     /**
-     * 获取默认模板
+     * 模板预览
      */
     public function print_template_preview()
     {
+    	//获取当前配送方式插件的快递单模板文件
     	$shipping_id = intval($_GET['shipping_id']);
-    	$shipping_code = RC_DB::TABLE('shipping')->where('shipping_id', $shipping_id)->pluck('shipping_code');
-    	$plugin_handle   = ecjia_shipping::channel($shipping_code);
+    	$shipping_data = RC_DB::table('shipping')->select('shipping_code', 'shipping_print')->where('shipping_id', $shipping_id)->first();
+    	$plugin_handle   = ecjia_shipping::channel($shipping_data['shipping_code']);
     	$shipping_print  = $plugin_handle->loadPrintOption('shipping_print');
-    
+    	
+    	//若并未设置自定义模板参数，则获取默认数据
     	$test_info = new Ecjia\App\Shipping\ShippingTemplateTest();
     	$template_data = $test_info->getTemplateData();
     	foreach ($template_data as $key => $val) {
     		$this->assign($key, $val);
     	}
-    	
-    	return $this->display($shipping_print);
+    	if(empty($shipping_data['shipping_print'])) {
+    		return $this->display($shipping_print);
+    	} else {
+    		echo $this->fetch_string($shipping_data['shipping_print']);
+    	}
     }
 }
-
 // end
