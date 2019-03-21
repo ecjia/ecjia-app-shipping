@@ -305,12 +305,14 @@ class admin extends ecjia_admin
     	$plugin_handle   = ecjia_shipping::channel($shipping_data['shipping_code']);
     	$shipping_print  = $plugin_handle->loadPrintOption('shipping_print');
     	
-    	//若并未设置自定义模板参数，则获取默认数据
+    	//获取默认数据
     	$test_info = new Ecjia\App\Shipping\ShippingTemplateTest();
     	$template_data = $test_info->getTemplateData();
     	foreach ($template_data as $key => $val) {
     		$this->assign($key, $val);
     	}
+    	
+    	//若未设置自定义模板参数，浏览默认模板
     	if(empty($shipping_data['shipping_print'])) {
     		return $this->display($shipping_print);
     	} else {
