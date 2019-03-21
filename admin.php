@@ -103,6 +103,7 @@ class admin extends ecjia_admin
         if (isset($shipping_data['shipping_code'])) {
             $plugin_handle = ecjia_shipping::channel($shipping_data['shipping_code']);
             $data          = array(
+            	'print_model'  => 2,	
                 'print_bg'     => $plugin_handle->defaultPrintBackgroundImage(),
                 'config_lable' => $plugin_handle->getConfigLabel(),
             );
@@ -225,6 +226,8 @@ class admin extends ecjia_admin
                 $config_print_bg = $plugin_handle->defaultPrintBackgroundImage();
                 if ($shipping_data['print_bg'] != $config_print_bg) {
                     $shipping_data['print_bg'] = RC_Upload::upload_url($shipping_data['print_bg']);
+                }else {
+                	$shipping_data['print_bg'] = $shipping_data['print_bg'];
                 }
             }
 
