@@ -20,7 +20,8 @@ class ShippingTemplateTest extends ShippingTemplate
         $this->setTemplateData('shop_country', '中国');
         $this->setTemplateData('shop_province', '上海市');
         $this->setTemplateData('shop_city', '上海市');
-        $this->setTemplateData('shop_district', '普陀区曹杨新村街道');
+        $this->setTemplateData('shop_district', '普陀区');
+        $this->setTemplateData('shop_street', '曹杨新村街道');
         $this->setTemplateData('shop_address', '普陀区中山北路3551号');
         $this->setTemplateData('shop_name', '天天果园');
         $this->setTemplateData('shop_tel', '15012345678');
@@ -28,7 +29,8 @@ class ShippingTemplateTest extends ShippingTemplate
         $this->setTemplateData('customer_country', '中国');
         $this->setTemplateData('customer_province', '上海市');
         $this->setTemplateData('customer_city', '上海市');
-        $this->setTemplateData('customer_district', '普陀区曹杨新村街道');
+        $this->setTemplateData('customer_district', '普陀区');
+        $this->setTemplateData('customer_street', '曹杨新村街道');
         $this->setTemplateData('customer_tel', '021-12345678');
         $this->setTemplateData('customer_mobel', '15012345678');
         $this->setTemplateData('customer_post', '200000');

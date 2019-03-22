@@ -220,15 +220,12 @@ class admin extends ecjia_admin
 
             $shipping_template_info = (new Ecjia\App\Shipping\ShippingTemplate())->getDefaultsWithFormatted();
             $this->assign('shipping_template_info', $shipping_template_info);
-
             if (!empty($shipping_data['print_bg'])) {
-                $plugin_handle   = ecjia_shipping::channel($shipping_data['shipping_code']);
-                $config_print_bg = $plugin_handle->defaultPrintBackgroundImage();
-                if ($shipping_data['print_bg'] != $config_print_bg) {
-                    $shipping_data['print_bg'] = RC_Upload::upload_url($shipping_data['print_bg']);
-                }else {
-                	$shipping_data['print_bg'] = $shipping_data['print_bg'];
-                }
+            	if (strpos($shipping_data['print_bg'], 'http://') === false && strpos($shipping_data['print_bg'], 'https://') === false) {
+            		$shipping_data['print_bg'] = RC_Upload::upload_url($shipping_data['print_bg']);
+            	} else {
+            		$shipping_data['print_bg'] = $shipping_data['print_bg'];
+            	}
             }
 
             $links = array(
