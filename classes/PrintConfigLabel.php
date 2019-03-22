@@ -45,9 +45,11 @@ class PrintConfigLabel
      */
     public function getLabels()
     {
-        return collect($this->labels)->map(function ($itme, $key) {
-        	return RC_Lang::get('shipping::shipping.lable_box.'.$key);
-        });
+//        return collect($this->labels)->map(function ($itme, $key) {
+//        	return RC_Lang::get('shipping::shipping.lable_box.'.$key);
+//        });
+
+        return collect($this->labels);
     }
     
     /**
