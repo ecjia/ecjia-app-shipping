@@ -67,9 +67,7 @@ class PrintConfigLabel
      */
     public function translantConfigLabel($config)
     {
-        $items = explode("||,||", $config);
-        
-        $transConfig = collect($items)->map(function($item) {
+        $transConfig = collect($config)->map(function($item) {
         	$subItems = explode(',', $item);
         	$subItems = collect($subItems)->map(function ($item, $key) {
         		if ($key === 1) {
