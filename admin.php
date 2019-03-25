@@ -183,7 +183,8 @@ class admin extends ecjia_admin
         	$print_model_msg = __('所见即所得模式', 'shipping');
         }
         $upgrade_url = RC_Uri::url('shipping/admin/print_template_preview', array('shipping_id' => $shipping_id));
-        $warning = sprintf(__('当前属于%s，切换之后需要保存才可<a href="%s" target="_blank">点击预览</a>快递单模板。', 'shipping'), $print_model_msg, $upgrade_url);
+        $this->assign('upgrade_url', $upgrade_url);
+        $warning = sprintf(__('当前属于%s，保存设置即可<a href="%s" target="_blank">点击预览</a>快递单模板。', 'shipping'), $print_model_msg, $upgrade_url);
         ecjia_screen::get_current_screen()->add_admin_notice(new admin_notice($warning, 'alert'));
 
         if ($shipping_data) {
@@ -308,7 +309,6 @@ class admin extends ecjia_admin
      */
     public function print_template_preview()
     {
-    	//获取当前配送方式插件的快递单模板文件
     	$shipping_id = intval($_GET['shipping_id']);
     	$shipping_data = RC_DB::table('shipping')->where('shipping_id', $shipping_id)->first();
     	
@@ -369,7 +369,7 @@ class admin extends ecjia_admin
     			//自定义模板设置
     			echo $this->fetch_string(stripslashes($shipping_data['shipping_print']));
     		} else {
-    			//默认模板
+    			//获取当前配送方式插件的快递单默认模板文件
     			$plugin_handle   = ecjia_shipping::channel($shipping_data['shipping_code']);
     			$shipping_print  = $plugin_handle->loadPrintOption('shipping_print');
     		

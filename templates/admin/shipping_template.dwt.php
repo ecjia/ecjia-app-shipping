@@ -420,7 +420,7 @@
 			</ul>
 		</div> 
 	</div>
-			
+	<input type="hidden" name="upgrade_url" value="{$upgrade_url}" />
 	<!--模板模式-->
 	<div id="visual" {if $shipping.print_model == 1}style="display:none"{else} style="display:block"{/if}>
 		<form action="{$post_links.print_img_upload}" enctype="multipart/form-data" method="post" name="theForm"  id="theForm">
