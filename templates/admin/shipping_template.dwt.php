@@ -538,7 +538,7 @@
 			                        </div>
 			                        
 				  					<div class="text-box">
-				  						<span class="help-block">{t domain="shipping" escape=no url="{url path='shipping/admin/print_template_preview' args="shipping_id={$shipping.shipping_id}"}" name="点击预览"}温馨提示：请复制右侧区域变量进行自定义模板设置 ；若未进行设置，系统将会默认插件中的快递单模板<a href="%1" target="_blank">%2</a>；{/t}</span>
+				  						<span class="help-block">{t domain="shipping"}温馨提示：请复制右侧区域变量进行自定义模板设置 ；若未进行设置，系统将会默认插件中的快递单模板；{/t}</span>
 					       				<textarea class="text-con" id="shipping_print" name="shipping_print" rows="40" cols="3" >{$shipping.shipping_print|escape:html}</textarea>
 					                </div>
 				                </div>
