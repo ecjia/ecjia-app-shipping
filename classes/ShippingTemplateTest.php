@@ -32,7 +32,7 @@ class ShippingTemplateTest extends ShippingTemplate
         $this->setTemplateData('customer_district', '普陀区');
         $this->setTemplateData('customer_street', '曹杨新村街道');
         $this->setTemplateData('customer_tel', '021-12345678');
-        $this->setTemplateData('customer_mobel', '15012345678');
+        $this->setTemplateData('customer_mobel', '13512345678');
         $this->setTemplateData('customer_post', '200000');
         $this->setTemplateData('customer_address', '普陀区中山北路3559号');
         $this->setTemplateData('customer_name', '张三');
