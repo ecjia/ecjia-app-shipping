@@ -46,11 +46,9 @@
                 dataType: "json",
                 success: function(data) {
                     if (data.state == "success") {
-                        if (data.refresh_url != undefined) {
-                            var url = data.refresh_url;
-                            ecjia.pjax(url, function() {
-                                ecjia.admin.showmessage(data);
-                            });
+                        if (data.url) {
+                            ecjia.admin.showmessage(data);
+                            location.href = data.url;
                         } else {
                             ecjia.admin.showmessage(data);
                         }

@@ -5,7 +5,7 @@
 <script type="text/javascript">
 	ecjia.admin.admin_template.library();
 
-	ecjia.admin.shipTemplate.init_template_1();
+	ecjia.admin.shipTemplate.init_template_1(); //代码模式js提交处理
 	
 	// 这里把JS用到的所有语言都赋值到这里
 	{foreach from=$lang_js_languages key=key item=item}
@@ -217,6 +217,9 @@
 							callback();
 						}
 						ecjia.admin.showmessage(data);
+						if(data.url) {
+							location.href = data.url;
+						}
 					}
 				});
 				return true;
