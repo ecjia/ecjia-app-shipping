@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Ecjia App shipping 1.27.4\n"
 "Report-Msgid-Bugs-To: https://make.ecjia.com/polyglots/\n"
-"POT-Creation-Date: 2019-03-22 03:53:28+00:00\n"
+"POT-Creation-Date: 2019-03-29 01:41:54+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <ecjia@ecjia.com>\n"
 
-#: admin.php:90 admin.php:219 admin_plugin.php:91 admin_plugin.php:103
+#: admin.php:90 admin.php:199 admin_plugin.php:91 admin_plugin.php:103
 #: admin_plugin.php:114 admin_plugin.php:166
 #: apis/shipping_plugin_menu_api.class.php:57
 #: apis/shipping_tool_menu_api.class.php:57
@@ -21,71 +21,85 @@ msgstr ""
 msgid "配送方式"
 msgstr ""
 
-#: admin.php:117
-msgid "恢复默认设置成功"
-msgstr ""
-
-#: admin.php:119
-msgid "恢复默认设置失败"
-msgstr ""
-
-#: admin.php:137
+#: admin.php:107
 msgid "错误：文件类型不正确。请上传%s类型的文件！"
 msgstr ""
 
-#: admin.php:149
+#: admin.php:120
 msgid "上传打印单图片成功"
 msgstr ""
 
-#: admin.php:151
+#: admin.php:122
 msgid "上传打印单图片操作失败"
 msgstr ""
 
-#: admin.php:155
+#: admin.php:126
 msgid "您还没有选择打印单图片。请使用“选择图片”按钮进行选择！"
 msgstr ""
 
-#: admin.php:175
+#: admin.php:146
 msgid "要删除的图片是默认图片，恢复模板可再次使用"
 msgstr ""
 
-#: admin.php:180
+#: admin.php:151
 msgid "打印单图片删除成功"
 msgstr ""
 
-#: admin.php:183
+#: admin.php:154
 msgid "暂无打印单图片可删除"
 msgstr ""
 
-#: admin.php:199 admin_plugin.php:106
+#: admin.php:170 admin_plugin.php:106
 msgid "概述"
 msgstr ""
 
-#: admin.php:200
+#: admin.php:171
 msgid ""
 "欢迎访问ECJia智能后台快递单模板编辑页面，可以在此编辑相应的快递单模板信息。"
 msgstr ""
 
-#: admin.php:204 admin_plugin.php:111
+#: admin.php:175 admin_plugin.php:111
 msgid "更多信息："
 msgstr ""
 
-#: admin.php:205
+#: admin.php:176
 msgid ""
 "<a href=\"https://ecjia.com/wiki/帮助:ECJia智能后台:配送方式\" target="
 "\"_blank\">关于快递单模板编辑帮助文档</a>"
 msgstr ""
 
-#: admin.php:216 admin.php:218
+#: admin.php:182
+msgid "代码模式"
+msgstr ""
+
+#: admin.php:184
+msgid "所见即所得模式"
+msgstr ""
+
+#: admin.php:188
+msgid ""
+"当前属于%s，保存设置即可<a href=\"%s\" target=\"_blank\">点击预览</a>快递单模"
+"板。"
+msgstr ""
+
+#: admin.php:196 admin.php:198
 msgid "快递单模板编辑"
 msgstr ""
 
-#: admin.php:263
+#: admin.php:243
 msgid "您的配送方式尚未安装，暂不能编辑模板"
 msgstr ""
 
-#: admin.php:294
+#: admin.php:275
 msgid "快递单模板编辑成功"
+msgstr ""
+
+#: admin.php:305
+msgid "恢复默认设置成功"
+msgstr ""
+
+#: admin.php:307
+msgid "恢复默认设置失败"
 msgstr ""
 
 #: admin_config.php:82 admin_config.php:84
@@ -959,73 +973,63 @@ msgstr ""
 msgid "配送状态"
 msgstr ""
 
-#: content/apps/shipping/templates/admin/shipping_template.dwt.php:408
-msgid "所见即所得模式"
-msgstr ""
-
-#: content/apps/shipping/templates/admin/shipping_template.dwt.php:409
-#: content/apps/shipping/templates/admin/shipping_template.dwt.php:537
-msgid "代码模式"
-msgstr ""
-
-#: content/apps/shipping/templates/admin/shipping_template.dwt.php:414
+#: content/apps/shipping/templates/admin/shipping_template.dwt.php:417
 msgid "--- 选择插入标签 ---"
 msgstr ""
 
-#: content/apps/shipping/templates/admin/shipping_template.dwt.php:416
+#: content/apps/shipping/templates/admin/shipping_template.dwt.php:419
 msgid "选择插入标签"
 msgstr ""
 
-#: content/apps/shipping/templates/admin/shipping_template.dwt.php:442
-#: content/apps/shipping/templates/admin/shipping_template.dwt.php:453
+#: content/apps/shipping/templates/admin/shipping_template.dwt.php:445
+#: content/apps/shipping/templates/admin/shipping_template.dwt.php:456
 msgid "模板底图："
 msgstr ""
 
-#: content/apps/shipping/templates/admin/shipping_template.dwt.php:445
+#: content/apps/shipping/templates/admin/shipping_template.dwt.php:448
 msgid "上传打印单图片,未选中文件"
 msgstr ""
 
-#: content/apps/shipping/templates/admin/shipping_template.dwt.php:446
+#: content/apps/shipping/templates/admin/shipping_template.dwt.php:449
 msgid "选择图片"
 msgstr ""
 
-#: content/apps/shipping/templates/admin/shipping_template.dwt.php:447
+#: content/apps/shipping/templates/admin/shipping_template.dwt.php:450
 msgid "上传"
 msgstr ""
 
-#: content/apps/shipping/templates/admin/shipping_template.dwt.php:454
+#: content/apps/shipping/templates/admin/shipping_template.dwt.php:457
 msgid "删除打印单图片"
 msgstr ""
 
-#: content/apps/shipping/templates/admin/shipping_template.dwt.php:459
+#: content/apps/shipping/templates/admin/shipping_template.dwt.php:462
 msgid "删除标签"
 msgstr ""
 
-#: content/apps/shipping/templates/admin/shipping_template.dwt.php:460
+#: content/apps/shipping/templates/admin/shipping_template.dwt.php:463
 msgid "注：需选中标签才可进行删除"
 msgstr ""
 
-#: content/apps/shipping/templates/admin/shipping_template.dwt.php:490
+#: content/apps/shipping/templates/admin/shipping_template.dwt.php:493
 msgid "设置打印内容"
 msgstr ""
 
-#: content/apps/shipping/templates/admin/shipping_template.dwt.php:521
-#: content/apps/shipping/templates/admin/shipping_template.dwt.php:563
+#: content/apps/shipping/templates/admin/shipping_template.dwt.php:524
+#: content/apps/shipping/templates/admin/shipping_template.dwt.php:566
 msgid "保存设置"
 msgstr ""
 
-#: content/apps/shipping/templates/admin/shipping_template.dwt.php:522
+#: content/apps/shipping/templates/admin/shipping_template.dwt.php:525
 msgid "恢复默认"
 msgstr ""
 
-#: content/apps/shipping/templates/admin/shipping_template.dwt.php:541
+#: content/apps/shipping/templates/admin/shipping_template.dwt.php:544
 msgid ""
-"\"}\" name=\"点击预览\"}温馨提示：请复制右侧区域变量进行自定义模板设置 ；若未"
-"进行设置，系统将会默认插件中的快递单模板<a href=\"%1\" target=\"_blank\">%2</"
-"a>；"
+"温馨提示：请复制右侧区域变量进行自定义模板设置 ；若未进行设置，系统将会默认插"
+"件中的快递单模板；"
 msgstr ""
 
-#: content/apps/shipping/templates/admin/shipping_template.dwt.php:548
+#: content/apps/shipping/templates/admin/shipping_template.dwt.php:551
 msgid "订单模板变量说明"
 msgstr ""
 
