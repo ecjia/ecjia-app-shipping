@@ -4,18 +4,18 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Ecjia App shipping 1.27.4\n"
 "Report-Msgid-Bugs-To: https://make.ecjia.com/polyglots/\n"
-"POT-Creation-Date: 2019-03-20 07:33:55+00:00\n"
+"POT-Creation-Date: 2019-04-04 10:04+0800\n"
+"PO-Revision-Date: 2019-04-04 10:22+0800\n"
+"Last-Translator: \n"
+"Language-Team: LANGUAGE <ecjia@ecjia.com>\n"
+"Language: zh_TW\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"PO-Revision-Date: 2019-03-28 13:01+0800\n"
-"Language-Team: LANGUAGE <ecjia@ecjia.com>\n"
-"X-Generator: Poedit 2.2\n"
-"Last-Translator: \n"
+"X-Generator: Poedit 1.8.7\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"Language: zh_TW\n"
 
-#: admin.php:90 admin.php:218 admin_plugin.php:91 admin_plugin.php:103
+#: admin.php:90 admin.php:199 admin_plugin.php:91 admin_plugin.php:103
 #: admin_plugin.php:114 admin_plugin.php:166
 #: apis/shipping_plugin_menu_api.class.php:57
 #: apis/shipping_tool_menu_api.class.php:57
@@ -24,57 +24,49 @@ msgstr ""
 msgid "配送方式"
 msgstr "配送方式"
 
-#: admin.php:116
-msgid "恢复默认设置成功"
-msgstr "恢復默認設置成功"
-
-#: admin.php:118
-msgid "恢复默认设置失败"
-msgstr "恢復默認設置失敗"
-
-#: admin.php:136
+#: admin.php:107
 msgid "错误：文件类型不正确。请上传%s类型的文件！"
 msgstr "錯誤：文件類型不正確。請上傳%s類型的文件！"
 
-#: admin.php:148
+#: admin.php:120
 msgid "上传打印单图片成功"
 msgstr "上傳打印單圖片成功"
 
-#: admin.php:150
+#: admin.php:122
 msgid "上传打印单图片操作失败"
 msgstr "上傳打印單圖片操作失敗"
 
-#: admin.php:154
+#: admin.php:126
 msgid "您还没有选择打印单图片。请使用“选择图片”按钮进行选择！"
 msgstr "您還沒有選擇打印單圖片。請使用“選擇圖片”按鈕進行選擇！"
 
-#: admin.php:174
+#: admin.php:146
 msgid "要删除的图片是默认图片，恢复模板可再次使用"
 msgstr "要刪除的圖片是默認圖片，恢復模板可再次使用"
 
-#: admin.php:179
+#: admin.php:151
 msgid "打印单图片删除成功"
 msgstr "打印單圖片刪除成功"
 
-#: admin.php:182
+#: admin.php:154
 msgid "暂无打印单图片可删除"
 msgstr "暫無打印單圖片可刪除"
 
-#: admin.php:198 admin_plugin.php:106
+#: admin.php:170 admin_plugin.php:106
 msgid "概述"
 msgstr "概述"
 
-#: admin.php:199
+#: admin.php:171
 msgid ""
 "欢迎访问ECJia智能后台快递单模板编辑页面，可以在此编辑相应的快递单模板信息。"
 msgstr ""
 "歡迎訪問ECJia智能後台快遞單模板編輯頁面，可以在此編輯相應的快遞單模板信息。"
 
-#: admin.php:203 admin_plugin.php:111
+#: admin.php:175 admin_plugin.php:111
 msgid "更多信息："
 msgstr "更多信息："
 
-#: admin.php:204
+#: admin.php:176
 msgid ""
 "<a href=\"https://ecjia.com/wiki/帮助:ECJia智能后台:配送方式\" target="
 "\"_blank\">关于快递单模板编辑帮助文档</a>"
@@ -82,17 +74,41 @@ msgstr ""
 "<a href=\"https://ecjia.com/wiki/帮助:ECJia智能后台:配送方式\" target="
 "\"_blank\">關於快遞單模板編輯幫助文檔</a>"
 
-#: admin.php:215 admin.php:217
+#: admin.php:182
+msgid "代码模式"
+msgstr "代碼模式"
+
+#: admin.php:184
+msgid "所见即所得模式"
+msgstr "所見即所得模式"
+
+#: admin.php:188
+msgid ""
+"当前属于%s，保存设置即可<a href=\"%s\" target=\"_blank\">点击预览</a>快递单"
+"模板。"
+msgstr ""
+"當前屬於%s，保存設置即可<a href=\"%s\" target=\"_blank\">點擊預覽</a>快遞單"
+"模板。"
+
+#: admin.php:196 admin.php:198
 msgid "快递单模板编辑"
 msgstr "快遞單模板編輯"
 
-#: admin.php:263
+#: admin.php:243
 msgid "您的配送方式尚未安装，暂不能编辑模板"
 msgstr "您的配送方式尚未安裝，暫不能編輯模板"
 
-#: admin.php:294
+#: admin.php:275
 msgid "快递单模板编辑成功"
 msgstr "快遞單模板編輯成功"
+
+#: admin.php:305
+msgid "恢复默认设置成功"
+msgstr "恢復默認設置成功"
+
+#: admin.php:307
+msgid "恢复默认设置失败"
+msgstr "恢復默認設置失敗"
 
 #: admin_config.php:82 admin_config.php:84
 #: classes/hooks/admin_shipping.class.php:57
@@ -337,6 +353,202 @@ msgstr "無需物流"
 msgid "不需要物流时选择此插件（本配送方式只支持商家发货时使用）"
 msgstr "不需要物流時選擇此插件（本配送方式只支持商家發貨時使用）"
 
+#: classes/ShippingTemplate.php:19 configs/shipping_template_info.php:54
+msgid "表示网店名称"
+msgstr "表示網店名稱"
+
+#: classes/ShippingTemplate.php:20 configs/shipping_template_info.php:70
+msgid "表示网店联系电话"
+msgstr "表示網店聯繫電話"
+
+#: classes/ShippingTemplate.php:21
+msgid "表示网店所属国家"
+msgstr "表示網店所屬國家"
+
+#: classes/ShippingTemplate.php:22 configs/shipping_template_info.php:58
+msgid "表示网店所属省份"
+msgstr "表示網店所屬省份"
+
+#: classes/ShippingTemplate.php:23 configs/shipping_template_info.php:62
+msgid "表示网店所属城市"
+msgstr "表示網店所屬城市"
+
+#: classes/ShippingTemplate.php:24
+msgid "表示网店所属区/县"
+msgstr "表示網店所屬區/縣"
+
+#: classes/ShippingTemplate.php:25
+msgid "表示网店所属街道"
+msgstr "表示網店所屬街道"
+
+#: classes/ShippingTemplate.php:26 configs/shipping_template_info.php:66
+msgid "表示网店地址"
+msgstr "表示網店地址"
+
+#: classes/ShippingTemplate.php:28
+msgid "表示收件人姓名"
+msgstr "表示收件人姓名"
+
+#: classes/ShippingTemplate.php:29 configs/shipping_template_info.php:82
+msgid "表示收件人电话"
+msgstr "表示收件人電話"
+
+#: classes/ShippingTemplate.php:30 configs/shipping_template_info.php:86
+msgid "表示收件人手机"
+msgstr "表示收件人手機"
+
+#: classes/ShippingTemplate.php:31 configs/shipping_template_info.php:90
+msgid "表示收件人邮编"
+msgstr "表示收件人郵編"
+
+#: classes/ShippingTemplate.php:32
+msgid "表示收件人所属国家"
+msgstr "表示收件人所屬國家"
+
+#: classes/ShippingTemplate.php:33
+msgid "表示收件人所属省份"
+msgstr "表示收件人所屬省份"
+
+#: classes/ShippingTemplate.php:34
+msgid "表示收件人所属城市"
+msgstr "表示收件人所屬城市"
+
+#: classes/ShippingTemplate.php:35
+msgid "表示收件人所属区/县"
+msgstr "表示收件人所屬區/縣"
+
+#: classes/ShippingTemplate.php:36
+msgid "表示收件人所属街道"
+msgstr "表示收件人所屬街道"
+
+#: classes/ShippingTemplate.php:37 configs/shipping_template_info.php:94
+msgid "表示收件人详细地址"
+msgstr "表示收件人詳細地址"
+
+#: classes/ShippingTemplate.php:39 configs/shipping_template_info.php:102
+msgid "表示订单号"
+msgstr "表示訂單號"
+
+#: classes/ShippingTemplate.php:40 configs/shipping_template_info.php:74
+msgid "表示订单金额"
+msgstr "表示訂單金額"
+
+#: classes/ShippingTemplate.php:41
+msgid "表示订单备注"
+msgstr "表示訂單備註"
+
+#: classes/ShippingTemplate.php:42
+msgid "表示最佳送货时间"
+msgstr "表示最佳送貨時間"
+
+#: classes/ShippingTemplate.php:43 classes/ShippingTemplateBox.php:46
+msgid "年-当日日期"
+msgstr "年-當日日期"
+
+#: classes/ShippingTemplate.php:44 classes/ShippingTemplateBox.php:47
+msgid "月-当日日期"
+msgstr "月-當日日期"
+
+#: classes/ShippingTemplate.php:45 classes/ShippingTemplateBox.php:48
+msgid "日-当日日期"
+msgstr "日-當日日期"
+
+#: classes/ShippingTemplateBox.php:22
+msgid "网店-名称"
+msgstr "網店-名稱"
+
+#: classes/ShippingTemplateBox.php:23
+msgid "网店-联系电话"
+msgstr "網店-聯繫電話"
+
+#: classes/ShippingTemplateBox.php:24
+msgid "网店-国家"
+msgstr "網店-國家"
+
+#: classes/ShippingTemplateBox.php:25
+msgid "网店-省份"
+msgstr "網店-省份"
+
+#: classes/ShippingTemplateBox.php:26
+msgid "网店-城市"
+msgstr "網店-城市"
+
+#: classes/ShippingTemplateBox.php:27
+msgid "网店-区/县"
+msgstr "網店-區/縣"
+
+#: classes/ShippingTemplateBox.php:28
+msgid "网店-街道"
+msgstr "網店-街道"
+
+#: classes/ShippingTemplateBox.php:29
+msgid "网店-地址"
+msgstr "網店-地址"
+
+#: classes/ShippingTemplateBox.php:31
+msgid "收件人-姓名"
+msgstr "收件人-姓名"
+
+#: classes/ShippingTemplateBox.php:32
+msgid "收件人-电话"
+msgstr "收件人-電話"
+
+#: classes/ShippingTemplateBox.php:33
+msgid "收件人-手机"
+msgstr "收件人-手機"
+
+#: classes/ShippingTemplateBox.php:34
+msgid "收件人-邮编"
+msgstr "收件人-郵編"
+
+#: classes/ShippingTemplateBox.php:35
+msgid "收件人-国家"
+msgstr "收件人-國家"
+
+#: classes/ShippingTemplateBox.php:36
+msgid "收件人-省份"
+msgstr "收件人-省份"
+
+#: classes/ShippingTemplateBox.php:37
+msgid "收件人-城市"
+msgstr "收件人-城市"
+
+#: classes/ShippingTemplateBox.php:38
+msgid "收件人-区/县"
+msgstr "收件人-區/縣"
+
+#: classes/ShippingTemplateBox.php:39
+msgid "收件人-街道"
+msgstr "收件人-街道"
+
+#: classes/ShippingTemplateBox.php:40
+msgid "收件人-详细地址"
+msgstr "收件人-詳細地址"
+
+#: classes/ShippingTemplateBox.php:42
+msgid "订单号-订单"
+msgstr "訂單號-訂單"
+
+#: classes/ShippingTemplateBox.php:43
+msgid "订单金额-订单"
+msgstr "訂單金額-訂單"
+
+#: classes/ShippingTemplateBox.php:44
+msgid "备注-订单"
+msgstr "備註-訂單"
+
+#: classes/ShippingTemplateBox.php:45
+msgid "送货时间-订单"
+msgstr "送貨時間-訂單"
+
+#: classes/ShippingTemplateBox.php:50
+msgid "√-对号"
+msgstr "√-對號"
+
+#: classes/ShippingTemplateBox.php:51
+msgid "自定义内容"
+msgstr "自定義內容"
+
 #: classes/StoreCleanHandlers/StoreShippingAreaClear.php:34
 msgid "店铺配送区域、运费模板"
 msgstr "店鋪配送區域、運費模板"
@@ -465,57 +677,13 @@ msgstr ""
 "操作，商家可直接在配送方式列表對物流公司經行快捷編輯，報價費用，並可一鍵切換"
 "是否啟用該物流公司，打印等，且可以對配送區域進行配置和添加。"
 
-#: configs/shipping_template_info.php:54
-msgid "表示网店名称"
-msgstr "表示網店名稱"
-
-#: configs/shipping_template_info.php:58
-msgid "表示网店所属省份"
-msgstr "表示網店所屬省份"
-
-#: configs/shipping_template_info.php:62
-msgid "表示网店所属城市"
-msgstr "表示網店所屬城市"
-
-#: configs/shipping_template_info.php:66
-msgid "表示网店地址"
-msgstr "表示網店地址"
-
-#: configs/shipping_template_info.php:70
-msgid "表示网店联系电话"
-msgstr "表示網店聯繫電話"
-
-#: configs/shipping_template_info.php:74
-msgid "表示订单金额"
-msgstr "表示訂單金額"
-
 #: configs/shipping_template_info.php:78
 msgid "表示收件人地区"
 msgstr "表示收件人地區"
 
-#: configs/shipping_template_info.php:82
-msgid "表示收件人电话"
-msgstr "表示收件人電話"
-
-#: configs/shipping_template_info.php:86
-msgid "表示收件人手机"
-msgstr "表示收件人手機"
-
-#: configs/shipping_template_info.php:90
-msgid "表示收件人邮编"
-msgstr "表示收件人郵編"
-
-#: configs/shipping_template_info.php:94
-msgid "表示收件人详细地址"
-msgstr "表示收件人詳細地址"
-
 #: configs/shipping_template_info.php:98
 msgid "表示收件人名称"
 msgstr "表示收件人名稱"
-
-#: configs/shipping_template_info.php:102
-msgid "表示订单号"
-msgstr "表示訂單號"
 
 #: configs/track_status.php:8
 msgid "圆通速递"
@@ -822,70 +990,65 @@ msgstr "配送來源"
 msgid "配送状态"
 msgstr "配送狀態"
 
-#: content/apps/shipping/templates/admin/shipping_template.dwt.php:408
-msgid "所见即所得模式"
-msgstr "所見即所得模式"
-
-#: content/apps/shipping/templates/admin/shipping_template.dwt.php:409
-#: content/apps/shipping/templates/admin/shipping_template.dwt.php:537
-msgid "代码模式"
-msgstr "代碼模式"
-
-#: content/apps/shipping/templates/admin/shipping_template.dwt.php:414
+#: content/apps/shipping/templates/admin/shipping_template.dwt.php:417
 msgid "--- 选择插入标签 ---"
 msgstr "--- 選擇插入標籤 ---"
 
-#: content/apps/shipping/templates/admin/shipping_template.dwt.php:416
+#: content/apps/shipping/templates/admin/shipping_template.dwt.php:419
 msgid "选择插入标签"
 msgstr "選擇插入標籤"
 
-#: content/apps/shipping/templates/admin/shipping_template.dwt.php:442
-#: content/apps/shipping/templates/admin/shipping_template.dwt.php:453
+#: content/apps/shipping/templates/admin/shipping_template.dwt.php:445
+#: content/apps/shipping/templates/admin/shipping_template.dwt.php:456
 msgid "模板底图："
 msgstr "模板底圖："
 
-#: content/apps/shipping/templates/admin/shipping_template.dwt.php:445
+#: content/apps/shipping/templates/admin/shipping_template.dwt.php:448
 msgid "上传打印单图片,未选中文件"
 msgstr "上傳打印單圖片,未選中文件"
 
-#: content/apps/shipping/templates/admin/shipping_template.dwt.php:446
+#: content/apps/shipping/templates/admin/shipping_template.dwt.php:449
 msgid "选择图片"
 msgstr "選擇圖片"
 
-#: content/apps/shipping/templates/admin/shipping_template.dwt.php:447
+#: content/apps/shipping/templates/admin/shipping_template.dwt.php:450
 msgid "上传"
 msgstr "上傳"
 
-#: content/apps/shipping/templates/admin/shipping_template.dwt.php:454
+#: content/apps/shipping/templates/admin/shipping_template.dwt.php:457
 msgid "删除打印单图片"
 msgstr "刪除打印單圖片"
 
-#: content/apps/shipping/templates/admin/shipping_template.dwt.php:459
+#: content/apps/shipping/templates/admin/shipping_template.dwt.php:462
 msgid "删除标签"
 msgstr "刪除標籤"
 
-#: content/apps/shipping/templates/admin/shipping_template.dwt.php:460
+#: content/apps/shipping/templates/admin/shipping_template.dwt.php:463
 msgid "注：需选中标签才可进行删除"
 msgstr "注：需選中標籤才可進行刪除"
 
-#: content/apps/shipping/templates/admin/shipping_template.dwt.php:490
+#: content/apps/shipping/templates/admin/shipping_template.dwt.php:493
 msgid "设置打印内容"
 msgstr "設置打印內容"
 
-#: content/apps/shipping/templates/admin/shipping_template.dwt.php:521
-#: content/apps/shipping/templates/admin/shipping_template.dwt.php:563
+#: content/apps/shipping/templates/admin/shipping_template.dwt.php:524
+#: content/apps/shipping/templates/admin/shipping_template.dwt.php:566
 msgid "保存设置"
 msgstr "保存設置"
 
-#: content/apps/shipping/templates/admin/shipping_template.dwt.php:522
+#: content/apps/shipping/templates/admin/shipping_template.dwt.php:525
 msgid "恢复默认"
 msgstr "恢復默認"
 
-#: content/apps/shipping/templates/admin/shipping_template.dwt.php:541
-msgid "温馨提示：请复制右侧区域变量放入以下输入框中"
-msgstr "溫馨提示：請複制右側區域變量放入以下輸入框中"
+#: content/apps/shipping/templates/admin/shipping_template.dwt.php:544
+msgid ""
+"温馨提示：请复制右侧区域变量进行自定义模板设置 ；若未进行设置，系统将会默认"
+"插件中的快递单模板；"
+msgstr ""
+"溫馨提示：請複制右側區域變量進行自定義模板設置 ；若未進行設置，系統將會默認"
+"插件中的快遞單模板；"
 
-#: content/apps/shipping/templates/admin/shipping_template.dwt.php:548
+#: content/apps/shipping/templates/admin/shipping_template.dwt.php:551
 msgid "订单模板变量说明"
 msgstr "訂單模板變量說明"
 
@@ -1267,3 +1430,6 @@ msgstr "選擇快遞"
 #: content/apps/shipping/templates/merchant/shipping_template_info.dwt.php:194
 msgid "请选择快递方式..."
 msgstr "選擇快遞"
+
+#~ msgid "温馨提示：请复制右侧区域变量放入以下输入框中"
+#~ msgstr "溫馨提示：請複制右側區域變量放入以下輸入框中"
