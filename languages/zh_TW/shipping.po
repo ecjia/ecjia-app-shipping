@@ -5,14 +5,14 @@ msgstr ""
 "Project-Id-Version: Ecjia App shipping 1.27.4\n"
 "Report-Msgid-Bugs-To: https://make.ecjia.com/polyglots/\n"
 "POT-Creation-Date: 2019-04-04 10:04+0800\n"
-"PO-Revision-Date: 2019-04-04 10:22+0800\n"
+"PO-Revision-Date: 2019-04-09 10:13+0800\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <ecjia@ecjia.com>\n"
 "Language: zh_TW\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.8.7\n"
+"X-Generator: Poedit 2.2\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
 #: admin.php:90 admin.php:199 admin_plugin.php:91 admin_plugin.php:103
@@ -283,7 +283,7 @@ msgstr "入駐商家列表"
 
 #: admin_store_shipping.php:109 admin_store_shipping.php:137
 msgid " - 运费模板"
-msgstr "入駐商家列表"
+msgstr " - 運費模板"
 
 #: admin_store_shipping.php:112 admin_store_shipping.php:140
 #: admin_store_shipping.php:146 apis/shipping_merchant_menu_api.class.php:61
@@ -571,7 +571,7 @@ msgstr "請輸入配送方式名稱"
 
 #: configs/jslang.php:53 configs/jslang.php:72
 msgid "配送方式名称长度不能小于3"
-msgstr "請輸入配送方式名稱"
+msgstr "配送方式名稱長度不能小於3"
 
 #: configs/jslang.php:54 configs/jslang.php:73
 msgid "请输入配送方式描述"
@@ -663,7 +663,7 @@ msgstr "請填寫App Key"
 
 #: configs/jslang.php:106
 msgid "请填写App Secret"
-msgstr "請填寫App Key"
+msgstr "請填寫App Secret"
 
 #: configs/package.php:56
 msgid ""
@@ -1213,7 +1213,7 @@ msgstr "按件數"
 #: content/apps/shipping/templates/merchant/library/shipping_info_unwrite.lbi.php:64
 #: content/apps/shipping/templates/merchant/library/shipping_info.lbi.php:64
 msgid "下单后几天内配送："
-msgstr "按件數"
+msgstr "下單後幾天內配送："
 
 #: content/apps/shipping/templates/merchant/library/shipping_info_unwrite.lbi.php:66
 #: content/apps/shipping/templates/merchant/library/shipping_info_unwrite.lbi.php:125
@@ -1417,7 +1417,7 @@ msgstr "請先選擇市/區名稱..."
 
 #: content/apps/shipping/templates/merchant/shipping_template_info.dwt.php:165
 msgid "搜索街道镇"
-msgstr "請先選擇市/區名稱..."
+msgstr "搜索街道鎮"
 
 #: content/apps/shipping/templates/merchant/shipping_template_info.dwt.php:168
 msgid "请选择街道/镇"
@@ -1429,7 +1429,7 @@ msgstr "選擇快遞"
 
 #: content/apps/shipping/templates/merchant/shipping_template_info.dwt.php:194
 msgid "请选择快递方式..."
-msgstr "選擇快遞"
+msgstr "請選擇快遞方式..."
 
 #~ msgid "温馨提示：请复制右侧区域变量放入以下输入框中"
 #~ msgstr "溫馨提示：請複制右側區域變量放入以下輸入框中"
