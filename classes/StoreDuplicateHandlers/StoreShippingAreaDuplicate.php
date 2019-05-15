@@ -14,6 +14,12 @@ use RC_DB;
 use RC_Api;
 use ecjia_admin;
 
+/**
+ * 复制店铺中的配送方式和配送地区
+ *
+ * Class StoreShippingAreaDuplicate
+ * @package Ecjia\App\Shipping\StoreDuplicateHandlers
+ */
 class StoreShippingAreaDuplicate extends StoreDuplicateAbstract
 {
 
