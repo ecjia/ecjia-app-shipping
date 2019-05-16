@@ -75,19 +75,16 @@ HTML;
      */
     public function handleDuplicate()
     {
-        return true;
-        $count = $this->handleCount();
-        if (empty($count)) {
-            return true;
+        $item = $this->dependentCheck();
+        //判断提示错误
+        if (empty($item)){
+            //标记处理完成
+            $this->markDuplicateFinished();
+            //$this->handleAdminLog();
+            return TRUE;
         }
 
-        $result = RC_DB::table('shipping_area')->where('store_id', $this->store_id)->delete();
-
-        if ($result) {
-            $this->handleAdminLog();
-        }
-
-        return $result;
+        return FALSE;
     }
 
     /**
