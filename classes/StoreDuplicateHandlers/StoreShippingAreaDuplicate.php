@@ -123,9 +123,10 @@ HTML;
 
             }
 
-            dd($items);
+           // dd($items);
             //插入数据到新店铺
             RC_DB::table('shipping_area')->insert($items);
+
         });
     }
 
