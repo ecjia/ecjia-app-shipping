@@ -23,7 +23,6 @@ use ecjia_admin;
  */
 class StoreShippingAreaDuplicate extends StoreDuplicateAbstract
 {
-
     /**
      * 代号标识
      * @var string
@@ -41,8 +40,14 @@ class StoreShippingAreaDuplicate extends StoreDuplicateAbstract
         $this->name = __('店铺配送区域、运费模板', 'shipping');
 
         parent::__construct($store_id, $source_store_id);
+    }
 
-        $this->source_store_data_handler = RC_DB::table('shipping_area')->where('store_id', $this->source_store_id);
+    /**
+     * 获取源店铺数据操作对象
+     */
+    public function getSourceStoreDataHandler()
+    {
+        return RC_DB::table('shipping_area')->where('store_id', $this->source_store_id);
     }
 
     /**
@@ -51,7 +56,7 @@ class StoreShippingAreaDuplicate extends StoreDuplicateAbstract
     public function handlePrintData()
     {
         $count = $this->handleCount();
-        $text      = sprintf(__('店铺内运费模板总共<span class="ecjiafc-red ecjiaf-fs3">%s</span>个', 'shipping'), $count);
+        $text = sprintf(__('店铺内运费模板总共<span class="ecjiafc-red ecjiaf-fs3">%s</span>个', 'shipping'), $count);
         return <<<HTML
 <span class="controls-info w400">{$text}</span>
 HTML;
@@ -70,9 +75,7 @@ HTML;
             return $this->count;
         }
         // 统计数据条数
-        if (!empty($this->source_store_data_handler)) {
-            $this->count = $this->source_store_data_handler->count();
-        }
+        $this->count = $this->getSourceStoreDataHandler()->count();
         return $this->count;
     }
 
@@ -97,8 +100,12 @@ HTML;
             }
         }
 
+
         //执行具体任务
-        $this->startDuplicateProcedure();
+        $result = $this->startDuplicateProcedure();
+        if (is_ecjia_error($result)) {
+            return $result;
+        }
 
         //标记处理完成
         $this->markDuplicateFinished();
@@ -112,22 +119,44 @@ HTML;
     /**
      * 店铺复制操作的具体过程
      */
-    protected function startDuplicateProcedure(){
-        $this->source_store_data_handler->chunk(50, function ($items) {
-            //构造可用于复制的数据
-            foreach ($items as &$item) {
-                unset($item['shipping_area_id']);
+    protected function startDuplicateProcedure()
+    {
+        try {
+            $replacement_shipping_area = [];
+            $this->getSourceStoreDataHandler()->chunk(50, function ($items) use (&$replacement_shipping_area) {
+                //构造可用于复制的数据
+                foreach ($items as &$item) {
+                    $shipping_area_id = $item['shipping_area_id'];
+                    unset($item['shipping_area_id']);
 
-                //将源店铺ID设为新店铺的ID
-                $item['store_id'] = $this->store_id;
+                    //将源店铺ID设为新店铺的ID
+                    $item['store_id'] = $this->store_id;
 
+                    //插入数据到新店铺
+                    $new_shipping_area_id = RC_DB::table('shipping_area')->insertGetId($item);
+
+                    $replacement_shipping_area[$shipping_area_id] = $new_shipping_area_id;
+                }
+            });
+
+            //将数据插入到area_region
+            $shipping_area_keys = array_keys($replacement_shipping_area);
+            if (!empty($shipping_area_keys)) {
+                RC_DB::table('area_region')->whereIn('shipping_area_id', $shipping_area_keys)->chunk(50, function ($items) use ($replacement_shipping_area) {
+                    foreach ($items as &$item) {
+                        $item['shipping_area_id'] = $replacement_shipping_area[$item['shipping_area_id']];
+                    }
+                    RC_DB::table('area_region')->insert($items);
+                });
             }
 
-           // dd($items);
-            //插入数据到新店铺
-            RC_DB::table('shipping_area')->insert($items);
+            $this->setReplacementData($this->getCode(), $replacement_shipping_area);
 
-        });
+            return true;
+        } catch (\Royalcms\Component\Repository\Exceptions\RepositoryException $e) {
+            return new ecjia_error('duplicate_data_error', $e->getMessage());
+        }
+
     }
 
     /**
@@ -143,7 +172,7 @@ HTML;
 
         $merchants_name = !empty($store_info) ? sprintf(__('店铺名是%s', 'shipping'), $store_info['merchants_name']) : sprintf(__('店铺ID是%s', 'shipping'), $this->store_id);
 
-        ecjia_admin::admin_log($merchants_name, 'clean', 'store_shipping_area');
+        ecjia_admin::admin_log($merchants_name, 'duplicate', 'store_shipping_area');
     }
 
 
