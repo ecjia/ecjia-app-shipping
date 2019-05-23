@@ -9,7 +9,9 @@
 namespace Ecjia\App\Shipping\StoreDuplicateHandlers;
 
 use Ecjia\App\Store\StoreDuplicate\StoreDuplicateAbstract;
+use ecjia_admin;
 use ecjia_error;
+use RC_Api;
 use RC_DB;
 use Royalcms\Component\Database\QueryException;
 
@@ -118,9 +120,8 @@ HTML;
     protected function startDuplicateProcedure()
     {
         $replacement_shipping_area = [];
-        $err_msg = '';
         try {
-            $this->getSourceStoreDataHandler()->chunk(50, function ($items) use (&$replacement_shipping_area, &$err_msg) {
+            $this->getSourceStoreDataHandler()->chunk(50, function ($items) use (&$replacement_shipping_area) {
                 //构造可用于复制的数据
                 foreach ($items as $item) {
                     $shipping_area_id = $item['shipping_area_id'];
@@ -134,8 +135,7 @@ HTML;
 
                         $replacement_shipping_area[$shipping_area_id] = $new_shipping_area_id;
                     } catch (QueryException $e) {
-                        $this->enableException();
-                        $err_msg .= $e->getMessage();
+                        ecjia_log_warning($e->getMessage());
                     }
                 }
             });
@@ -152,17 +152,35 @@ HTML;
             }
 
             $this->setReplacementData($this->getCode(), $replacement_shipping_area);
+            return true;
         } catch (QueryException $e) {
-            $this->enableException();
-            $err_msg .= $e->getMessage();
+            ecjia_log_warning($e->getMessage());
+            return new ecjia_error('duplicate_data_error', $e->getMessage());
         }
-
-        if ($this->exception) {
-            $this->disableException();
-            ecjia_log_error($err_msg);
-            return new ecjia_error('duplicate_data_error', $err_msg);
-        }
-        return true;
     }
 
+    /**
+     * 返回操作日志编写
+     *
+     * @return mixed
+     */
+    public function handleAdminLog()
+    {
+        \Ecjia\App\Store\Helper::assign_adminlog_content();
+
+        static $store_merchant_name, $source_store_merchant_name;
+
+        if (empty($store_merchant_name)) {
+            $store_info = RC_Api::api('store', 'store_info', ['store_id' => $this->store_id]);
+            $store_merchant_name = array_get(empty($store_info) ? [] : $store_info, 'merchants_name');
+        }
+
+        if (empty($source_store_merchant_name)) {
+            $source_store_info = RC_Api::api('store', 'store_info', ['store_id' => $this->source_store_id]);
+            $source_store_merchant_name = array_get(empty($source_store_info) ? [] : $source_store_info, 'merchants_name');
+        }
+
+        $content = sprintf(__('录入：将【%s】店铺所有%s复制到【%s】店铺中', 'goods'), $source_store_merchant_name, $this->name, $store_merchant_name);
+        ecjia_admin::admin_log($content, 'clear', 'store_goodsww');
+    }
 }
