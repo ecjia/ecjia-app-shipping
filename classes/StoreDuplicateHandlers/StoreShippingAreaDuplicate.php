@@ -10,10 +10,8 @@ namespace Ecjia\App\Shipping\StoreDuplicateHandlers;
 
 use Ecjia\App\Store\StoreDuplicate\StoreDuplicateAbstract;
 use ecjia_error;
-use RC_Uri;
 use RC_DB;
-use RC_Api;
-use ecjia_admin;
+use Royalcms\Component\Database\QueryException;
 
 /**
  * 复制店铺中的配送方式和配送地区
@@ -67,8 +65,13 @@ HTML;
         if ($this->count) {
             return $this->count;
         }
+
         // 统计数据条数
-        $this->count = $this->getSourceStoreDataHandler()->count();
+        try {
+            $this->count = $this->getSourceStoreDataHandler()->count();
+        } catch (QueryException $e) {
+            ecjia_log_warning($e->getMessage());
+        }
         return $this->count;
     }
 
@@ -114,21 +117,26 @@ HTML;
      */
     protected function startDuplicateProcedure()
     {
+        $replacement_shipping_area = [];
+        $err_msg = '';
         try {
-            $replacement_shipping_area = [];
-            $this->getSourceStoreDataHandler()->chunk(50, function ($items) use (&$replacement_shipping_area) {
+            $this->getSourceStoreDataHandler()->chunk(50, function ($items) use (&$replacement_shipping_area, &$err_msg) {
                 //构造可用于复制的数据
-                foreach ($items as &$item) {
+                foreach ($items as $item) {
                     $shipping_area_id = $item['shipping_area_id'];
                     unset($item['shipping_area_id']);
 
                     //将源店铺ID设为新店铺的ID
                     $item['store_id'] = $this->store_id;
+                    try {
+                        //插入数据到新店铺
+                        $new_shipping_area_id = RC_DB::table('shipping_area')->insertGetId($item);
 
-                    //插入数据到新店铺
-                    $new_shipping_area_id = RC_DB::table('shipping_area')->insertGetId($item);
-
-                    $replacement_shipping_area[$shipping_area_id] = $new_shipping_area_id;
+                        $replacement_shipping_area[$shipping_area_id] = $new_shipping_area_id;
+                    } catch (QueryException $e) {
+                        $this->enableException();
+                        $err_msg .= $e->getMessage();
+                    }
                 }
             });
 
@@ -144,12 +152,17 @@ HTML;
             }
 
             $this->setReplacementData($this->getCode(), $replacement_shipping_area);
-
-            return true;
-        } catch (\Royalcms\Component\Repository\Exceptions\RepositoryException $e) {
-            return new ecjia_error('duplicate_data_error', $e->getMessage());
+        } catch (QueryException $e) {
+            $this->enableException();
+            $err_msg .= $e->getMessage();
         }
 
+        if ($this->exception) {
+            $this->disableException();
+            ecjia_log_error($err_msg);
+            return new ecjia_error('duplicate_data_error', $err_msg);
+        }
+        return true;
     }
 
 }
