@@ -41,7 +41,7 @@ class StoreShippingAreaDuplicate extends StoreDuplicateAbstract
      */
     public function getSourceStoreDataHandler()
     {
-        return RC_DB::table('shipping_area')->where('store_id', $this->source_store_id);
+        return RC_DB::table('shipping_area')->where('store_id', $this->source_store_id)->where('enabled', 1);
     }
 
     /**
@@ -64,7 +64,7 @@ HTML;
     public function handleCount()
     {
         //如果已经统计过，直接返回统计过的条数
-        if ($this->count) {
+        if (!is_null($this->count)) {
             return $this->count;
         }
 
