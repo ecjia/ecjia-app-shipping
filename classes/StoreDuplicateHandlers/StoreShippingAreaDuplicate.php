@@ -178,7 +178,7 @@ HTML;
         }
 
         \Ecjia\App\Store\Helper::assign_adminlog_content();
-        $content = sprintf(__('录入：将【%s】店铺所有配送区域、运费模板复制到【%s】店铺中', 'goods'), $source_store_merchant_name, $store_merchant_name);
+        $content = sprintf(__('将【%s】店铺所有配送区域、运费模板复制到【%s】店铺中', 'goods'), $source_store_merchant_name, $store_merchant_name);
         ecjia_admin::admin_log($content, 'duplicate', 'store_goods');
     }
 }
