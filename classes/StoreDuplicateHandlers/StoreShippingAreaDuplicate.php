@@ -39,6 +39,8 @@ class StoreShippingAreaDuplicate extends StoreDuplicateAbstract
 
     /**
      * 获取源店铺数据操作对象
+     *
+     * @return \Royalcms\Component\Database\Query\Builder
      */
     public function getSourceStoreDataHandler()
     {
