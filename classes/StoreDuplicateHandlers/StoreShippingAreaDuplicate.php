@@ -44,7 +44,7 @@ class StoreShippingAreaDuplicate extends StoreDuplicateAbstract
      */
     public function getSourceStoreDataHandler()
     {
-        return RC_DB::table('shipping_area')->where('store_id', $this->source_store_id)->where('enabled', 1);
+        return RC_DB::table('shipping_area')->where('store_id', $this->source_store_id);
     }
 
     /**
@@ -56,7 +56,6 @@ class StoreShippingAreaDuplicate extends StoreDuplicateAbstract
         return <<<HTML
 <span class="controls-info w400">{$text}</span>
 HTML;
-
     }
 
     /**
@@ -98,7 +97,6 @@ HTML;
                 return new ecjia_error('handle_duplicate_error', __('复制依赖检测失败！', 'store'), $items);
             }
         }
-
 
         //执行具体任务
         $result = $this->startDuplicateProcedure();
